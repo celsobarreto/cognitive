@@ -1,58 +1,58 @@
 #summary Model bazy danych
 
 SpecialPages
- - id: string
- - title: string
- - content: text
+ * id: string
+ * title: string
+ * content: text
 
 News
- - id: int
- - date: date
- - title: string
- - content: text
+ * id: int
+ * date: date
+ * title: string
+ * content: text
 
 User
- - id: int
- - is_scientist: bool
- - is_entrepreneur: bool
- - password_hash: string
- - email: string  -- pełni także funkcję loginu
- - is_accepted: bool
- - is_activated: bool
- - competences: text
- - is_admin: bool
- - allowed_IPs: text
- - full_name -- imię, nazwisko i ew. tytuł naukowy
+ * id: int
+ * is_scientist: bool
+ * is_entrepreneur: bool
+ * password_hash: string
+ * email: string  -- pełni także funkcję loginu
+ * is_accepted: bool
+ * is_activated: bool
+ * competences: text
+ * is_admin: bool
+ * allowed_IPs: text
+ * full_name -- imię, nazwisko i ew. tytuł naukowy
 
 Setting
- - id: string
- - value: text
+ * id: string
+ * value: text
 
 ScienceDomain
- - id: int
- - name: string
- - description: text
- - is_default: bool
+ * id: int
+ * name: string
+ * description: text
+ * is_default: bool
 
 Publication
- - id
- - title
- - keywords
- - authors
- - link
- - year
- - references
- - journal
- - volume
- - pages
+ * id
+ * title
+ * keywords
+ * authors
+ * link
+ * year
+ * references
+ * journal
+ * volume
+ * pages
 
 Offer
- - id
- - entrepreneur_id
- - title
- - content
- - date
- - type [job|service]
+ * id
+ * entrepreneur_id
+ * title
+ * content
+ * date
+ * type [job|service]
 
 (User n:m ScienceDomain)
 (User n:m Publication)
