@@ -2,7 +2,7 @@
 
 = Grupa 1 =
 
-  * Damian Mietka
+  * Damian Miętka
   * Piotr Ładanowski
   * Paweł Kubica
 
