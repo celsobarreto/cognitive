@@ -2,19 +2,19 @@
 
 = Grupa 1 =
 
-  * Damian Miętka
+  * Damian Miętka *kierownik*
   * Piotr Ładanowski
   * Paweł Kubica
 
 = Grupa 2 =
 
-  * Adam Dziendziel
+  * Adam Dziendziel *kierownik*
   * Rafał Rząsa
   * Marcin Noczyński
 
 = Grupa 3 =
 
-  * Cezary Turek
+  * Cezary Turek *kierownik*
   * Mateusz Kosibowicz
   * Paweł Radwan
   * Damian Kość
