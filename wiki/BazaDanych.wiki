@@ -1,4 +1,5 @@
 #summary Model bazy danych
+#labels Featured
 
 SpecialPages
  * id: string
