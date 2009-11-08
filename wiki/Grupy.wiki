@@ -2,18 +2,18 @@
 
 = Grupa 1 =
 
-Damian Mietka
-Piotr Ładanowski
-Paweł Kubica
+* Damian Mietka
+* Piotr Ładanowski
+* Paweł Kubica
 
 = Grupa 2 =
 
-Adam Dziendziel
-Rafał Rząsa
-Marcin Noczyński
+* Adam Dziendziel
+* Rafał Rząsa
+* Marcin Noczyński
 
 = Grupa 3 =
 
-Cezary Turek
-Mateusz Kosibowicz
-Paweł Radwan
+* Cezary Turek
+* Mateusz Kosibowicz
+* Paweł Radwan
