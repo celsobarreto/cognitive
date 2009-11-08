@@ -1,0 +1,19 @@
+#summary Podział osób na grupy 1, 2 i 3
+
+= Grupa 1 =
+
+Damian Mietka
+Piotr Ładanowski
+Paweł Kubica
+
+= Grupa 2 =
+
+Adam Dziendziel
+Rafał Rząsa
+Marcin Noczyński
+
+= Grupa 3 =
+
+Cezary Turek
+Mateusz Kosibowicz
+Paweł Radwan
