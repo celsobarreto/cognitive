@@ -1,4 +1,4 @@
-#summary Podział osób na grupy 1, 2 i 3
+#summary Podział osób na grupy
 
 = Grupa 1 =
 
@@ -17,3 +17,4 @@
   * Cezary Turek
   * Mateusz Kosibowicz
   * Paweł Radwan
+  * Damian Kość
