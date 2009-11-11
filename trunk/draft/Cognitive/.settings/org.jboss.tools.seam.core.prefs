@@ -1,0 +1,16 @@
+#Wed Aug 06 19:35:32 BST 2008
+action.package=uj.edu.Cognitive.action
+action.sources=/Cognitive/src/hot
+eclipse.preferences.version=1
+model.package=uj.edu.Cognitive.model
+model.sources=/Cognitive/src/main
+seam.ejb.project=Cognitive
+seam.project.connection.profile=
+seam.project.deployment.type=ear
+seam.project.settings.version=1.1
+seam.project.web.root.folder=/Cognitive/view
+seam.runtime.name=
+seam.test.creating=true
+seam.test.project=Cognitive
+test.package=uj.edu.Cognitive.test
+test.sources=/Cognitive/src/test

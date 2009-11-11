@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project basedir=".." name="Cognitive-IDE">
+    
+  <property file="nbproject/debug-jboss.properties"/>
+
+  <target name="debug-nb">
+    <nbjpdaconnect name="Cognitive" host="${jpda.host}" address="${jpda.address}" transport="${jpda.transport}">
+      <!--classpath>
+        <path path="exploded-archives/Cognitive.jar"/>
+      </classpath>
+      <sourcepath>
+        <path path="src"/>
+      </sourcepath-->
+    </nbjpdaconnect>
+  </target>
+</project>
