@@ -14,7 +14,7 @@
 
 = Grupa 3 =
 
-  * Cezary Turek *kierownik*
-  * Mateusz Kosibowicz
+  * Cezary Turek 
+  * Mateusz Kosibowicz *kierownik*
   * Paweł Radwan
   * Damian Kość
