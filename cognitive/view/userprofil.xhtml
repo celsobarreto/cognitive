@@ -1,0 +1,71 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	    		xmlns:ui="http://java.sun.com/jsf/facelets"
+	  			xmlns:h="http://java.sun.com/jsf/html"
+	  			xmlns:f="http://java.sun.com/jsf/core"
+	  			xmlns:s="http://jboss.com/products/seam/taglib"
+                xmlns:a="http://richfaces.org/a4j"
+				template="template.xhtml">
+
+	<ui:define name="navigation">
+		<ui:param name="pageid" value="profil" />
+	</ui:define>
+	
+	<ui:define name="content">
+		[<s:link view="/userprofil.seam" action="#{userProfil.createTestData}" propagation="none">create test data</s:link>]
+		<br/>
+		<br/>
+		<h:form>
+			<h:outputText value="No users to display" rendered="#{userList.rowCount==0}" />
+			<h:dataTable border="0" cellpadding="3" cellspacing="0" headerClass="header_table" var="usr" value="#{userList}" rendered="#{userList.rowCount>0}">
+				<f:facet name="header">
+    				<h:outputText value="Users List" rendered="#{userList.rowCount>1}"/>
+  				</f:facet>
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="Id"/>
+					</f:facet>
+					<h:outputText value="#{usr.id}"/>
+				</h:column>
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="Name"/>
+					</f:facet>
+					<s:link value="#{usr.fullName}" action="#{userProfil.showPublication}" rendered="#{userList.rowCount>1}"/>
+					<h:outputText value="#{usr.fullName}" rendered="#{userList.rowCount==1}"/>
+				</h:column>
+			</h:dataTable>
+			<br/>
+			<h:outputText value="No publications to display" rendered="#{user.publications.size==0}" />
+			<h:dataTable border="0" cellpadding="2" cellspacing="0" headerClass="header_table" var="publ" value="#{user.publications}" rendered="#{user.publications.size>0}">
+				<f:facet name="header">
+	    			<h:outputText value="User '#{user.fullName}' publication list"/>
+	  			</f:facet>	
+	  			<h:column>
+					<f:facet name="header">
+						<h:outputText value="Id" />
+					</f:facet>
+					<h:outputText value="#{publ.id}"/>
+				</h:column>
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="Title" />
+					</f:facet>
+					<h:outputText value="#{publ.title}"/>
+				</h:column>
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="Year" />
+					</f:facet>
+					<h:outputText value="#{publ.year}"/>
+				</h:column>
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="Keywords" />
+					</f:facet>
+					<h:outputText value="#{publ.keywords}"/>
+				</h:column>
+			</h:dataTable>
+		</h:form>
+	</ui:define>
+</ui:composition>
