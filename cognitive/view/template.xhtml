@@ -50,10 +50,16 @@
 					<li>
 						<s:link value="Edit special pages" view="/pagelist.seam" action="#{pageEdit.showList}" styleClass="active" propagation="none" rendered="#{pageid eq 'pagelist'}"></s:link>
 						<s:link value="Edit special pages" view="/pagelist.seam" action="#{pageEdit.showList}" propagation="none" rendered="#{pageid ne 'pagelist'}"></s:link>
+					</li>
+					<li>
+						<s:link value="Test data" view="/testData.seam" rendered="#{pageid ne 'testdata'}" propagation="none" />
 					</li>					
 				</ul>
 			</div>
 			<div id="content">
+		        <h:messages id="messages" globalOnly="true" styleClass="message"
+		            errorClass="errormsg" infoClass="infomsg" warnClass="warnmsg"
+		            rendered="#{showGlobalMessages != 'false'}"/>			
 				<ui:insert name="content"/>
 				<br/>
 			</div>

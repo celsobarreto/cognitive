@@ -29,41 +29,6 @@ public class UserProfilAction implements UserProfil
 	@Out(required = false)
 	private User user;
 	
-	public void createTestData()
-	{
-		SpecialPage sp = new SpecialPage();
-		sp.setId("info");
-		sp.setContent("content...");
-		sp.setTitle("project info");
-		this.em.persist(sp);
-		
-		User testuser = new User();
-		testuser.setFullName("testUser");
-		this.em.persist(testuser);
-		
-		User admin = new User();
-		admin.setFullName("admin");
-		this.em.persist(admin);
-		
-		this.em.flush();
-		this.em.refresh(testuser);
-		this.em.refresh(admin);
-		
-		Publication publ1 = new Publication();
-		publ1.setTitle("publication 1");
-		publ1.setYear(2000);
-		publ1.setVolume(2);
-		publ1.setPages(1234);
-		this.em.persist(publ1);
-		testuser.getPublications().add(publ1);
-		
-		Publication publ2 = new Publication();
-		publ2.setTitle("publication 2");
-		this.em.persist(publ2);
-		admin.getPublications().add(publ1);
-		admin.getPublications().add(publ2);
-	}
-
 	@SuppressWarnings("unchecked")
 	@Factory("userList")
 	public void findUser()

@@ -20,6 +20,6 @@
    <!-- Seam and EL -->
    <module>
        <ejb>jboss-seam.jar</ejb>
-   </module>    
+   </module>
     
 </application>
