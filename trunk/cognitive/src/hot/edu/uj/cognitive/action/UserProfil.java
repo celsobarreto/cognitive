@@ -5,7 +5,6 @@ import javax.ejb.Local;
 @Local
 public interface UserProfil
 {
-	public void createTestData();
 	public void findUser();
 	public void delete();
 	public void destroy();
