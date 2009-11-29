@@ -47,6 +47,10 @@
 						<s:link value="Test" view="/spage.seam" action="#{specialPages.toPage('test')}" styleClass="active" propagation="none" rendered="#{pageid eq 'test'}"></s:link>
 						<s:link value="Test" view="/spage.seam" action="#{specialPages.toPage('test')}" propagation="none" rendered="#{pageid ne 'test'}"></s:link>
 					</li>
+					<li>
+						<s:link value="Edit special pages" view="/pagelist.seam" action="#{pageEdit.showList}" styleClass="active" propagation="none" rendered="#{pageid eq 'pagelist'}"></s:link>
+						<s:link value="Edit special pages" view="/pagelist.seam" action="#{pageEdit.showList}" propagation="none" rendered="#{pageid ne 'pagelist'}"></s:link>
+					</li>					
 				</ul>
 			</div>
 			<div id="content">

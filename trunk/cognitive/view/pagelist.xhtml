@@ -1,0 +1,35 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	    		xmlns:ui="http://java.sun.com/jsf/facelets"
+	  			xmlns:h="http://java.sun.com/jsf/html"
+	  			xmlns:f="http://java.sun.com/jsf/core"
+	  			xmlns:s="http://jboss.com/products/seam/taglib"
+                xmlns:a="http://richfaces.org/a4j"
+				template="template.xhtml">
+
+	<ui:define name="navigation">
+		<ui:param name="pageid" value="pagelist"/>
+	</ui:define>
+
+	<ui:define name="content">
+	<h:outputText value="There's no static page in database" rendered="#{pageList.rowCount==0}" />
+			<h:dataTable border="0" cellpadding="3" cellspacing="0" headerClass="header_table" var="page" value="#{pageList}" rendered="#{pageList.rowCount>0}">
+				<f:facet name="header">
+    				<h:outputText value="Page List" rendered="#{pageList.rowCount>1}"/>
+  				</f:facet>
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="Id"/>
+					</f:facet>
+					<h:outputText value="#{page.id}"/>
+				</h:column>
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="Title"/>
+					</f:facet>
+					<s:link value="#{page.title}" view="/editpage.seam" action="#{pageEdit.showPage('page.id')}" rendered="#{pageList.rowCount>0}"/>
+				</h:column>
+			</h:dataTable>	
+
+	</ui:define>
+</ui:composition>
