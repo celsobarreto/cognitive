@@ -27,7 +27,7 @@ public class News implements Serializable
         private static final long serialVersionUID = 1551491368638860686L;
 
         @Id
-        @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "publ_seq")
+        @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "news_seq")
         private Integer id;
 
         @NotNull
