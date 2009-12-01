@@ -52,8 +52,12 @@
 						<s:link value="Edit special pages" view="/pagelist.seam" action="#{pageEdit.showList}" propagation="none" rendered="#{pageid ne 'pagelist'}"></s:link>
 					</li>
 					<li>
-						<s:link value="Test data" view="/testData.seam" rendered="#{pageid ne 'testdata'}" propagation="none" />
+						<s:link value="News list" view="/News.seam" action="#{newsManager.getNews}" styleClass="active" propagation="none" rendered="#{pageid eq 'news'}"></s:link>
+						<s:link value="News list" view="/News.seam" action="#{newsManager.getNews}" propagation="none" rendered="#{pageid ne 'news'}"></s:link>
 					</li>					
+					<li>
+						<s:link value="Test data" view="/testData.seam" rendered="#{pageid ne 'testdata'}" propagation="none" />
+					</li>
 				</ul>
 			</div>
 			<div id="content">
