@@ -54,6 +54,10 @@
 					<li>
 						<s:link value="News list" view="/News.seam" action="#{newsManager.getNews}" styleClass="active" propagation="none" rendered="#{pageid eq 'news'}"></s:link>
 						<s:link value="News list" view="/News.seam" action="#{newsManager.getNews}" propagation="none" rendered="#{pageid ne 'news'}"></s:link>
+					</li>
+					<li>
+						<s:link value="Science Domain" view="/scienceDomainList.seam" styleClass="active" propagation="none" rendered="#{pageid eq 'sd'}"></s:link>
+						<s:link value="Science Domain" view="/scienceDomainList.seam"  propagation="none" rendered="#{pageid ne 'sd'}"></s:link>
 					</li>					
 					<li>
 						<s:link value="Test data" view="/testData.seam" rendered="#{pageid ne 'testdata'}" propagation="none" />

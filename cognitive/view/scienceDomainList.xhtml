@@ -1,0 +1,57 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:s="http://jboss.com/products/seam/taglib"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:rich="http://richfaces.org/rich"
+    template="template.xhtml">
+
+<ui:define name="navigation">
+		<ui:param name="pageid" value="sd" />
+</ui:define>
+
+
+<ui:define name="content">
+
+    <rich:panel>
+        <f:facet name="header">scienceDomainList</f:facet>
+
+        <div class="results">
+
+            <h:outputText value="No scienceDomain exists"
+                       rendered="#{empty scienceDomainList.resultList}"/>
+
+            <h:dataTable id="scienceDomainList" var="scienceDomain"
+                      value="#{scienceDomainList.resultList}"
+                   rendered="#{not empty scienceDomainList.resultList}">
+                <h:column>
+                    <f:facet name="header">Id</f:facet>
+                    #{scienceDomain.id}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">Name</f:facet>
+                    <s:link id="scienceDomain"
+                         value="#{scienceDomain.name}"
+                   propagation="none"
+                         view="/scienceDomain.xhtml">
+                        <f:param name="scienceDomainId"
+                                value="#{scienceDomain.id}"/>
+                    </s:link>
+                </h:column>
+            </h:dataTable>
+
+        </div>
+
+    </rich:panel>
+
+    <div class="actionButtons">
+        <s:button id="done"
+               value="Create scienceDomain"
+                view="/scienceDomain.xhtml"/>
+    </div>
+
+</ui:define>
+
+</ui:composition>
