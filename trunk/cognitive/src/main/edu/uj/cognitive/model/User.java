@@ -3,6 +3,7 @@ package edu.uj.cognitive.model;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -36,6 +37,9 @@ public class User implements Serializable
 
 	@ManyToMany
 	private List<Publication>	publications;
+	
+	@ManyToMany(fetch=FetchType.EAGER)
+	private List<ScienceDomain> scienceDomains;
 
 	public void setId(Integer id)
 	{
@@ -65,5 +69,13 @@ public class User implements Serializable
 	public String getFullName()
 	{
 		return this.fullName;
+	}
+
+	public void setScienceDomains(List<ScienceDomain> scienceDomains) {
+		this.scienceDomains = scienceDomains;
+	}
+
+	public List<ScienceDomain> getScienceDomains() {
+		return scienceDomains;
 	}
 }

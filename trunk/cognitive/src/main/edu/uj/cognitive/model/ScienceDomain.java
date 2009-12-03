@@ -1,11 +1,15 @@
 package edu.uj.cognitive.model;
 
 import java.io.Serializable;
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.GeneratedValue;
+import javax.persistence.ManyToMany;
 import javax.persistence.Version;
 import org.hibernate.validator.Length;
+
 
 @Entity
 public class ScienceDomain implements Serializable
@@ -16,6 +20,7 @@ public class ScienceDomain implements Serializable
     private String name;
     private String description;
     private Boolean isDefault;
+    private List<User> users;
 
     // add additional entity attributes
 
@@ -63,5 +68,16 @@ public class ScienceDomain implements Serializable
 	public void setIsDefault(Boolean isDefault) {
 		this.isDefault = isDefault;
 	}
+	
+	@ManyToMany(mappedBy="scienceDomains")
+	public List<User> getUsers() {
+		return users;
+	}
+	
+	public void setUsers(List<User> users) {
+		this.users = users;
+	}
+
+	
 
 }
