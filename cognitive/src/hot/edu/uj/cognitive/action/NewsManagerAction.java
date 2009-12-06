@@ -32,7 +32,7 @@ public class NewsManagerAction implements NewsManager
 	
 	@SuppressWarnings("unchecked")
 	@Factory("newsList")
-	public void getNews() 
+	public void getNews()
 	{
 		this.newsList = this.em.createQuery("select n from News n").getResultList();
 	}

@@ -4,7 +4,7 @@
 	  			xmlns:h="http://java.sun.com/jsf/html"
 	  			xmlns:f="http://java.sun.com/jsf/core"
 	  			xmlns:s="http://jboss.com/products/seam/taglib"
-                xmlns:a="http://richfaces.org/a4j"
+                xmlns:a="http://richfaces.org/rich"
 				template="template.xhtml">
 				
 	<ui:define name="navigation">
@@ -12,7 +12,22 @@
 	</ui:define>
 				
 	<ui:define name="content">
-            <h1>News list:</h1> 
+		<h:form>
+            <h:outputText value="No news to display" rendered="#{newsList.rowCount==0}" />
+            <h:dataTable border="0" cellpadding="3" cellspacing="0" headerClass="header_table" var="news" value="#{newsList}" rendered="#{newsList.rowCount>0}" width="100%">
+            	<f:facet name="header">
+    				<h:outputText value="News:"/>
+  				</f:facet>            
+  				<h:column>
+            		<a:panel>
+            			<f:facet name="header">
+            					<h:outputText value="#{news.title} | #{news.date}"/> 
+            			</f:facet>
+            			<h:outputText value="#{news.content}"/>	
+            		</a:panel>
+            	</h:column>
+            </h:dataTable>
+		</h:form>
 	</ui:define>
 
 </ui:composition>
