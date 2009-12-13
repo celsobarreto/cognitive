@@ -1,7 +1,6 @@
 package edu.uj.cognitive.model;
 
 import java.io.Serializable;
-import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -23,7 +22,7 @@ import org.jboss.seam.annotations.Scope;
 @SequenceGenerator(name = "offer_seq", sequenceName = "offer_seq", initialValue = 1, allocationSize = 1)
 public class Offer implements Serializable{
 	
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 7759813144512363139L;
 	
 	@Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "offer_seq")
@@ -37,9 +36,9 @@ public class Offer implements Serializable{
 	@Length(max = 2000)
     private String content;
 	@NotNull
-    private Date date;
+    private String dateAdded;
 	@NotNull
-    private OfferTypeEnum offerType;
+    private String offerType;
     
     public Offer(){    	
     }
@@ -77,19 +76,19 @@ public class Offer implements Serializable{
 		this.content = content;
 	}
 
-	public Date getDate() {
-		return date;
+	public String getDate() {
+		return dateAdded;
 	}
 
-	public void setDate(Date date) {
-		this.date = date;
+	public void setDate(String date) {
+		this.dateAdded = date;
 	}
 
-	public OfferTypeEnum getOfferType() {
+	public String getOfferType() {
 		return offerType;
 	}
 
-	public void setOfferType(OfferTypeEnum offerType) {
+	public void setOfferType(String offerType) {
 		this.offerType = offerType;
 	}
     
