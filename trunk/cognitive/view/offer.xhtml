@@ -1,0 +1,33 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	    		xmlns:ui="http://java.sun.com/jsf/facelets"
+	  			xmlns:h="http://java.sun.com/jsf/html"
+	  			xmlns:f="http://java.sun.com/jsf/core"
+	  			xmlns:s="http://jboss.com/products/seam/taglib"
+                xmlns:a="http://richfaces.org/rich"
+				template="template.xhtml">
+				
+	<ui:define name="navigation">
+		<ui:param name="pageid" value="offer" />
+	</ui:define>
+				
+	<ui:define name="content">
+		<h:form>
+            <h:outputText value="No propositions to display" rendered="#{offerList.rowCount==0}" />
+            <h:dataTable border="0" cellpadding="3" cellspacing="0" headerClass="header_table" var="offer" value="#{offerList}" rendered="#{offerList.rowCount>0}" width="100%">
+            	<f:facet name="header">
+    				<h:outputText value="Propositions:"/>
+  				</f:facet>            
+  				<h:column>
+            		<a:panel>
+            			<f:facet name="header">
+            					<h:outputText value="#{offer.title} | #{offer.dateAdded} | #{offer.offerType}"/> 
+            			</f:facet>
+            			<h:outputText value="#{offer.content}"/>	
+            		</a:panel>
+            	</h:column>
+            </h:dataTable>
+		</h:form>
+	</ui:define>
+
+</ui:composition>
