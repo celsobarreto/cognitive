@@ -2,6 +2,8 @@ package edu.uj.cognitive.model;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Set;
+
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -16,6 +18,11 @@ import org.hibernate.validator.Pattern;
 import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Scope;
+import org.jboss.seam.annotations.security.management.UserEnabled;
+import org.jboss.seam.annotations.security.management.UserPassword;
+import org.jboss.seam.annotations.security.management.UserPrincipal;
+import org.jboss.seam.annotations.security.management.UserRoles;
+import org.jboss.seam.security.digest.DigestUtils;
 
 @Entity
 @Name("user")
@@ -32,7 +39,7 @@ public class User implements Serializable
 
 	@NotNull
 	@Length(min = 3, max = 255)
-	@Pattern(regex = "^\\w*$", message = "not a valid username")
+	@UserPrincipal
 	private String				fullName;
 
 	@ManyToMany
@@ -40,6 +47,101 @@ public class User implements Serializable
 	
 	@ManyToMany(fetch=FetchType.EAGER)
 	private List<ScienceDomain> scienceDomains;
+	
+	@NotNull
+	@UserPassword(hash = "md5")
+	private String passwordHash;
+
+	@NotNull
+	private String email; // acts as a login
+	
+	private String competences;
+	
+	private String allowedIPs; // comma-delimited IPs or null if any IP is allowed
+
+	@NotNull
+	private Boolean accepted;
+	
+	@NotNull
+	private Boolean activated;
+
+	public User(String fullname, String email, String password) {
+		this.fullName = fullname;
+		this.email = email;
+		this.setPassword(password);
+		this.activated = true;
+		this.accepted = true;
+	}
+	
+	public User() {
+		
+	}
+
+	private void setPassword(String password) {
+		this.passwordHash = DigestUtils.md5Hex(password);
+	}
+
+
+	public Boolean getAccepted() {
+		return accepted;
+	}
+
+	public void setAccepted(Boolean accepted) {
+		this.accepted = accepted;
+	}
+
+	public Boolean getActivated() {
+		return activated;
+	}
+
+	public void setActivated(Boolean activated) {
+		this.activated = activated;
+	}
+
+	@UserRoles
+	@ManyToMany(fetch=FetchType.EAGER)
+	private Set<Role> roles;
+	
+
+	public String getPasswordHash() {
+		return passwordHash;
+	}
+
+	public void setPasswordHash(String passwordHash) {
+		this.passwordHash = passwordHash;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getCompetences() {
+		return competences;
+	}
+
+	public void setCompetences(String competences) {
+		this.competences = competences;
+	}
+
+	public String getAllowedIPs() {
+		return allowedIPs;
+	}
+
+	public void setAllowedIPs(String allowedIPs) {
+		this.allowedIPs = allowedIPs;
+	}
+
+	public Set<Role> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(Set<Role> roles) {
+		this.roles = roles;
+	}
 
 	public void setId(Integer id)
 	{
