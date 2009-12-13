@@ -58,7 +58,11 @@
 					<li>
 						<s:link value="Science Domain" view="/scienceDomainList.seam" styleClass="active" propagation="none" rendered="#{pageid eq 'sd'}"></s:link>
 						<s:link value="Science Domain" view="/scienceDomainList.seam"  propagation="none" rendered="#{pageid ne 'sd'}"></s:link>
-					</li>					
+					</li>
+					<li>
+						<s:link value="Propositions" view="/offer.seam" action="#{offerManager.getOffer}" styleClass="active" propagation="none" rendered="#{pageid eq 'offer'}"></s:link>
+						<s:link value="Propositions" view="/offer.seam" action="#{offerManager.getOffer}" propagation="none" rendered="#{pageid ne 'offer'}"></s:link>
+					</li>
 					<li>
 						<s:link value="Test data" view="/testData.seam" rendered="#{pageid ne 'testdata'}" propagation="none" />
 					</li>
