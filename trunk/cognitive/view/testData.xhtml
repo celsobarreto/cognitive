@@ -13,7 +13,7 @@
 	</ui:define>
 				
 	<ui:define name="content">
-	        <s:button value="Insert test data into the database" action="#{TestData.insert}" view="/testData.seam"  />
+	        <s:button value="Insert test data into the database" action="#{TestData.insert}" view="/testData.seam" propagation="none"  />
 	
             <p>This operation can take a while. Press the button and wait.</p> 
 	

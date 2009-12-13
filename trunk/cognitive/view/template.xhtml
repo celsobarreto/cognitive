@@ -20,7 +20,24 @@
 	<div id="wrap">
 		<div id="header">
 			<h1>Cognitive</h1>
-			<h2>cognitive &nbsp; &nbsp; &nbsp; project</h2>
+
+			<h:form class="loginForm" rendered="#{not identity.loggedIn}">
+				<div>
+				    <h:outputLabel for="name" value="E-mail"/>
+				    <h:inputText id="name" value="#{credentials.username}"/>
+				</div>
+				<div>
+				    <h:outputLabel for="password" value="Password"/>
+				    <h:inputSecret id="password" value="#{credentials.password}"/>
+				</div>	
+				<div>		
+				    <h:commandButton value="Login" action="#{identity.login}"/>
+				</div>
+			</h:form>
+			<s:div rendered="#{identity.loggedIn}">
+			  <div>Zalogowany jako: &nbsp; #{loggedUser.getFullName()}</div> 
+			  <div><s:link value="Logout" view="/homepage.seam" action="#{identity.logout}" /></div>
+			</s:div>
 		</div>
 		<div style="clear: both;">&nbsp;</div>
 		<div id="container">
