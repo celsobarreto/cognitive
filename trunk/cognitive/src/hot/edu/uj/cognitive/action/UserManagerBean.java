@@ -11,13 +11,15 @@ import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Out;
 import org.jboss.seam.annotations.datamodel.DataModel;
 import org.jboss.seam.annotations.datamodel.DataModelSelection;
+import org.jboss.seam.annotations.web.RequestParameter;
+
 import edu.uj.cognitive.model.Publication;
 import edu.uj.cognitive.model.SpecialPage;
 import edu.uj.cognitive.model.User;
 
 @Stateful
-@Name("userProfil")
-public class UserProfilAction implements UserProfil
+@Name("userManager")
+public class UserManagerBean implements UserManager
 {
 	@PersistenceContext(type = PersistenceContextType.EXTENDED)
 	private EntityManager em;
@@ -25,13 +27,23 @@ public class UserProfilAction implements UserProfil
 	@DataModel
 	private List<User> userList;
 	
-	@DataModelSelection(value = "userList")
-	@Out(required = false)
+	@RequestParameter 
+	private Integer userId;
+	
+	public Integer getUserId() {
+		return userId;
+	}
+	
+	public void setUserId(Integer id) {
+		this.userId = id;
+	}
+	
+	@Out(value="userProfile", required = false)	
 	private User user;
 	
 	@SuppressWarnings("unchecked")
 	@Factory("userList")
-	public void findUser()
+	public void list()
 	{
 		this.userList = this.em.createQuery("select u from User u").getResultList();
 	}
@@ -51,24 +63,15 @@ public class UserProfilAction implements UserProfil
 	public void destroy()
 	{
 		this.userList = null;
-	}
-	
-	public void showPublication()
-	{
-		return;
+		this.user = null;
 	}
 	
 	@SuppressWarnings("unchecked")
-	public void showUser()
+	public void show()
 	{
-		this.userList = this.em.createQuery("select u from User u where u.id = #{publUser.id}").getResultList();
-		if (this.userList.size() > 0)
-		{
-			this.user = this.userList.get(0);
-		}
-		else
-		{
-			this.user = null;
-		}
+		
+		this.user = (User) this.em.createQuery("select u from User u where u.id = "+userId.toString()).getSingleResult();
+
+
 	}
 }

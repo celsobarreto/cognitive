@@ -1,0 +1,36 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	    		xmlns:ui="http://java.sun.com/jsf/facelets"
+	  			xmlns:h="http://java.sun.com/jsf/html"
+	  			xmlns:f="http://java.sun.com/jsf/core"
+	  			xmlns:s="http://jboss.com/products/seam/taglib"
+                xmlns:a="http://richfaces.org/a4j"
+				template="template.xhtml">
+
+	<ui:define name="navigation">
+		<ui:param name="pageid" value="users" />
+	</ui:define>
+	
+	<ui:define name="content">
+		<h2>Lista użytkowników</h2>
+		<h:form>
+			<h:outputText value="Nie ma żadnych użytkowników w systemie" rendered="#{userList.rowCount==0}" />
+			<h:dataTable border="0" cellpadding="3" cellspacing="0" headerClass="header_table" var="usr" value="#{userList}" rendered="#{userList.rowCount>0}">
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="Id"/>
+					</f:facet>
+					<h:outputText value="#{usr.id}"/>
+				</h:column>
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="Pełna nazwa użytkownika"/>
+					</f:facet>
+					<s:link value="#{usr.fullName}" view="/userProfile.xhtml" action="#{userManager.show()}" propagation="none">
+					     <f:param name="userId" value="#{usr.id}"/>
+					</s:link>
+				</h:column>
+			</h:dataTable>
+		</h:form>
+	</ui:define>
+</ui:composition>
