@@ -1,9 +1,11 @@
 package edu.uj.cognitive.action;
 
 import javax.ejb.Stateless;
+import javax.faces.context.FacesContext;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
+import javax.servlet.http.HttpServletRequest;
 
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Logger;
@@ -29,6 +31,8 @@ public class AuthenticatorBean implements Authenticator
     @In Credentials credentials;
     @In Identity identity;
 
+    @In private FacesContext facesContext;  
+    
     public boolean authenticate()
     {
     	 try {
@@ -44,9 +48,15 @@ public class AuthenticatorBean implements Authenticator
              }
              
              if (!user.getAccepted() || !user.getActivated()) {
-            	 log.info("User account is not enabled. Cannot login.");
+            	 log.info("Konto użytkownika nie zostało aktywowane. Nie możesz się zalogować.");
             	 return false;
              }
+             
+             //String ip = getIP();
+             /*if (!hasAllowedIP(user, ip)) {
+            	 log.info("Adres IP tego komputera ("+ip+") nie znajduje się wśród dopuszczonych ("+user.getAllowedIPs()+")");
+            	 return false;
+             }*/
 
              Contexts.getSessionContext().set("loggedUser", user);             
              
@@ -59,6 +69,27 @@ public class AuthenticatorBean implements Authenticator
              return false;
 
           }    	
+    }
+    
+    private boolean hasAllowedIP(User user, String ip) {
+    	String allowedIPs = user.getAllowedIPs();
+    	if (allowedIPs == null) {
+    		log.info("Uzytkownik nie ma ustalonych dopuszczalnych IP logowania.");
+    		return true;
+    	}
+    	
+    	String[] allAllowed = allowedIPs.split(",");
+    	for(String allowed: allAllowed) {
+    		if (allowed.equals(ip)) {
+    			return true;
+    		}
+    	}
+    	
+    	return false;
+    }
+    
+    private String getIP() {
+    	return ((HttpServletRequest) facesContext.getExternalContext().getRequest()).getRemoteAddr();    	
     }
 
 }
