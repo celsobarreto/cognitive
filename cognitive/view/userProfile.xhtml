@@ -8,37 +8,26 @@
 				template="template.xhtml">
 
 	<ui:define name="navigation">
-		<ui:param name="pageid" value="profil" />
+		<ui:param name="pageid" value="users" />
 	</ui:define>
 	
 	<ui:define name="content">
-		<br/>
-		<br/>
+		<h2>Użytkownik '#{userProfile.fullName}'</h2>
+		
+		<ul>
+			<li>
+				<s:link value="Wyślij e-mail do tego użytkownika" view="/sendEmail.xhtml"  propagation="none">
+				     <f:param name="userId" value="#{userProfile.id}"/>
+				</s:link>
+			</li>
+		</ul>
+		
+		
 		<h:form>
-			<h:outputText value="No users to display" rendered="#{userList.rowCount==0}" />
-			<h:dataTable border="0" cellpadding="3" cellspacing="0" headerClass="header_table" var="usr" value="#{userList}" rendered="#{userList.rowCount>0}">
+			<h:outputText value="Ten użytkownik nie posiada żadnych podpiętych publikacji" rendered="#{userProfile.publications.size==0}" />
+			<h:dataTable border="0" cellpadding="2" cellspacing="0" headerClass="header_table" var="publ" value="#{userProfile.publications}" rendered="#{userProfile.publications.size>0}">
 				<f:facet name="header">
-    				<h:outputText value="Users List" rendered="#{userList.rowCount>1}"/>
-  				</f:facet>
-				<h:column>
-					<f:facet name="header">
-						<h:outputText value="Id"/>
-					</f:facet>
-					<h:outputText value="#{usr.id}"/>
-				</h:column>
-				<h:column>
-					<f:facet name="header">
-						<h:outputText value="Name"/>
-					</f:facet>
-					<s:link value="#{usr.fullName}" action="#{userProfil.showPublication}" rendered="#{userList.rowCount>1}"/>
-					<h:outputText value="#{usr.fullName}" rendered="#{userList.rowCount==1}"/>
-				</h:column>
-			</h:dataTable>
-			<br/>
-			<h:outputText value="No publications to display" rendered="#{user.publications.size==0}" />
-			<h:dataTable border="0" cellpadding="2" cellspacing="0" headerClass="header_table" var="publ" value="#{user.publications}" rendered="#{user.publications.size>0}">
-				<f:facet name="header">
-	    			<h:outputText value="User '#{user.fullName}' publication list"/>
+	    			<h:outputText value="Publikacje użytkownika"/>
 	  			</f:facet>	
 	  			<h:column>
 					<f:facet name="header">

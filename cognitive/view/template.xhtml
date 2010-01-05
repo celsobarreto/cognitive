@@ -45,43 +45,40 @@
 				<ui:insert name="navigation"/>
 				<ul>
 					<li class="begin">
-						<s:link value="Home" view="/homepage.seam" styleClass="active" propagation="none" rendered="#{pageid eq 'home'}"></s:link>
-						<s:link value="Home" view="/homepage.seam" propagation="none" rendered="#{pageid ne 'home'}"></s:link>
+						<s:link value="Strona główna" view="/homepage.seam" styleClass="active" propagation="none" rendered="#{pageid eq 'home'}"></s:link>
+						<s:link value="Strona główna" view="/homepage.seam" propagation="none" rendered="#{pageid ne 'home'}"></s:link>
 					</li>
 					<li>
-						<s:link value="Publication" view="/publication.seam" action="#{publicationManager.destroy}" styleClass="active" propagation="none" rendered="#{pageid eq 'publ'}"></s:link>
-						<s:link value="Publication" view="/publication.seam" action="#{publicationManager.destroy}" propagation="none" rendered="#{pageid ne 'publ'}"></s:link>
+						<s:link value="Publikacje" view="/publication.seam" action="#{publicationManager.destroy}" styleClass="active" propagation="none" rendered="#{pageid eq 'publ'}"></s:link>
+						<s:link value="Publikacje" view="/publication.seam" action="#{publicationManager.destroy}" propagation="none" rendered="#{pageid ne 'publ'}"></s:link>
 						</li>
 					<li>
-						<s:link value="Users list" view="/userprofil.seam" action="#{userProfil.destroy}" styleClass="active" propagation="none" rendered="#{pageid eq 'profil'}"></s:link>
-						<s:link value="Users list" view="/userprofil.seam" action="#{userProfil.destroy}" propagation="none" rendered="#{pageid ne 'profil'}"></s:link>
+						<s:link value="Użytkownicy" view="/userList.seam" action="#{userManager.destroy}" styleClass="active" propagation="none" rendered="#{pageid eq 'users'}"></s:link>
+						<s:link value="Uzytkownicy" view="/userList.seam" action="#{userManager.destroy}" propagation="none" rendered="#{pageid ne 'users'}"></s:link>
 					</li>
 					<li>
-						<s:link value="Info" view="/spage.seam" action="#{specialPages.toPage('info')}" styleClass="active" propagation="none" rendered="#{pageid eq 'info'}"></s:link>
-						<s:link value="Info" view="/spage.seam" action="#{specialPages.toPage('info')}" propagation="none" rendered="#{pageid ne 'info'}"></s:link>
+						<s:link value="O projekcie" view="/spage.seam" action="#{specialPages.toPage('info')}" styleClass="active" propagation="none" rendered="#{pageid eq 'info'}"></s:link>
+						<s:link value="O projekcie" view="/spage.seam" action="#{specialPages.toPage('info')}" propagation="none" rendered="#{pageid ne 'info'}"></s:link>
 					</li>
 					<li>
-						<s:link value="Test" view="/spage.seam" action="#{specialPages.toPage('test')}" styleClass="active" propagation="none" rendered="#{pageid eq 'test'}"></s:link>
-						<s:link value="Test" view="/spage.seam" action="#{specialPages.toPage('test')}" propagation="none" rendered="#{pageid ne 'test'}"></s:link>
+						<s:link value="Aktualności" view="/News.seam" action="#{newsManager.getNews}" styleClass="active" propagation="none" rendered="#{pageid eq 'news'}"></s:link>
+						<s:link value="Aktualności" view="/News.seam" action="#{newsManager.getNews}" propagation="none" rendered="#{pageid ne 'news'}"></s:link>
+					</li>
+
+					<li>
+						<s:link value="Oferty pracy" view="/offer.seam" action="#{offerManager.getOffer}" styleClass="active" propagation="none" rendered="#{pageid eq 'offer'}"></s:link>
+						<s:link value="Oferty pracy" view="/offer.seam" action="#{offerManager.getOffer}" propagation="none" rendered="#{pageid ne 'offer'}"></s:link>
 					</li>
 					<li>
 						<s:link value="Edit special pages" view="/pagelist.seam" action="#{pageEdit.showList}" styleClass="active" propagation="none" rendered="#{pageid eq 'pagelist'}"></s:link>
 						<s:link value="Edit special pages" view="/pagelist.seam" action="#{pageEdit.showList}" propagation="none" rendered="#{pageid ne 'pagelist'}"></s:link>
 					</li>
 					<li>
-						<s:link value="News list" view="/News.seam" action="#{newsManager.getNews}" styleClass="active" propagation="none" rendered="#{pageid eq 'news'}"></s:link>
-						<s:link value="News list" view="/News.seam" action="#{newsManager.getNews}" propagation="none" rendered="#{pageid ne 'news'}"></s:link>
-					</li>
-					<li>
 						<s:link value="Science Domain" view="/scienceDomainList.seam" styleClass="active" propagation="none" rendered="#{pageid eq 'sd'}"></s:link>
 						<s:link value="Science Domain" view="/scienceDomainList.seam"  propagation="none" rendered="#{pageid ne 'sd'}"></s:link>
-					</li>
+					</li>										
 					<li>
-						<s:link value="Propositions" view="/offer.seam" action="#{offerManager.getOffer}" styleClass="active" propagation="none" rendered="#{pageid eq 'offer'}"></s:link>
-						<s:link value="Propositions" view="/offer.seam" action="#{offerManager.getOffer}" propagation="none" rendered="#{pageid ne 'offer'}"></s:link>
-					</li>
-					<li>
-						<s:link value="Test data" view="/testData.seam" rendered="#{pageid ne 'testdata'}" propagation="none" />
+						<s:link value="Wstaw dane testowe" view="/testData.seam" rendered="#{pageid ne 'testdata'}" propagation="none" />
 					</li>
 				</ul>
 			</div>

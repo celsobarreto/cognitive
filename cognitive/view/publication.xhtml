@@ -117,7 +117,9 @@
 							<f:facet name="header">
 								<h:outputText value="Name"/>
 							</f:facet>
-							<s:link view="/userprofil.seam" action="#{userProfil.showUser()}" propagation="none">#{pusr.fullName}</s:link>
+							<s:link value="#{pusr.fullName}" view="/userProfile.xhtml" action="#{userManager.show()}" propagation="none">
+					     		<f:param name="userId" value="#{pusr.id}"/>
+							</s:link>
 						</h:column>
 					</h:dataTable>
 				</h:outputText>
