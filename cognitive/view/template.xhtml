@@ -53,9 +53,9 @@
 						<s:link value="Aktualności" view="/News.seam" action="#{newsManager.getNews}" propagation="none" rendered="#{pageid ne 'news'}"></s:link>
 					</li>					
 					<li>
-						<s:link value="Publikacje" view="/publication.seam" action="#{publicationManager.destroy}" styleClass="active" propagation="none" rendered="#{pageid eq 'publ'}"></s:link>
-						<s:link value="Publikacje" view="/publication.seam" action="#{publicationManager.destroy}" propagation="none" rendered="#{pageid ne 'publ'}"></s:link>
-						</li>
+						<s:link value="Publikacje" view="/publication.seam" action="#{publicationManager.newSearch}" styleClass="active" propagation="none" rendered="#{pageid eq 'publ'}"></s:link>
+						<s:link value="Publikacje" view="/publication.seam" action="#{publicationManager.newSearch}" propagation="none" rendered="#{pageid ne 'publ'}"></s:link>
+					</li>
 					<li>
 						<s:link value="Użytkownicy" view="/userList.seam" action="#{userManager.destroy}" styleClass="active" propagation="none" rendered="#{pageid eq 'users'}"></s:link>
 						<s:link value="Uzytkownicy" view="/userList.seam" action="#{userManager.destroy}" propagation="none" rendered="#{pageid ne 'users'}"></s:link>
