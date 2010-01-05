@@ -14,8 +14,8 @@
 	<ui:define name="content">
 		<h:outputText rendered="#{sPage ne null}">
 			<h2>#{sPage.title}</h2>
-			#{sPage.content}
 		</h:outputText>
+		<h:outputText rendered="#{sPage ne null}" escape="false" value="#{sPage.content}" />		
 		<h:outputText rendered="#{sPage eq null}">
 			<h2>Brak strony o podanym id :/</h2>
 		</h:outputText>
