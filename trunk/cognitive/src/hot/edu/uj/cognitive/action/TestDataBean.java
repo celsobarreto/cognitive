@@ -103,7 +103,7 @@ public class TestDataBean implements TestData
 
 		admin = new User("Administrator", "admin@uj.pl", "admin");
 		admin.setRoles(new HashSet<Role>(Arrays.asList(new Role[] {adminRole})));
-		admin.setAllowedIPs("127.0.0.1");
+		admin.setAllowedIPs("127.0.0.1"); // oddzielone przecinkiem
 		this.em.persist(admin);
 
 		this.em.flush();

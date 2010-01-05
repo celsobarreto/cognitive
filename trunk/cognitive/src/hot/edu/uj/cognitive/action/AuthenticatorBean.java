@@ -52,18 +52,19 @@ public class AuthenticatorBean implements Authenticator
             	 return false;
              }
              
-             //String ip = getIP();
-             /*if (!hasAllowedIP(user, ip)) {
+             String ip = getIP();
+             log.info("IP = "+ip);
+             if (!hasAllowedIP(user, ip)) {
             	 log.info("Adres IP tego komputera ("+ip+") nie znajduje się wśród dopuszczonych ("+user.getAllowedIPs()+")");
             	 return false;
-             }*/
+             }
 
+             log.info("Uzytkownik zalogowany.");
              Contexts.getSessionContext().set("loggedUser", user);             
              
              return true;
 
           }
-
           catch (NoResultException ex) {
 
              return false;
@@ -74,13 +75,14 @@ public class AuthenticatorBean implements Authenticator
     private boolean hasAllowedIP(User user, String ip) {
     	String allowedIPs = user.getAllowedIPs();
     	if (allowedIPs == null) {
-    		log.info("Uzytkownik nie ma ustalonych dopuszczalnych IP logowania.");
+    		log.info("Uzytkownik nie ma ustalonych dopuszczalnych IP logowania. Nie sprawdzam IP.");
     		return true;
     	}
     	
     	String[] allAllowed = allowedIPs.split(",");
     	for(String allowed: allAllowed) {
     		if (allowed.equals(ip)) {
+    			log.info("IP się zgadza.");
     			return true;
     		}
     	}
