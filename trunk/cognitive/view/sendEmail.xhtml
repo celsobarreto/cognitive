@@ -20,11 +20,11 @@
             <div class="dialog">
                 <h:panelGrid columns="2" rowClasses="prop" columnClasses="name,value">
                     <h:outputLabel for="emailAddress">E-mail</h:outputLabel>
-                    <h:inputText id="emailAddress" value="#{emailData.recipient}"/>
+                    <h:inputText id="emailAddress" value="#{emailSender.recipient}"/>
                     <h:outputLabel for="emailSubject">Subject</h:outputLabel>
-                    <h:inputText id="emailSubject" value="#{emailData.subject}"/>
+                    <h:inputText id="emailSubject" value="#{emailSender.subject}"/>
                 </h:panelGrid>
-                <h:inputTextarea id="emailMessage" value="#{emailData.message}" style="width : 500px; height : 300px; "/>
+                <h:inputTextarea id="emailMessage" value="#{emailSender.message}" style="width : 500px; height : 300px; "/>
             </div>
 
         <div class="actionButtons">

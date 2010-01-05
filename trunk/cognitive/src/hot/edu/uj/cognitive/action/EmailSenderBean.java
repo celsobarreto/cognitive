@@ -2,6 +2,8 @@ package edu.uj.cognitive.action;
 
 import java.util.Properties;
 
+import javax.ejb.Remove;
+import javax.ejb.Stateful;
 import javax.ejb.Stateless;
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -11,21 +13,54 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
 import org.drools.lang.DRLParser.unary_constr_return;
+import org.hibernate.validator.NotNull;
+import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
+import org.jboss.seam.annotations.Scope;
+import org.jboss.seam.annotations.security.Restrict;
 
-@Stateless
+@Stateful
 @Name("emailSender")
+@Scope(ScopeType.SESSION)
+//@Restrict("#{identity.loggedIn}")
 public class EmailSenderBean implements EmailSender{
 	public static String FROM =  "cognitiveportal@gmail.com";
 	public static String HOST = "smtp.gmail.com";
 	public static String USERNAME = "cognitiveportal";
 	public static String PASSWORD = "cognitive1234";
-	@In public EmailData emailData;
+	
+	public String getRecipient() {
+		return recipient;
+	}
+	public void setRecipient(String recipient) {
+		this.recipient = recipient;
+	}
+
+	public String getSubject() {
+		return subject;
+	}
+	public void setSubject(String subject) {
+		this.subject = subject;
+	}
+
+	public String getMessage() {
+		return message;
+	}
+	public void setMessage(String message) {
+		this.message = message;
+	}
+
+	private String recipient; 
+	private String subject; 
+	private String message ; 
+
+	
+	
 	public void postMail( ) throws MessagingException
 	{
 		
-		String recipients[] = {emailData.recipient}; 
+		String recipients[] = {recipient}; 
 	    boolean debug = false;
 
 	     //Set the host smtp address
@@ -41,7 +76,8 @@ public class EmailSenderBean implements EmailSender{
 	    Message msg = new MimeMessage(session);
 
 	    // set the from and to address
-	    InternetAddress addressFrom = new InternetAddress(emailData.from);
+	    
+	    InternetAddress addressFrom = new InternetAddress(FROM);
 	    msg.setFrom(addressFrom);
 
 	    InternetAddress[] addressTo = new InternetAddress[recipients.length]; 
@@ -56,15 +92,27 @@ public class EmailSenderBean implements EmailSender{
 	    msg.addHeader("MyHeaderName", "myHeaderValue");
 
 	    // Setting the Subject and Content Type
-	    msg.setSubject(emailData.subject);
-	    msg.setContent(emailData.message, "text/plain");
+	    msg.setSubject(subject);
+	    msg.setContent(message, "text/plain");
 	    try {
 	    	t.connect(HOST, USERNAME, PASSWORD);
 	    	t.sendMessage(msg, msg.getAllRecipients());
-	        } finally {
+	    } 
+	    finally {
 	    	t.close();
-	    }
+	    }    
+	    
 	}
+	
+	@Remove
+	public void destroy() 
+	{
+		this.recipient = null;
+		this.subject = null;
+		this.message = null;
+		this.subject = null;
+	}		
+	/*
 public static void main(String[] args) throws MessagingException {
 	EmailData emailData = new EmailData();
 	emailData.from = "za3maj@gmail.com";
@@ -74,5 +122,5 @@ public static void main(String[] args) throws MessagingException {
 	EmailSenderBean esb= new EmailSenderBean();
 	esb.emailData = emailData;
 	esb.postMail();
-}
+}*/
 }
