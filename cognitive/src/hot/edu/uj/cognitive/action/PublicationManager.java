@@ -8,8 +8,7 @@ public interface PublicationManager
 	public void findPublication();
 	public void showDetails();
 	public void search();
-	public void destroy();
-	public void delete();
+	public void newSearch();
 	public void nextPage();
 	public void prevPage();
 	public boolean isNextPageAvailable();
