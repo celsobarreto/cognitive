@@ -45,18 +45,21 @@ public class PublicationManagerAction implements PublicationManager
 	@DataModel
 	private List<User> publUserList;
 
-	@DataModelSelection(value = "publUserList")
-	@Out(required = false)
-	private User publUser;
-
 	@SuppressWarnings("unchecked")
-	@Factory("publicationList")
 	public void findPublication() 
 	{
 		Query query;
 		if (this.criterion != null && (this.criterion.equalsIgnoreCase("year") || this.criterion.equalsIgnoreCase("volume") || this.criterion.equalsIgnoreCase("pages")))
 		{
-			int value = ((this.searchString != null && this.searchString.length() > 0) ? Integer.parseInt(this.searchString) : 0);
+			int value;
+			try
+			{
+				value = ((this.searchString != null && this.searchString.length() > 0) ? Integer.parseInt(this.searchString) : 0);
+			}
+			catch (NumberFormatException e)	
+			{
+				value = 0;
+			}
 			query = this.em.createQuery("select p from Publication p where p." + this.criterion + " = " + value);
 		}
 		else if (this.criterion != null && this.criterion.length() > 0)
@@ -65,7 +68,15 @@ public class PublicationManagerAction implements PublicationManager
 		}
 		else
 		{
-			int value = ((this.searchString != null && this.searchString.length() > 0) ? Integer.parseInt(this.searchString) : 0);
+			int value;
+			try
+			{
+				value = ((this.searchString != null && this.searchString.length() > 0) ? Integer.parseInt(this.searchString) : 0);
+			}
+			catch (NumberFormatException e)	
+			{
+				value = 0;
+			}
 			query = this.em.createQuery("select p from Publication p where lower(p.title) like #{pattern} or lower(p.keywords) like #{pattern} or lower(p.link) like #{pattern} or lower(p.references) like #{pattern} or lower(p.journal) like #{pattern} or p.year = " + value + " or p.volume = " + value + " or p.pages = " + value);
 		}
 		List<Publication> results = query.setMaxResults(this.pageSize + 1).setFirstResult(this.page * this.pageSize).getResultList();
@@ -94,19 +105,8 @@ public class PublicationManagerAction implements PublicationManager
 		this.findPublication();
 	}
 
-	public void delete() 
-	{
-		if (this.publication != null)
-		{
-			this.publicationList.remove(this.publication);
-			this.em.remove(this.publication);
-			this.em.flush();
-			this.publication = null;
-		}
-	}
-
 	@Remove
-	public void destroy() 
+	public void newSearch() 
 	{
 		this.publicationList = null;
 		this.publUserList = null;
@@ -148,11 +148,6 @@ public class PublicationManagerAction implements PublicationManager
 		this.details = true;
 	}
 
-	public User getPublUser()
-	{
-		return this.publUser;
-	}
-
 	public List<User> getPublUserList()
 	{
 		return this.publUserList;
@@ -186,5 +181,15 @@ public class PublicationManagerAction implements PublicationManager
 	public void setCriterion(String criterion)
 	{
 		this.criterion = criterion;
+	}
+
+	public void setPublicationList(List<Publication> publicationList)
+	{
+		this.publicationList = publicationList;
+	}
+
+	public List<Publication> getPublicationList()
+	{
+		return this.publicationList;
 	}
 }
