@@ -4,6 +4,7 @@
         xmlns:ui="http://java.sun.com/jsf/facelets"
         xmlns:h="http://java.sun.com/jsf/html"
         xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:r="http://richfaces.org/rich"
         xmlns:s="http://jboss.com/products/seam/taglib">
 
 <html>
@@ -19,27 +20,37 @@
 <body>
 	<div id="wrap">
 		<div id="header">
-			<h1>Cognitive</h1>
-
-			<h:form class="loginForm" rendered="#{not identity.loggedIn}">
-				<div>
-				    <h:outputLabel for="name" value="E-mail"/>
-				    <h:inputText id="name" value="#{credentials.username}"/>
-				</div>
-				<div>
-				    <h:outputLabel for="password" value="Password"/>
-				    <h:inputSecret id="password" value="#{credentials.password}"/>
-				</div>	
-				<div>		
-				    <h:commandButton value="Login" action="#{identity.login}"/>
-				</div>
-			</h:form>
-			<s:div rendered="#{identity.loggedIn}">
-			  <div>Zalogowany jako: &nbsp; #{loggedUser.getFullName()}</div> 
-			  <div><s:link value="Logout" view="/homepage.seam" action="#{identity.logout}" /></div>
-			</s:div>
+			<h:panelGrid id="header_table" columns="3" cellpadding="0" cellspacing="0" columnClasses="header_table_td_side,header_table_td_center,header_table_td_side">
+				<h:outputText value="&nbsp;"/>
+				<h:outputText value="Cognitive"/>
+				<r:panel>
+					<h:form class="loginForm" rendered="#{not identity.loggedIn}">
+						<h:panelGrid columns="2" cellpadding="0" columnClasses="right,left">
+							<h:outputLabel for="name" value="E-mail: "/>
+						    <h:inputText id="name" value="#{credentials.username}"/>
+						    <h:outputLabel for="password" value="Password: "/>
+						    <h:inputSecret id="password" value="#{credentials.password}" redisplay="false"/>
+						    <f:facet name="footer">
+						    	<h:commandButton value="Zaloguj" action="#{identity.login}"/>
+					   		</f:facet>
+						</h:panelGrid>
+					</h:form>
+					<s:div rendered="#{identity.loggedIn}">
+					  	<h:outputText value="Zalogowany jako: &nbsp; #{loggedUser.fullName}"/>
+					  	<ul class="header_table_login_ul">
+					  		<li>
+					  		<s:link value="Zobacz profil" view="/userProfile.xhtml" action="#{userManager.show}" propagation="none">
+					  			<f:param name="userId" value="#{loggedUser.id}"/>
+					  		</s:link>
+					  		</li>
+					  		<li>
+					  			<s:link value="Wyloguj" view="/homepage.seam" action="#{identity.logout}" propagation="none"/>
+							</li>
+						</ul>
+					</s:div>
+				</r:panel>
+			</h:panelGrid>
 		</div>
-		<div style="clear: both;">&nbsp;</div>
 		<div id="container">
 			<div id="navigation">
 				<ui:insert name="navigation"/>
@@ -96,8 +107,9 @@
 				<ui:insert name="content"/>
 				<br/>
 			</div>
+			<div style="clear: both;">&nbsp;</div>
 		</div>
-		<div style="clear: both;">&nbsp;</div>
+		<div id="push"></div>
 	</div>
 	<div id="footer">
 		<p>footer</p>

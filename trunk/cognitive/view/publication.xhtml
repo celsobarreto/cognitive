@@ -93,7 +93,7 @@
 							<s:link value="Next page" action="#{publicationManager.nextPage}" propagation="none" rendered="#{publicationManager.nextPageAvailable}"/>
 							<h:outputText value="Next page" rendered="#{publicationManager.nextPageAvailable eq false}"/>
 						</h:panelGroup>
-			 			</f:facet>
+			 		</f:facet>
 				</h:dataTable>
 			</r:panel>
 			<r:panel rendered="#{publicationManager.details}">
@@ -104,6 +104,7 @@
 					Id: <h:outputText value="#{publication.id}"/>
 					Title: <h:outputText value="#{publication.title}"/>
 					Link: <h:outputText value="#{publication.link}"/>
+					Keywords: <h:outputText value="#{publication.keywords}"/>
 					Year: <h:outputText value="#{publication.year}"/>
 					References: <h:outputText value="#{publication.references}"/>
 					Journal: <h:outputText value="#{publication.journal}"/>
@@ -120,9 +121,7 @@
 							<f:facet name="header">
 								<h:outputText value="Id"/>
 							</f:facet>
-							<s:link value="#{pusr.id}" view="/userProfile.xhtml" action="#{userManager.show}" propagation="none">
-					     		<f:param name="userId" value="#{pusr.id}"/>
-							</s:link>
+							<h:outputText value="#{pusr.id}"/>
 						</h:column>
 						<h:column>
 							<f:facet name="header">
@@ -136,7 +135,9 @@
 							<f:facet name="header">
 								<h:outputText value="E-mail"/>
 							</f:facet>
-							<h:outputText value="#{pusr.email}"/>
+							<s:link value="#{pusr.email}" view="/sendEmail.xhtml" propagation="none">
+								<f:param name="userId" value="#{pusr.id}"/>
+							</s:link>
 						</h:column>
 						<h:column>
 							<f:facet name="header">
