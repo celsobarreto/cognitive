@@ -5,6 +5,7 @@
 	  			xmlns:f="http://java.sun.com/jsf/core"
 	  			xmlns:s="http://jboss.com/products/seam/taglib"
                 xmlns:a="http://richfaces.org/a4j"
+                xmlns:r="http://richfaces.org/rich"
 				template="template.xhtml">
 
 	<ui:define name="navigation">
@@ -12,23 +13,24 @@
 	</ui:define>
 	
 	<ui:define name="content">
-		<h2>Użytkownik '#{userProfile.fullName}'</h2>
-		
-		<ul>
-			<li>
-				<s:link value="Wyślij e-mail do tego użytkownika" view="/sendEmail.xhtml"  propagation="none">
-				     <f:param name="userId" value="#{userProfile.id}"/>
-				</s:link>
-			</li>
-		</ul>
-		
-		
-		<h:form>
+		<r:panel>
+			<f:facet name="header">
+	    		<h:outputText value="Profil użytkownika '#{userProfile.fullName}'"/>
+	  		</f:facet>
+			<ul>
+				<li>
+					<s:link value="Wyślij e-mail do tego użytkownika" view="/sendEmail.xhtml"  propagation="none">
+					     <f:param name="userId" value="#{userProfile.id}"/>
+					</s:link>
+				</li>
+			</ul>
+		</r:panel>
+		<r:panel>
+			<f:facet name="header">
+	    		<h:outputText value="Publikacje użytkownika" rendered="#{userProfile.publications.size>0}"/>
+	  		</f:facet>
 			<h:outputText value="Ten użytkownik nie posiada żadnych podpiętych publikacji" rendered="#{userProfile.publications.size==0}" />
-			<h:dataTable border="0" cellpadding="2" cellspacing="0" headerClass="header_table" var="publ" value="#{userProfile.publications}" rendered="#{userProfile.publications.size>0}">
-				<f:facet name="header">
-	    			<h:outputText value="Publikacje użytkownika"/>
-	  			</f:facet>	
+			<h:dataTable border="0" cellpadding="5" cellspacing="0" headerClass="header_table" var="publ" value="#{userProfile.publications}" rendered="#{userProfile.publications.size>0}">
 	  			<h:column>
 					<f:facet name="header">
 						<h:outputText value="Id" />
@@ -43,6 +45,12 @@
 				</h:column>
 				<h:column>
 					<f:facet name="header">
+						<h:outputText value="Link" />
+					</f:facet>
+					<h:outputText value="#{publ.link}"/>
+				</h:column>
+				<h:column>
+					<f:facet name="header">
 						<h:outputText value="Year" />
 					</f:facet>
 					<h:outputText value="#{publ.year}"/>
@@ -53,7 +61,31 @@
 					</f:facet>
 					<h:outputText value="#{publ.keywords}"/>
 				</h:column>
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="References" />
+					</f:facet>
+					<h:outputText value="#{publ.references}"/>
+				</h:column>
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="Journal" />
+					</f:facet>
+					<h:outputText value="#{publ.journal}"/>
+				</h:column>
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="Volume" />
+					</f:facet>
+					<h:outputText value="#{publ.volume}"/>
+				</h:column>
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="Pages" />
+					</f:facet>
+					<h:outputText value="#{publ.pages}"/>
+				</h:column>
 			</h:dataTable>
-		</h:form>
+		</r:panel>
 	</ui:define>
 </ui:composition>
