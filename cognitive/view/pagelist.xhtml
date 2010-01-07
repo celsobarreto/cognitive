@@ -27,7 +27,9 @@
 					<f:facet name="header">
 						<h:outputText value="Title"/>
 					</f:facet>
-					<s:link value="#{page.title}" view="/editpage.seam" action="#{pageEdit.showPage('page.id')}" rendered="#{pageList.rowCount>0}"/>
+					<s:link value="#{page.title}" view="/editpage.seam" action="#{pageEdit.showPage}" rendered="#{pageList.rowCount>0}">
+					     <f:param name="pageId" value="#{page.id}"/>
+					</s:link>
 				</h:column>
 			</h:dataTable>	
 
