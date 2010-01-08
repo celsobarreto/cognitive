@@ -1,6 +1,7 @@
 package edu.uj.cognitive.model;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -17,7 +18,7 @@ import org.jboss.seam.annotations.Scope;
 
 @Entity
 @Name("offer")
-@Scope(ScopeType.SESSION)
+@Scope(ScopeType.EVENT)
 @Table(name = "offer")
 @SequenceGenerator(name = "offer_seq", sequenceName = "offer_seq", initialValue = 1, allocationSize = 1)
 public class Offer implements Serializable{
@@ -26,9 +27,9 @@ public class Offer implements Serializable{
 	
 	@Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "offer_seq")
-	private int id;
+	private Integer id;
 	@NotNull
-    private int entrepreneur_id;
+    private Integer entrepreneur_id;
 	@NotNull
 	@Length(max = 255)
 	private String title;
@@ -36,27 +37,27 @@ public class Offer implements Serializable{
 	@Length(max = 2000)
     private String content;
 	@NotNull
-    private String dateAdded;
+    private Date dateAdded;
 	@NotNull
+	@Length(max = 10)
     private String offerType;
     
     public Offer(){    	
     }
 
-    @GeneratedValue
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
-	public int getEntrepreneur_id() {
+	public Integer getEntrepreneur_id() {
 		return entrepreneur_id;
 	}
 
-	public void setEntrepreneur_id(int entrepreneur_id) {
+	public void setEntrepreneur_id(Integer entrepreneur_id) {
 		this.entrepreneur_id = entrepreneur_id;
 	}
 
@@ -76,11 +77,11 @@ public class Offer implements Serializable{
 		this.content = content;
 	}
 
-	public String getDate() {
+	public Date getDateAdded() {
 		return dateAdded;
 	}
 
-	public void setDate(String date) {
+	public void setDateAdded(Date date) {
 		this.dateAdded = date;
 	}
 

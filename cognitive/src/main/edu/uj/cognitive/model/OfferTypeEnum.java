@@ -1,8 +1,8 @@
 package edu.uj.cognitive.model;
 
 public enum OfferTypeEnum {
-	JOB("job"),
-	SERVICE("service");
+	JOB("praca"),
+	SERVICE("usluga");
 	
 	private String offerType;
 	
