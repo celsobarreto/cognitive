@@ -4,19 +4,19 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.HashSet;
 
-import javax.ejb.Remove;
-import javax.ejb.Stateful;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Logger;
-import org.jboss.seam.log.Log;
+import org.jboss.seam.annotations.Name;
 import org.jboss.seam.international.StatusMessages;
+import org.jboss.seam.log.Log;
 
 import edu.uj.cognitive.model.News;
+import edu.uj.cognitive.model.Offer;
+import edu.uj.cognitive.model.OfferTypeEnum;
 import edu.uj.cognitive.model.Publication;
 import edu.uj.cognitive.model.Role;
 import edu.uj.cognitive.model.SpecialPage;
@@ -56,6 +56,7 @@ public class TestDataBean implements TestData
 		this.insertUsers();
 		this.insertSpecialPages();
 		this.insertPublications();
+		this.insertPropositions();
 		this.insertNews();
     	
         statusMessages.add("Test data loaded successfully.");
@@ -69,6 +70,7 @@ public class TestDataBean implements TestData
 		em.createQuery("DELETE User u").executeUpdate();
 		em.createQuery("DELETE Role r").executeUpdate();
 		em.createQuery("DELETE News n").executeUpdate();
+		em.createQuery("DELETE Offer o").executeUpdate();
 		em.flush();		
 	}
 	
@@ -161,5 +163,23 @@ public class TestDataBean implements TestData
 		this.em.persist(publ2);
 		profesor.getPublications().add(publ1);
 		profesor.getPublications().add(publ2);		
+	}
+	
+	private void insertPropositions(){
+		Offer offer1 = new Offer();
+		offer1.setTitle("Tytul 1");
+		offer1.setContent("To jest niezmiernie ciekawa praca");
+		offer1.setDateAdded(new Date());
+		offer1.setEntrepreneur_id(milioner.getId());
+		offer1.setOfferType(OfferTypeEnum.JOB.getOfferType());
+		this.em.persist(offer1);
+		
+		Offer offer2 = new Offer();
+		offer2.setTitle("Tytul 2");
+		offer2.setContent("A tu z kolei mamy niezmiernie ciekawa oferte uslugi");
+		offer2.setDateAdded(new Date());
+		offer2.setEntrepreneur_id(milioner.getId());
+		offer2.setOfferType(OfferTypeEnum.SERVICE.getOfferType());
+		this.em.persist(offer2);
 	}
 }

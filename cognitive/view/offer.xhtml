@@ -13,15 +13,15 @@
 				
 	<ui:define name="content">
 		<h:form>
-            <h:outputText value="No propositions to display" rendered="#{offerList.rowCount==0}" />
+            <h:outputText value="Brak danych do wyswietlania" rendered="#{offerList.rowCount==0}" />
             <h:dataTable border="0" cellpadding="3" cellspacing="0" headerClass="header_table" var="offer" value="#{offerList}" rendered="#{offerList.rowCount>0}" width="100%">
             	<f:facet name="header">
-    				<h:outputText value="Propositions:"/>
+    				<h:outputText value="Oferty pracy/uslug:"/>
   				</f:facet>            
   				<h:column>
             		<a:panel>
             			<f:facet name="header">
-            					<h:outputText value="#{offer.title} | #{offer.dateAdded} | #{offer.offerType}"/> 
+            					<h:outputText value="Tytul: #{offer.title}|Data dodania: #{offer.dateAdded}|Typ oferty: #{offer.offerType}|Dodal:  #{offerManager.getEntrepreneurName(offer)}"/> 
             			</f:facet>
             			<h:outputText value="#{offer.content}"/>	
             		</a:panel>
