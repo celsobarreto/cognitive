@@ -16,6 +16,7 @@ import org.jboss.seam.annotations.datamodel.DataModelSelection;
 
 import edu.uj.cognitive.model.News;
 import edu.uj.cognitive.model.Offer;
+import edu.uj.cognitive.model.User;
 
 @Stateful
 @Name("offerManager")
@@ -25,7 +26,7 @@ public class OfferManagerAction implements OfferManager {
 	private EntityManager em;
 	
 	@DataModel
-	private List<News> offerList;
+	private List<Offer> offerList;
 	
 	@DataModelSelection(value = "offerList")
 	@Out(required = false)
@@ -36,6 +37,13 @@ public class OfferManagerAction implements OfferManager {
 	public void getOffer()
 	{
 		this.offerList = this.em.createQuery("select o from Offer o").getResultList();
+	}
+	
+	public String getEntrepreneurName(Offer o){
+		int entrepreneurId = o.getEntrepreneur_id();
+		User entrepreneur = (User)this.em.createQuery("select u from User u where id="+entrepreneurId).getSingleResult();
+		
+		return entrepreneur.getFullName();
 	}
 	
 	@Remove
