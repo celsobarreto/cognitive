@@ -14,7 +14,11 @@
 	<ui:define name="content">
 		<h:outputText rendered="#{sPage ne null}">
 			<h2>#{sPage.title}</h2>
-			<textarea>#{sPage.content}</textarea>
+			<h:form id="pageForm">
+			 	<h:inputTextarea id="pageText" value="#{sPage.content}" rows="10" cols="70"/><br/>
+				
+				<h:commandButton  id="submit" value="Zapisz stronę" action="#{pageEdit.savePage}" />  
+			</h:form>
 		</h:outputText>
 		<h:outputText rendered="#{sPage eq null}">
 			<h2>Błąd</h2>
