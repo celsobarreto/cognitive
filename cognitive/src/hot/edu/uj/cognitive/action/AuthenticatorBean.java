@@ -7,9 +7,11 @@ import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.servlet.http.HttpServletRequest;
 
+import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Logger;
 import org.jboss.seam.annotations.Name;
+import org.jboss.seam.annotations.Out;
 import org.jboss.seam.contexts.Contexts;
 import org.jboss.seam.log.Log;
 import org.jboss.seam.security.Credentials;
@@ -31,12 +33,16 @@ public class AuthenticatorBean implements Authenticator
     @In Credentials credentials;
     @In Identity identity;
 
+    @In(required=false)   
+    @Out(required=false, scope=ScopeType.SESSION)
+    private User user;
+    
     @In private FacesContext facesContext;  
     
     public boolean authenticate()
     {
     	 try {
-             User user = (User) entityManager.createQuery(
+             user = (User) entityManager.createQuery(
                 "from User where email = :username and passwordHash = :password")
                 .setParameter("username", credentials.getUsername())
                 .setParameter("password", DigestUtils.md5Hex(credentials.getPassword()))
