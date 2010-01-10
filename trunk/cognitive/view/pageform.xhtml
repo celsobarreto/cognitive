@@ -8,20 +8,18 @@
 				template="template.xhtml">
 
 	<ui:define name="navigation">
-		<ui:param name="pageId" value="#{pageID}"/>
+		<ui:param name="pageid" value="testform"/>
 	</ui:define>
-	
+
 	<ui:define name="content">
-		<h:outputText rendered="#{sPage ne null}">
-			<h2>#{sPage.title}</h2>
-			<h:form id="pageForm">
-			 	<h:inputTextarea id="pageText" value="#{sPage.content}" rows="10" cols="70"/><br/>
-				
-				<h:commandButton  id="submit" value="Zapisz stronę" action="#{pageEdit.savePage}" />  
-			</h:form>
-		</h:outputText>
-		<h:outputText rendered="#{sPage eq null}">
-			<h2>Błąd</h2>
-		</h:outputText>
+	
+	<h:outputText value="edycja strony"/>
+		<h:form>
+			<h:inputHidden value="#{pageForm.id}"/><br/>
+			title: <h:inputText value="#{pageForm.title}"/><br/>
+			text:<br/> <h:inputTextarea value="#{pageForm.text}"/><br/>
+			<h:commandButton  id="submit" value="Zapisz stronę" action="#{pageForm.sendForm()}" />
+		</h:form>
+
 	</ui:define>
 </ui:composition>
