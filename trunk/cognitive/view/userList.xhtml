@@ -38,7 +38,7 @@
 						<f:facet name="header">
 							<h:outputText value="E-mail"/>
 						</f:facet>
-						<s:link value="#{usr.email}" view="/sendEmail.xhtml" propagation="none">
+						<s:link value="#{usr.email}" view="/sendEmail.xhtml"  action="#{emailSender.updateRecipientAddress()}" propagation="none">
 							<f:param name="userId" value="#{usr.id}"/>
 						</s:link>
 					</h:column>
