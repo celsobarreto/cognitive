@@ -9,4 +9,6 @@ public interface PageEdit
 	public void savePage();
 	public void showList();
 	public void destroy();
+	public String getText();
+	public void setText(String text);
 }

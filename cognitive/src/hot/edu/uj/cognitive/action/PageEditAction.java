@@ -8,6 +8,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
+import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Logger;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Out;
@@ -35,7 +36,9 @@ public class PageEditAction implements PageEdit
 	
 	@Out(required = false)
 	private String pageID;
-	
+ 
+	private String text;
+
 	@PersistenceContext
 	private EntityManager em;
 	
@@ -46,12 +49,12 @@ public class PageEditAction implements PageEdit
 	public void showPage()
 	{
 		System.out.println(this.pageId); 
-		
 		log.info(this.pageId);
 		Query query = this.em.createQuery("select u from SpecialPage u where u.id = :pageId");
 		query.setParameter("pageId", this.pageId);
 		this.sPage = (SpecialPage) query.getSingleResult();
 		this.pageID = (this.sPage == null ? "error": this.sPage.getId());
+		this.text = this.sPage.getContent();
 	}
 
 	public void showList(){
@@ -66,10 +69,25 @@ public class PageEditAction implements PageEdit
 			this.sPage = null;
 		if (this.pageID != null)
 			this.pageID = "";
+		if (this.text != null)
+			this.text = "";
 	}
-	@Override
+	
 	public void savePage() {
-		// TODO Auto-generated method stub
+		log.info("savePage");
+		log.info(this.pageId);
+		Query query = this.em.createQuery("select u from SpecialPage u where u.id = :pageId");
+		query.setParameter("pageId", this.pageId);
+		this.sPage = (SpecialPage) query.getSingleResult();
+		this.sPage.setContent(this.text);
+		this.em.persist(this.sPage);
+		this.pageID = (this.sPage == null ? "error": this.sPage.getId());
 		
+	}
+	public void setText(String text){
+		this.text = text;
+	}
+	public String getText(){
+		return this.sPage.getContent();
 	}
 }
