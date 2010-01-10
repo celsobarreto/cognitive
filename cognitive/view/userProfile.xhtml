@@ -19,7 +19,7 @@
 	  		</f:facet>
 			<ul>
 				<li>
-					<s:link value="Wyślij e-mail do tego użytkownika" view="/sendEmail.xhtml"  propagation="none">
+					<s:link value="Wyślij e-mail do tego użytkownika" view="/sendEmail.xhtml"  action="#{emailSender.updateRecipientAddress()}" propagation="none">
 					     <f:param name="userId" value="#{userProfile.id}"/>
 					</s:link>
 				</li>

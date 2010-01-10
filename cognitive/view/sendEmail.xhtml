@@ -20,7 +20,7 @@
             <div class="dialog">
                 <h:panelGrid columns="2" rowClasses="prop" columnClasses="name,value">
                     <h:outputLabel for="emailAddress">E-mail</h:outputLabel>
-                    <h:inputText id="emailAddress" value="#{emailSender.recipient}"/>
+                    <h:outputText id="emailAddress" value="#{emailSender.recipient}"/>
                     <h:outputLabel for="emailSubject">Subject</h:outputLabel>
                     <h:inputText id="emailSubject" value="#{emailSender.subject}"/>
                 </h:panelGrid>

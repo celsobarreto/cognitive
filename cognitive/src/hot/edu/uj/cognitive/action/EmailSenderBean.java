@@ -11,14 +11,21 @@ import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.PersistenceContextType;
 
 import org.drools.lang.DRLParser.unary_constr_return;
 import org.hibernate.validator.NotNull;
 import org.jboss.seam.ScopeType;
+import org.jboss.seam.annotations.Factory;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Scope;
 import org.jboss.seam.annotations.security.Restrict;
+import org.jboss.seam.annotations.web.RequestParameter;
+
+import edu.uj.cognitive.model.User;
 
 @Stateful
 @Name("emailSender")
@@ -29,7 +36,16 @@ public class EmailSenderBean implements EmailSender{
 	public static String HOST = "smtp.gmail.com";
 	public static String USERNAME = "cognitiveportal";
 	public static String PASSWORD = "cognitive1234";
+
+	@PersistenceContext(type = PersistenceContextType.EXTENDED)
+	private EntityManager em;
 	
+	@RequestParameter 
+	private Integer userId;
+	private String recipient; 
+	private String subject; 
+	private String message ; 
+
 	public String getRecipient() {
 		return recipient;
 	}
@@ -51,11 +67,7 @@ public class EmailSenderBean implements EmailSender{
 		this.message = message;
 	}
 
-	private String recipient; 
-	private String subject; 
-	private String message ; 
 
-	
 	
 	public void postMail( ) throws MessagingException
 	{
@@ -123,4 +135,8 @@ public static void main(String[] args) throws MessagingException {
 	esb.emailData = emailData;
 	esb.postMail();
 }*/
+	@Override
+	public void updateRecipientAddress() {
+		this.recipient = this.em.find(User.class, userId).getEmail();		
+	}
 }
