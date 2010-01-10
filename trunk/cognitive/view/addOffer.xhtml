@@ -1,0 +1,38 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	    		xmlns:ui="http://java.sun.com/jsf/facelets"
+	  			xmlns:h="http://java.sun.com/jsf/html"
+	  			xmlns:f="http://java.sun.com/jsf/core"
+	  			xmlns:s="http://jboss.com/products/seam/taglib"
+	  			xmlns:rich="http://richfaces.org/rich"
+                xmlns:a="http://richfaces.org/rich"
+				template="template.xhtml">
+
+<ui:define name="content">
+	<rich:toolBar rendered="">
+		<rich:toolBarGroup>
+			<h:outputText value="Dodaj oferte"/>
+		</rich:toolBarGroup>
+	</rich:toolBar>
+	<h:form>
+		<div align="center">
+		<h:panelGrid columns="2">
+		Tytul:
+			<h:inputText value="#{offer.title}" required="true"/>
+		Typ oferty:
+			<h:selectOneMenu value="#{offer.offerType}">
+				<f:selectItem itemLabel="praca" itemValue="praca"/>
+				<f:selectItem itemLabel="usluga" itemValue="usluga"/>
+			</h:selectOneMenu>
+		Tresc oferty:
+			<h:inputTextarea value="#{offer.content}" required="true"/>
+		</h:panelGrid>
+		</div>
+		<div align="center">
+		<h:commandButton action="#{offerManager.addOffer}" value="OK" />
+		<s:button value="Anuluj" view="/offer.xhtml"/>
+		</div>
+	</h:form>
+</ui:define>
+
+</ui:composition>
