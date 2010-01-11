@@ -8,32 +8,26 @@
 				template="template.xhtml">
 				
 	<ui:define name="navigation">
-		<ui:param name="pageid" value="news" />
+		<ui:param name="pageid" value="delnews" />
 	</ui:define>
 				
 	<ui:define name="content">
 		<h:form>
-            <h:outputText value="No news to display" rendered="#{newsList.rowCount==0}" />
+            <h:outputText value="No news to delete" rendered="#{newsList.rowCount==0}" />
             <h:dataTable border="0" cellpadding="3" cellspacing="0" headerClass="header_table" var="news" value="#{newsList}" rendered="#{newsList.rowCount>0}" width="100%">
             	<f:facet name="header">
-    				<h:outputText value="News:"/>
+    				<h:outputText value="News to delete:"/>
   				</f:facet>            	
   				<h:column>
             		<a:panel>
-            			<f:facet name="header">
-            					<h:outputFormat value="{0}	{1, date, yyyy-MM-dd HH:mm:ss}">
-            						<f:param value="#{news.title}"/>
-            						<f:param value="#{news.date}"/>
-            					</h:outputFormat>
-            			</f:facet>
-            			<h:outputText value="#{news.content}" escape="false"/>
+            			<h:outputText value="#{news.title}" escape="false"/>
             		</a:panel>
             	</h:column>
+            	<h:column>
+            		<h:outputText value="Usun"/>
+            	</h:column>            	
             </h:dataTable>
             
-            <p><s:link value="Dodaj" view="/addNews.seam" propagation="none"/></p>
-            <p><s:link value="Edytuj" view="/editNews.seam" propagation="none"/></p>
-            <p><s:link value="Usun" view="/delNews.seam" propagation="none"/></p>
 		</h:form>
 	</ui:define>
 

@@ -79,5 +79,5 @@ public class News implements Serializable
 		public void setContent(String content) 
 		{
 			this.content = content;
-		}
+		}		
 }

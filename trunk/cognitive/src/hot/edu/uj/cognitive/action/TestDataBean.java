@@ -138,7 +138,7 @@ public class TestDataBean implements TestData
 	private void insertNews() {
 		News news1 = new News();
 		news1.setTitle("Pierwsza wiadomosc");
-		news1.setContent("To jest zawartosc pierwszej wiadomosci :)");
+		news1.setContent("<b>To jest zawartosc pierwszej wiadomosci :)</b>");
 		news1.setDate(new Date());
 		this.em.persist(news1);
 		
