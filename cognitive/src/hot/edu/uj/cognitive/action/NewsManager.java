@@ -7,4 +7,6 @@ public interface NewsManager
 {
 	public void destroy();
 	public void getNews();
+	public void addNews();
+	public void createNews();
 }
