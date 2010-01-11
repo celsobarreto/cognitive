@@ -17,11 +17,14 @@
             <h:dataTable border="0" cellpadding="3" cellspacing="0" headerClass="header_table" var="news" value="#{newsList}" rendered="#{newsList.rowCount>0}" width="100%">
             	<f:facet name="header">
     				<h:outputText value="News:"/>
-  				</f:facet>            
+  				</f:facet>            	
   				<h:column>
             		<a:panel>
             			<f:facet name="header">
-            					<h:outputText value="#{news.title} | #{news.date}"/> 
+            					<h:outputFormat value="{0}	{1, date, yyyy-MM-dd HH:mm:ss}">
+            						<f:param value="#{news.title}"/>
+            						<f:param value="#{news.date}"/>
+            					</h:outputFormat>
             			</f:facet>
             			<h:outputText value="#{news.content}"/>	
             		</a:panel>

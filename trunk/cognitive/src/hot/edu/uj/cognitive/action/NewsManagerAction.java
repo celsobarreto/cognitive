@@ -34,7 +34,7 @@ public class NewsManagerAction implements NewsManager
 	@Factory("newsList")
 	public void getNews()
 	{
-		this.newsList = this.em.createQuery("select n from News n").getResultList();
+		this.newsList = this.em.createQuery("select n from News n order by n.date DESC").getResultList();
 	}
 	
 	@Remove
