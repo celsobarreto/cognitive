@@ -41,9 +41,11 @@
 						    <h:inputText id="name" value="#{credentials.username}"/>
 						    <h:outputLabel for="password" value="Password: "/>
 						    <h:inputSecret id="password" value="#{credentials.password}" redisplay="false"/>
-						    <f:facet name="footer">
-						    	<h:commandButton value="Zaloguj" action="#{identity.login}"/>
-					   		</f:facet>
+						    
+						    					    	
+						    		<h:commandButton value="Zaloguj" action="#{identity.login}"/>
+						    		<h:commandButton value="Rejestruj" action="/userRegister.seam" />
+						    	
 						</h:panelGrid>
 					</h:form>
 					<s:div rendered="#{identity.loggedIn}">

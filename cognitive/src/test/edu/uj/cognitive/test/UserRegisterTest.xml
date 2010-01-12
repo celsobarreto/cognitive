@@ -1,0 +1,9 @@
+<!DOCTYPE suite SYSTEM "http://beust.com/testng/testng-1.0.dtd" >
+
+<suite name="UserRegister Tests" verbose="2" parallel="false">
+   <test name="UserRegister Test">
+     <classes>
+       <class name="edu.uj.cognitive.test.UserRegisterTest"/>       
+     </classes>
+   </test>	
+</suite>
