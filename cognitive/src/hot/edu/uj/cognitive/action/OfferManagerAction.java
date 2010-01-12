@@ -18,6 +18,7 @@ import org.jboss.seam.annotations.Out;
 import org.jboss.seam.annotations.Scope;
 import org.jboss.seam.annotations.datamodel.DataModel;
 import org.jboss.seam.annotations.datamodel.DataModelSelection;
+import org.jboss.seam.contexts.Contexts;
 import org.jboss.seam.log.Log;
 
 import edu.uj.cognitive.model.Offer;
@@ -45,9 +46,6 @@ public class OfferManagerAction implements OfferManager {
 	
 	private Offer offerUpdate;
 	
-	@In(required=false)
-	private User user;
-	
 	@SuppressWarnings("unchecked")
 	@Factory("offerList")
 	public void getOffer()
@@ -65,6 +63,8 @@ public class OfferManagerAction implements OfferManager {
 	
 	@Override
 	public String addOffer() {
+		User user  = (User)Contexts.getSessionContext().get("loggedUser");
+		
 		offer.setDateAdded(new Date());
 		offer.setEntrepreneur_id(user.getId());
 		
@@ -110,6 +110,8 @@ public class OfferManagerAction implements OfferManager {
 	
 	@Override
 	public boolean isAllowed() {
+		User user  = (User)Contexts.getSessionContext().get("loggedUser");
+		
 		if(user != null){
 			Role[] roles = user.getRoles().toArray(new Role[0]);
 			
