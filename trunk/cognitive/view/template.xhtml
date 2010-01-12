@@ -9,7 +9,7 @@
 
 <html>
 <head>
-	<title>Cognitive</title>
+	<title>Cognitive Project</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-2" />
 	<meta http-equiv="Expires" content="0" />
 	<meta http-equiv="Pragma" content="no-cache" />
@@ -29,104 +29,136 @@
 </head>
 
 <body>
-	<div id="wrap">
-		<div id="header">
-			<h:panelGrid id="header_table" columns="3" cellpadding="0" cellspacing="0" columnClasses="header_table_td_side,header_table_td_center,header_table_td_side">
-				<h:outputText value="&nbsp;"/>
-				<h:outputText value="Cognitive"/>
-				<r:panel>
-					<h:form class="loginForm" rendered="#{not identity.loggedIn}">
-						<h:panelGrid columns="2" cellpadding="0" columnClasses="right,left">
-							<h:outputLabel for="name" value="E-mail: "/>
-						    <h:inputText id="name" value="#{credentials.username}"/>
-						    <h:outputLabel for="password" value="Password: "/>
-						    <h:inputSecret id="password" value="#{credentials.password}" redisplay="false"/>
-						    
-						    					    	
-						    		<h:commandButton value="Zaloguj" action="#{identity.login}"/>
-						    		<h:commandButton value="Rejestruj" action="/userRegister.seam" />
-						    	
-						</h:panelGrid>
-					</h:form>
-					<s:div rendered="#{identity.loggedIn}">
-					  	<h:outputText value="Zalogowany jako: &nbsp; #{loggedUser.fullName}"/>
-					  	<ul class="header_table_login_ul">
-					  		<li>
-					  		<s:link value="Zobacz profil" view="/userProfile.xhtml" action="#{userManager.show}" propagation="none">
-					  			<f:param name="userId" value="#{loggedUser.id}"/>
-					  		</s:link>
-					  		</li>
-					  		<li>
-					  			<s:link value="Wyloguj" view="/homepage.seam" action="#{identity.logout}" propagation="none"/>
-							</li>
-						</ul>
-					</s:div>
-				</r:panel>
-			</h:panelGrid>
-		</div>
-		<div id="container">
-			<div id="navigation">
-				<ui:insert name="navigation"/>
+	<div class="menuContainer">
+		<div id="menu">
+			<div id="mainMenu">
 				<ul>
-					<li class="begin">
-						<s:link value="Strona główna" view="/homepage.seam" styleClass="active" propagation="none" rendered="#{pageid eq 'home'}"></s:link>
-						<s:link value="Strona główna" view="/homepage.seam" propagation="none" rendered="#{pageid ne 'home'}"></s:link>
+					<li class="first">
+						<s:link value="Start" view="/homepage.seam" styleClass="" propagation="none"></s:link>
 					</li>
 					<li>
-						<s:link value="Aktualności" view="/News.seam" action="#{newsManager.getNews}" styleClass="active" propagation="none" rendered="#{pageid eq 'news'}"></s:link>
-						<s:link value="Aktualności" view="/News.seam" action="#{newsManager.getNews}" propagation="none" rendered="#{pageid ne 'news'}"></s:link>
+						<s:link value="Aktualności" view="/News.seam" action="#{newsManager.getNews}" styleClass="active" propagation="none" ></s:link>
 					</li>					
 					<li>
-						<s:link value="Publikacje" view="/publication.seam" action="#{publicationManager.newSearch}" styleClass="active" propagation="none" rendered="#{pageid eq 'publ'}"></s:link>
-						<s:link value="Publikacje" view="/publication.seam" action="#{publicationManager.newSearch}" propagation="none" rendered="#{pageid ne 'publ'}"></s:link>
+						<s:link value="O projekcie" view="/spage.seam" action="#{specialPages.toPage('info')}" styleClass="active" propagation="none" ></s:link>
 					</li>
 					<li>
-						<s:link value="Użytkownicy" view="/userList.seam" action="#{userManager.destroy}" styleClass="active" propagation="none" rendered="#{pageid eq 'users'}"></s:link>
-						<s:link value="Uzytkownicy" view="/userList.seam" action="#{userManager.destroy}" propagation="none" rendered="#{pageid ne 'users'}"></s:link>
+						<s:link value="Naukowcy" view="/userList.seam" action="#{userManager.destroy}" styleClass="active" propagation="none" ></s:link>
 					</li>
 					<li>
-						<s:link value="O projekcie" view="/spage.seam" action="#{specialPages.toPage('info')}" styleClass="active" propagation="none" rendered="#{pageid eq 'info'}"></s:link>
-						<s:link value="O projekcie" view="/spage.seam" action="#{specialPages.toPage('info')}" propagation="none" rendered="#{pageid ne 'info'}"></s:link>
+						<s:link value="Przedsiębiorcy" view="/userList.seam" action="#{userManager.destroy}" styleClass="active" propagation="none" ></s:link>
 					</li>
 					<li>
-						<s:link value="Wykonawcy" view="/spage.seam" action="#{specialPages.toPage('staff')}" styleClass="active" propagation="none" rendered="#{pageid eq 'staff'}"></s:link>
-						<s:link value="Wykonawcy" view="/spage.seam" action="#{specialPages.toPage('staff')}" propagation="none" rendered="#{pageid ne 'staff'}"></s:link>
-					</li>			
-					<li>
-						<s:link value="Linki" view="/spage.seam" action="#{specialPages.toPage('links')}" styleClass="active" propagation="none" rendered="#{pageid eq 'links'}"></s:link>
-						<s:link value="Linki" view="/spage.seam" action="#{specialPages.toPage('links')}" propagation="none" rendered="#{pageid ne 'links'}"></s:link>
-					</li>							
-					<li>
-						<s:link value="Oferty pracy" view="/offer.seam" action="#{offerManager.getOffer}" styleClass="active" propagation="none" rendered="#{pageid eq 'offer'}"></s:link>
-						<s:link value="Oferty pracy" view="/offer.seam" action="#{offerManager.getOffer}" propagation="none" rendered="#{pageid ne 'offer'}"></s:link>
+						<s:link value="Publikacje" view="/offer.seam" action="#{offerManager.getOffer}" styleClass="active" propagation="none" ></s:link>
 					</li>
 					<li>
-						<s:link value="Edit special pages" view="/pagelist.seam" action="#{pageEdit.showList}" styleClass="active" propagation="none" rendered="#{pageid eq 'pagelist'}"></s:link>
-						<s:link value="Edit special pages" view="/pagelist.seam" action="#{pageEdit.showList}" propagation="none" rendered="#{pageid ne 'pagelist'}"></s:link>
+						<s:link value="Forum" view="/offer.seam" action="#{offerManager.getOffer}" styleClass="active" propagation="none" ></s:link>
 					</li>
-					<li>
-						<s:link value="Science Domain" view="/scienceDomainList.seam" styleClass="active" propagation="none" rendered="#{pageid eq 'sd'}"></s:link>
-						<s:link value="Science Domain" view="/scienceDomainList.seam"  propagation="none" rendered="#{pageid ne 'sd'}"></s:link>
-					</li>										
-					<li>
-						<s:link value="Wstaw dane testowe" view="/testData.seam" rendered="#{pageid ne 'testdata'}" propagation="none" />
-					</li>
-				</ul>
+				</ul>				
 			</div>
-			<div id="content">
-		        <h:messages id="messages" globalOnly="true" styleClass="message"
-		            errorClass="errormsg" infoClass="infomsg" warnClass="warnmsg"
-		            rendered="#{showGlobalMessages != 'false'}"/>			
-				<ui:insert name="content"/>
-				<br/>
+			<div id="handMenu">
+				<ul>
+					<li class="first">
+						<s:link value="Zarejestruj się" view="/userRegister.seam" styleClass="" propagation="none" rendered="#{not identity.loggedIn}"></s:link>
+					</li>
+					<li>
+						<s:link value="Edytuj Profil" view="/userProfile.xhtml" action="#{userManager.show}" propagation="none" rendered="#{identity.loggedIn}">
+				  			<f:param name="userId" value="#{loggedUser.id}"/>
+				  		</s:link>
+					</li>
+			  		<li>
+			  			<s:link value="Wyloguj" view="/homepage.seam" action="#{identity.logout}" propagation="none" rendered="#{identity.loggedIn}"/>
+					</li>					
+
+				</ul>					
 			</div>
-			<div style="clear: both;">&nbsp;</div>
 		</div>
-		<div id="push"></div>
 	</div>
-	<div id="footer">
-		<p>footer</p>
+	<div class="headContainer">
+		<div id="head">
+			<div class="logo"></div>
+			<div class="panel">
+				<h:form class="loginForm" rendered="#{not identity.loggedIn}">
+					<h:panelGrid columns="2" cellpadding="0" columnClasses="right,left">
+						<h:outputLabel for="name" value="E-mail: "/>
+					    <h:inputText id="name" value="#{credentials.username}"/>
+					    <h:outputLabel for="password" value="Password: "/>
+					    <h:inputSecret id="password" value="#{credentials.password}" redisplay="false"/>
+					    <f:facet name="footer">
+					    	<h:commandButton value="Zaloguj" action="#{identity.login}"/>
+				   		</f:facet>
+					</h:panelGrid>
+				</h:form>			
+			</div>
+		</div>
 	</div>
+	<div class="bodyContainer">
+		<div id="body">
+			<div id="content">
+				<ui:insert name="content"/>
+			</div>
+			<div id="extra">
+			
+<div id="temporaryNavigation navigation">
+	<ul>
+		<li class="begin">
+			<s:link value="Strona główna" view="/homepage.seam" styleClass="active" propagation="none" rendered="#{pageid eq 'home'}"></s:link>
+			<s:link value="Strona główna" view="/homepage.seam" propagation="none" rendered="#{pageid ne 'home'}"></s:link>
+		</li>
+		<li>
+			<s:link value="Aktualności" view="/News.seam" action="#{newsManager.getNews}" styleClass="active" propagation="none" rendered="#{pageid eq 'news'}"></s:link>
+			<s:link value="Aktualności" view="/News.seam" action="#{newsManager.getNews}" propagation="none" rendered="#{pageid ne 'news'}"></s:link>
+		</li>					
+		<li>
+			<s:link value="Publikacje" view="/publication.seam" action="#{publicationManager.newSearch}" styleClass="active" propagation="none" rendered="#{pageid eq 'publ'}"></s:link>
+			<s:link value="Publikacje" view="/publication.seam" action="#{publicationManager.newSearch}" propagation="none" rendered="#{pageid ne 'publ'}"></s:link>
+		</li>
+		<li>
+			<s:link value="Użytkownicy" view="/userList.seam" action="#{userManager.destroy}" styleClass="active" propagation="none" rendered="#{pageid eq 'users'}"></s:link>
+			<s:link value="Uzytkownicy" view="/userList.seam" action="#{userManager.destroy}" propagation="none" rendered="#{pageid ne 'users'}"></s:link>
+		</li>
+		<li>
+			<s:link value="O projekcie" view="/spage.seam" action="#{specialPages.toPage('info')}" styleClass="active" propagation="none" rendered="#{pageid eq 'info'}"></s:link>
+			<s:link value="O projekcie" view="/spage.seam" action="#{specialPages.toPage('info')}" propagation="none" rendered="#{pageid ne 'info'}"></s:link>
+		</li>
+		<li>
+			<s:link value="Wykonawcy" view="/spage.seam" action="#{specialPages.toPage('staff')}" styleClass="active" propagation="none" rendered="#{pageid eq 'staff'}"></s:link>
+			<s:link value="Wykonawcy" view="/spage.seam" action="#{specialPages.toPage('staff')}" propagation="none" rendered="#{pageid ne 'staff'}"></s:link>
+		</li>			
+		<li>
+			<s:link value="Linki" view="/spage.seam" action="#{specialPages.toPage('links')}" styleClass="active" propagation="none" rendered="#{pageid eq 'links'}"></s:link>
+			<s:link value="Linki" view="/spage.seam" action="#{specialPages.toPage('links')}" propagation="none" rendered="#{pageid ne 'links'}"></s:link>
+		</li>							
+		<li>
+			<s:link value="Oferty pracy" view="/offer.seam" action="#{offerManager.getOffer}" styleClass="active" propagation="none" rendered="#{pageid eq 'offer'}"></s:link>
+			<s:link value="Oferty pracy" view="/offer.seam" action="#{offerManager.getOffer}" propagation="none" rendered="#{pageid ne 'offer'}"></s:link>
+		</li>
+		<li>
+			<s:link value="Edit special pages" view="/pagelist.seam" action="#{pageEdit.showList}" styleClass="active" propagation="none" rendered="#{pageid eq 'pagelist'}"></s:link>
+			<s:link value="Edit special pages" view="/pagelist.seam" action="#{pageEdit.showList}" propagation="none" rendered="#{pageid ne 'pagelist'}"></s:link>
+		</li>
+		<li>
+			<s:link value="Science Domain" view="/scienceDomainList.seam" styleClass="active" propagation="none" rendered="#{pageid eq 'sd'}"></s:link>
+			<s:link value="Science Domain" view="/scienceDomainList.seam"  propagation="none" rendered="#{pageid ne 'sd'}"></s:link>
+		</li>										
+		<li>
+			<s:link value="Wstaw dane testowe" view="/testData.seam" rendered="#{pageid ne 'testdata'}" propagation="none" />
+		</li>
+	</ul>
+</div>
+			
+			</div>
+		</div>
+	</div>
+	<div class="footContainer">
+		<div id="foot">
+		
+		</div>
+		
+	</div>
+
+
+
 </body>
 </html>
 </f:view>

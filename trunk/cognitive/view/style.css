@@ -8,7 +8,6 @@ body
 {
 	margin: 0px auto;
 	padding: 0px;
-	background: #EAEAEA;
 	font-family: verdana, arial, sans-serif;
 	font-size: 12px;
 	font-style: normal;
@@ -48,196 +47,150 @@ a:hover
 	text-decoration: none;
 }
 
-#wrap 
-{
-	margin: 0px auto -60px auto;
-	background: url("images/wrap.jpg") repeat-x left top;
-	min-height: 100%;
-	background-color: #FFFFFF;
-	width: 970px;
-	padding: 0px;
-	border-left: 1px #CBCBCD solid;
-	border-right: 1px #CBCBCD solid;
+/* LAYOUT */
+.siteBg{
+	background-color:#B3AEAA;
+	height:100%;
+	left:0;
+	position:absolute;
+	top:0;
+	width:100%;
+	z-index:-1;
+}
+.menuContainer{
+background-color:#EBEAE8;
+height:32px;
+width:100%;
 }
 
-#header 
-{
-	width: 100%;
-	height: 150px;
-	color: #9D9D9D;
-	margin: 0px auto;
-	text-align: center;
+.headContainer{
+	background:#FFFFFF none repeat scroll 0 0;
+	width: 100%
 }
 
-#header_table
-{
-	width: 100%;
-	height: 150px;
-	text-align: center;
-	margin: 0px;
-	padding: 0px;
-	border: 0px #000000 solid;
+.bodyContainer{
+background-color:#B3AEAA;
+width:100%;	
 }
 
-.header_table_login_ul
-{
-	padding: 0px;
+.footContainer{
+	background-color: #fff;
 }
 
-.header_table_td_side
-{
-	width: 250px;
-	padding-right: 15px;
-	padding-left: 15px;
-	text-align: center;
+#page{
+	height:100%;
+	margin:0 auto;
+	overflow:hidden;
+	width:970px;
+	z-index:100;
 }
 
-.header_table_td_center
-{
-	font-size: 28px;
+#head{
+background-color:#2A2927;
+height:120px;
+margin:0 auto;
+width:970px;
+overflow: hidden;
 }
 
-#container 
-{
-	width: 100%;
-	margin: 0px;
-	padding: 0px;
+#head .logo{
+	width: 670px;
+	float: left;	
+	height: 100%;
+	background: transparent url('images/logo.gif') no-repeat;
 }
 
-#content 
-{
-	line-height: 20px;
-	padding: 20px;
-	margin: 0px;
+#head .panel{
+	width: 270px;
+	float: left;
+	height: 90px;
+	padding: 15px 0;
 	overflow: hidden;
+}	
+
+#body{
+clear:both;
+min-height: 300px;
+margin:0 auto;
+overflow:hidden;
+width:970px;
+background: transparent url('images/cols_bg.gif') repeat-y;
 }
 
-#content h2 
-{
-	font-weight: normal;
+#content{
+	float: left;
+	width: 670px;
+	height: 100%;
 }
 
-#navigation 
-{
-	margin: 0px;
-	padding: 0px;
-	width: 180px;
+#extra{
+	float: left;
+	width: 300px;
+	height: 100%;	
+}
+
+#foot{
+background-color:#22211D;
+height:50px;
+margin:0 auto;
+width:970px;
+}
+
+#menu{
+background-color:#10100F;
+height:32px;
+margin:0 auto;
+width:970px;
+}
+
+#mainMenu{
 	float: left;
 }
 
-#navigation ul 
-{
-	margin: 0px;
-	padding: 10px 0px 0px 0px;
-	list-style: none;
+#handMenu{
+	float: right;
 }
 
-#navigation li 
-{
-	padding: 12px 0px;
-	background: url(images/li.gif) repeat-x left top;
+
+#menu ul{
+height:32px;
+margin:0;
+padding:0;	
 }
 
-#navigation .begin 
-{
-	background: none;
+#menu li{
+border-left:1px solid white;
+color:white;
+float:left;
+font-size:12px;
+line-height:14px;
+list-style-image:none;
+list-style-position:outside;
+list-style-type:none;
+margin:9px 0;
+padding:0 10px;
+overflow: visible;
 }
 
-#navigation a 
-{
-	background: url(images/item.gif) no-repeat left 6px;
-	margin-left: 20px;
-	padding-left: 15px;
-	text-decoration: none;
-	color: #525252;
+#menu #mainMenu ul{
+	margin-left: 10px;	
 }
 
-#navigation a:hover 
-{
-	background: url(images/active.gif) no-repeat left 6px;
-	padding-left: 20px;
-	color: #9F6840;
+#menu #handMenu ul{
+	margin-right: 10px;	
 }
 
-#navigation .active 
-{
-	background: url(images/active.gif) no-repeat left 6px;
-	color: #9F6840;
+#menu li.first{
+	border: none	
 }
 
-#push
-{
-	margin: 0px auto;
-	padding: 0px;
-	height: 60px;
-	width: 970px;
+#menu a{
+color:#FEFEFE;
+font-family:arial;
+font-size:14px;
+text-decoration:none;	
 }
 
-#footer 
-{
-	background: #EAEAEA url(images/footer.jpg) repeat-x left top;
-	color: #979797;
-	height: 60px;
-	margin: 0px auto;
-	width: 970px;
-	padding: 0px;
-}
-
-#footer p 
-{
-	text-align: center;
-	font-size: 11px;
-	line-height: 60px;
-	padding: 0px;
-	margin: 0px;
-}
-
-.input_error
-{
-	padding-left: 6px;
-	margin: 0px;
-	font-size: 10px;
-	font-style: italic;
-}
-
-.global_messages
-{
-	padding-left: 20px;
-	font-size: 12px;
-	font-weight: bold;
-	margin: 0px;
-}
-
-.button_box
-{
-	text-align: left;
-	padding-left: 10px;
-	padding-top: 5px;
-	clear: both;
-}
-
-.footer_table
-{
-	text-align: center;
-}
-
-.header_table
-{
-	text-align: center;
-	font-size: 14px;
-}
-
-.left
-{
-	text-align: left;
-}
-
-.right
-{
-	text-align: right;
-}
-
-.center
-{
-	text-align: center;
+#menu a:hover{
+	text-decoration: underline;
 }
