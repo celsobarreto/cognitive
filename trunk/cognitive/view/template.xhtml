@@ -134,8 +134,8 @@
 			<s:link value="Oferty pracy" view="/offer.seam" action="#{offerManager.getOffer}" propagation="none" rendered="#{pageid ne 'offer'}"></s:link>
 		</li>
 		<li>
-			<s:link value="Edit special pages" view="/pagelist.seam" action="#{pageEdit.showList}" styleClass="active" propagation="none" rendered="#{pageid eq 'pagelist'}"></s:link>
-			<s:link value="Edit special pages" view="/pagelist.seam" action="#{pageEdit.showList}" propagation="none" rendered="#{pageid ne 'pagelist'}"></s:link>
+			<s:link value="Mój profil (dla zalogowanych;))" view="/profilemanager.seam"  styleClass="active" propagation="none" rendered="#{pageid eq 'pagelist'}"></s:link>
+			<s:link value="Mój profil (dla zalogowanych;))" view="/profilemanager.seam"  propagation="none" rendered="#{pageid ne 'pagelist'}"></s:link>
 		</li>
 		<li>
 			<s:link value="Science Domain" view="/scienceDomainList.seam" styleClass="active" propagation="none" rendered="#{pageid eq 'sd'}"></s:link>
