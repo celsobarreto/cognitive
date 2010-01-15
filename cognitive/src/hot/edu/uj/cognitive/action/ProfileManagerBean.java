@@ -14,7 +14,10 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import org.jboss.seam.annotations.Factory;
 import org.jboss.seam.annotations.Name;
+import org.jboss.seam.annotations.datamodel.DataModel;
+import org.jboss.seam.annotations.web.RequestParameter;
 import org.jboss.seam.contexts.Contexts;
 
 import edu.uj.cognitive.model.Publication;
@@ -34,9 +37,15 @@ public class ProfileManagerBean implements ProfileManager {
 
 	private String message;
 	
+	
 	private List<Publication> userPublications;
 	
+	private Publication publication;
 
+
+	@RequestParameter
+	public Integer publId;
+	
 	@Remove
 	public void destroy() {
 	}
@@ -182,14 +191,23 @@ public class ProfileManagerBean implements ProfileManager {
 	}
 
 	@Override
-	public List<Publication> getUserPublications() {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Publication> getPublications() {
+		//jak to wywalic z gettera?
+	
+			User user = (User) Contexts.getSessionContext().get("loggedUser");
+			
+			user = (User)this.em.createQuery("select u from User u where id=:id").setParameter("id", user.getId()).getSingleResult();
+			
+			this.userPublications = user.getPublications();
+		
+		
+		return this.userPublications;
+		
 	}
 
 	@Override
-	public void setUserPublications(List<Publication> p) {
-		// TODO Auto-generated method stub
+	public void setPublications(List<Publication> p) {
+		this.userPublications = p;
 		
 	}
 
@@ -201,7 +219,46 @@ public class ProfileManagerBean implements ProfileManager {
 
 	@Override
 	public void removePublication() {
-		// TODO Auto-generated method stub
+		User user = (User) Contexts.getSessionContext().get("loggedUser");
+		
+		user = (User)this.em.createQuery("select u from User u where id=:id").setParameter("id", user.getId()).getSingleResult();
+		
+		this.userPublications = user.getPublications();
+		System.out.println("RequestID: "+this.publId);
+		boolean valid = false;
+		Publication p = null;
+		for(Publication pub: this.userPublications){
+			System.out.println("PubID: "+pub.getId());
+			if(pub.getId().equals(this.publId)){
+				valid = true;
+				p = pub;
+				break;
+			}
+		}
+		
+		if(valid){
+			//publikacja tego usera
+			if(p!=null){
+				//TODO jak to zmienic by dzialalo?
+				//em.remove(p);
+			}
+			this.userPublications = user.getPublications();
+			this.message = "publikacja usunięta";
+		} else {
+			this.message = "niewłaściwe ID";
+		}
+		
+	}
+
+	@Override
+	public Publication getPublication() {
+		
+		return this.publication;
+	}
+
+	@Override
+	public void setPublication(Publication p) {
+		this.publication = p;
 		
 	}
 }
