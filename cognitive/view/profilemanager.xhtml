@@ -5,6 +5,7 @@
 	  			xmlns:f="http://java.sun.com/jsf/core"
 	  			xmlns:s="http://jboss.com/products/seam/taglib"
                 xmlns:a="http://richfaces.org/a4j"
+                xmlns:r="http://richfaces.org/rich"
 				template="template.xhtml">
 
 	<ui:define name="navigation">
@@ -17,11 +18,81 @@
 		</strong>
 		
 		<h2>Profil użytkownika</h2>
-		<h3>Zmiana emaila</h3>
-		<h:form>
-			nowy email:<h:inputText value="#{profileManager.newAddress}"/><br/>
-			powtórz:  <h:inputText value="#{profileManager.newAddressConfirm}"/><br/>
-			<h:commandButton  id="submit" value="Wyślij" action="#{profileManager.changeRequest()}" />
-		</h:form>
+		
+		<r:panel>
+			<f:facet name="header">
+	    		<h:outputText value="Zmiana emaila"/>
+	  		</f:facet>
+			   
+                            
+        	Jeśli chcesz zmienić emaila wypełnij poniższy formularz. Otrzymasz na podany tutaj adres
+        	wiadomości z dalszymi informacjami
+			<h:form>
+			<h:panelGrid columns="2">
+				nowy email:<h:inputText value="#{profileManager.newAddress}"/>
+				powtórz:  <h:inputText value="#{profileManager.newAddressConfirm}"/>
+			</h:panelGrid>   
+				<h:commandButton  id="submit" value="Wyślij" action="#{profileManager.changeRequest()}" />
+			</h:form>
+			<r:spacer width="1" height="50" /> 
+			Jeśli otrzymałeś już wiadomość z dalszymi informacjami 
+			<s:link value=" przejdź do kolejnego kroku" view="/changeEmailForm.xhtml" propagation="none"></s:link>
+		</r:panel>
+		
+		
+		
+		<r:panel>
+			<f:facet name="header">
+	    		<h:outputText value="Twoje publikacje" rendered="#{profileManager.userPublications.size>0}"/>
+	  		</f:facet>
+			<h:outputText value="Nie posiadasz jeszcze dodanych publikacji. Możesz dodać nowe." rendered="#{profileManager.userPublications.size==0}" />
+			<h:dataTable border="0" cellpadding="5" cellspacing="0" headerClass="header_table" var="publ" value="#{userProfile.publications}" rendered="#{profileManager.userPublications.size>0}">
+	  			<h:column>
+					<f:facet name="header">
+						<h:outputText value="Id" />
+					</f:facet>
+					<h:outputText value="#{publ.id}"/>
+				</h:column>
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="Title" />
+					</f:facet>
+					<h:outputText value="#{publ.title}"/>
+				</h:column>
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="Link" />
+					</f:facet>
+					<h:outputText value="#{publ.link}"/>
+				</h:column>
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="Year" />
+					</f:facet>
+					<h:outputText value="#{publ.year}"/>
+				</h:column>
+				
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="Journal" />
+					</f:facet>
+					<h:outputText value="#{publ.journal}"/>
+				</h:column>
+				
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="Akcje" />
+					</f:facet>
+					<s:link value="usuń" view="/profilemanager.xhtml" action="#{profileManager.removePublication()}" propagation="none">
+						<f:param name="publId" value="#{publ.id}"/>
+					</s:link> 
+					 
+					<s:link value=" edytuj" view="/publicationForm.xhtml" action="#{profileManager.editPublication()}" propagation="none">
+						<f:param name="publId" value="#{publ.id}"/>
+					</s:link>
+				</h:column>
+			</h:dataTable>
+			<s:link  id="submit" view="/publicationForm.xhtml" value="Dodaj nową publikację" />
+		</r:panel>
 	</ui:define>
 </ui:composition>
