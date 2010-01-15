@@ -15,4 +15,5 @@ public interface NewsManager
 	public String performNewsAction();
 	public News getNews();
 	public void setNews(News news);
+	public boolean manageEnabled();
 }

@@ -17,8 +17,11 @@ import org.jboss.seam.annotations.Out;
 import org.jboss.seam.annotations.Scope;
 import org.jboss.seam.annotations.datamodel.DataModel;
 import org.jboss.seam.annotations.datamodel.DataModelSelection;
+import org.jboss.seam.contexts.Contexts;
 
 import edu.uj.cognitive.model.News;
+import edu.uj.cognitive.model.Role;
+import edu.uj.cognitive.model.User;
 
 @Stateful
 @Name("newsManager")
@@ -117,6 +120,23 @@ public class NewsManagerAction implements NewsManager
 	{
 		System.out.println("## setNews()");
 		this.news = news;
+	}
+	
+	@Override
+	public boolean manageEnabled() 
+	{
+		User user  = (User)Contexts.getSessionContext().get("loggedUser");
+		
+		if(user != null)
+		{
+			for(Role r: user.getRoles())
+			{
+				if(r.getName().equals("admin"))
+					return true;
+			}
+		}
+		
+		return false;
 	}
 	
 	@Remove
