@@ -1,5 +1,9 @@
 package edu.uj.cognitive.action;
 
+import java.util.List;
+
+import edu.uj.cognitive.model.Publication;
+
 public interface ProfileManager {
 
 	public String changeRequest();
@@ -11,5 +15,14 @@ public interface ProfileManager {
 	public String getNewAddress();
 	public String getMessage();
 	public void setMessage(String s);
+	public String getToken();
+	public void setToken(String s);
+
+	public void setUserPublications(List<Publication> p);
+	public List<Publication> getUserPublications();
+	
+	public void removePublication();
+	public void editPublication();
+	
 }
 
