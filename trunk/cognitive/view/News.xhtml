@@ -31,7 +31,10 @@
             	</h:column>
             </h:dataTable>
             
-            <p><s:link value="Zarządzaj wiadomościami" view="/manageNews.seam" /></p>
+            <a:panel rendered="#{newsManager.manageEnabled()}">
+            	<s:link value="Zarządzaj wiadomościami" view="/manageNews.seam" />
+            </a:panel>
+            
 		</h:form>
 	</ui:define>
 

@@ -33,8 +33,10 @@
             			<s:link value="Usuń" action="#{newsManager.deleteNewsAction()}"/>
             		</a:panel>
             	</h:column>            	
-            </h:dataTable>          
-            <p><s:link value="Dodaj nowa wiadomość" action="#{newsManager.addNewsAction()}"/></p>
+            </h:dataTable>
+            <a:panel>          
+           		<s:link value="Dodaj nowa wiadomość" action="#{newsManager.addNewsAction()}"/>
+            </a:panel>
 		</h:form>
 	</ui:define>
 
