@@ -11,6 +11,7 @@ import javax.persistence.PersistenceContextType;
 
 import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.Factory;
+import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Out;
 import org.jboss.seam.annotations.Scope;
@@ -21,6 +22,7 @@ import edu.uj.cognitive.model.News;
 
 @Stateful
 @Name("newsManager")
+@Scope(ScopeType.SESSION)
 public class NewsManagerAction implements NewsManager 
 {
 	@PersistenceContext(type = PersistenceContextType.EXTENDED)
@@ -30,45 +32,108 @@ public class NewsManagerAction implements NewsManager
 	private List<News> newsList;
 	
 	@DataModelSelection(value = "newsList")
-	@Out(required = false)
+	@Out(required=false, value="news")
+	@In(required=false, value="news")
 	private News news;
 	
-	private String tmpTitle;
-	private String tmpContent;
+	private actionType action;
 	
 	@SuppressWarnings("unchecked")
 	@Factory("newsList")
-	public void getNews()
+	public void getListOfNews()
 	{
 		this.newsList = this.em.createQuery("select n from News n order by n.date DESC").getResultList();
 	}
 	
 	@Override
-	public void addNews() 
-	{		
-		System.out.println("ADD NEWS:");
-		System.out.println(" Title: " + news.getTitle());
-		System.out.println(" Content: " + news.getContent());
+	public String addNewsAction() 
+	{
+		action = actionType.ADD;
+		System.out.println("CHANGE ACTION TYPE:" + action);
+		this.news = new News();
 		
-		news.setDate(new Date());
-		em.persist(news);
+		return "/addNewsForm.xhtml";
+	}	
+	
+	@Override
+	public String editNewsAction() 
+	{
+		action = actionType.EDIT;
+		
+		return "/editNewsForm.xhtml";
+	}
+
+	@Override
+	public String deleteNewsAction() 
+	{
+		action = actionType.DELETE;
+		
+		return performNewsAction();
+	}	
+	
+	@Override
+	public String performNewsAction() 
+	{
+		System.out.println("ACTION: " + action);
+		
+		if(news != null)
+			System.out.println(news);		
+		
+		switch(action)
+		{
+			case ADD:
+				System.out.println("ADD NEWS ACTION:");
+				System.out.println(news);
+				news.setDate(new Date());
+				em.persist(news);
+				
+			case EDIT:
+				break;
+				
+			case DELETE:
+				em.remove(news);
+				news = null;
+				break;
+			
+			default:
+				break;
+		}
+		
+		getListOfNews();
+		
+		return "/News.xhtml";
 	}
 	
-	@Factory("news")
-	public void createNews() 
+	public News getNews()
 	{
-		news = new News();
+		System.out.println("## getNews()");
+		if(this.news == null)
+			System.out.println("## getNews() return null");
+		
+		return this.news;
+	}
+	
+	public void setNews(News news)
+	{
+		System.out.println("## setNews()");
+		this.news = news;
 	}
 	
 	@Remove
 	public void destroy() 
 	{
-		this.news = null;
+		if(this.news != null)
+			this.news = null;
 		
 		if(this.newsList != null)
 		{
 			this.newsList.clear();
 			this.newsList = null;
 		}
+	}
+	
+	enum actionType
+	{
+		ADD, EDIT, DELETE, NONE
 	}
 }

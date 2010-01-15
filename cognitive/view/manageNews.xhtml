@@ -13,10 +13,10 @@
 				
 	<ui:define name="content">
 		<h:form>
-            <h:outputText value="No news to edit" rendered="#{newsList.rowCount==0}" />
+            <h:outputText value="Brak wiadomości" rendered="#{newsList.rowCount==0}" />
             <h:dataTable border="0" cellpadding="3" cellspacing="0" headerClass="header_table" var="news" value="#{newsList}" rendered="#{newsList.rowCount>0}" width="100%">
             	<f:facet name="header">
-    				<h:outputText value="News to edit:"/>
+    				<h:outputText value="Zarzadzanie wiadomosciami:"/>
   				</f:facet>            	
   				<h:column>
             		<a:panel>
@@ -24,10 +24,17 @@
             		</a:panel>
             	</h:column>
             	<h:column>
-            		<h:outputText value="Edytuj"/>
+            		<a:panel>
+            			<s:link value="Edytuj" action="#{newsManager.editNewsAction()}"/>
+            		</a:panel>
             	</h:column>
-            </h:dataTable>
-            
+            	<h:column>
+            		<a:panel>
+            			<s:link value="Usuń" action="#{newsManager.deleteNewsAction()}"/>
+            		</a:panel>
+            	</h:column>            	
+            </h:dataTable>          
+            <p><s:link value="Dodaj nowa wiadomość" action="#{newsManager.addNewsAction()}"/></p>
 		</h:form>
 	</ui:define>
 

@@ -8,17 +8,15 @@
 				template="template.xhtml">
 				
 	<ui:define name="navigation">
-		<ui:param name="pageid" value="addnews" />
+		<ui:param name="pageid" value="newsform" />
 	</ui:define>
 				
 	<ui:define name="content">
 		<h:form>
-        	<h:outputText value="Dodawanie wiadomosci"/>
-			Tytul: <h:inputText value="#{news.title}"/><br/>
-			Tresc: <h:inputTextarea value="#{news.content}"/><br/>
-			<h:commandButton  id="submit" value="Dodaj" action="#{newsManager.addNews()}" >
-				<f:param name="news" value="#{news}"/>
-			</h:commandButton>
+        	<h:outputText value="Dodawanie wiadomości"/><br/>
+			Tytuł: <h:inputText value="#{news.title}"/><br/>
+			Treść: <h:inputTextarea value="#{news.content}"/><br/>
+			<h:commandButton  id="submit" value="Zapisz" action="#{newsManager.performNewsAction()}"/>
 		</h:form>
 	</ui:define>
 </ui:composition>

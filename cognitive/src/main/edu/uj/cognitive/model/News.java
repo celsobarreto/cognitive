@@ -80,4 +80,10 @@ public class News implements Serializable
 		{
 			this.content = content;
 		}		
+		
+		@Override
+		public String toString()
+		{
+			return "ID: '" + this.id + "' Title: '" + this.title + "' Content:'" + this.content + "' Date: '" + this.date;
+		}
 }

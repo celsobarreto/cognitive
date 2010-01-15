@@ -37,7 +37,7 @@
 						<s:link value="Start" view="/homepage.seam" styleClass="" propagation="none"></s:link>
 					</li>
 					<li>
-						<s:link value="Aktualności" view="/News.seam" action="#{newsManager.getNews}" styleClass="active" propagation="none" ></s:link>
+						<s:link value="Aktualności" view="/News.seam" action="#{newsManager.getListOfNews()}" styleClass="active" propagation="none" ></s:link>
 					</li>					
 					<li>
 						<s:link value="O projekcie" view="/spage.seam" action="#{specialPages.toPage('info')}" styleClass="active" propagation="none" ></s:link>
