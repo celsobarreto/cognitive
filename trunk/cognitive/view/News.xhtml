@@ -14,7 +14,7 @@
 	<ui:define name="content">
 		<h:form>
             <h:outputText value="No news to display" rendered="#{newsList.rowCount==0}" />
-            <h:dataTable border="0" cellpadding="3" cellspacing="0" headerClass="header_table" var="news" value="#{newsList}" rendered="#{newsList.rowCount>0}" width="100%">
+            <h:dataTable border="0" cellpadding="3" cellspacing="0" headerClass="header_table" var="n" value="#{newsList}" rendered="#{newsList.rowCount>0}" width="100%">
             	<f:facet name="header">
     				<h:outputText value="News:"/>
   				</f:facet>            	
@@ -22,18 +22,16 @@
             		<a:panel>
             			<f:facet name="header">
             					<h:outputFormat value="{0}	{1, date, yyyy-MM-dd HH:mm:ss}">
-            						<f:param value="#{news.title}"/>
-            						<f:param value="#{news.date}"/>
+            						<f:param value="#{n.title}"/>
+            						<f:param value="#{n.date}"/>
             					</h:outputFormat>
             			</f:facet>
-            			<h:outputText value="#{news.content}" escape="false"/>
+            			<h:outputText value="#{n.content}" escape="false"/>
             		</a:panel>
             	</h:column>
             </h:dataTable>
             
-            <p><s:link value="Dodaj" view="/addNews.seam" propagation="none"/></p>
-            <p><s:link value="Edytuj" view="/editNews.seam" propagation="none"/></p>
-            <p><s:link value="Usun" view="/delNews.seam" propagation="none"/></p>
+            <p><s:link value="Zarządzaj wiadomościami" view="/manageNews.seam" /></p>
 		</h:form>
 	</ui:define>
 
