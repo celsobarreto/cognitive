@@ -18,9 +18,10 @@ public interface ProfileManager {
 	public String getToken();
 	public void setToken(String s);
 
-	public void setUserPublications(List<Publication> p);
-	public List<Publication> getUserPublications();
-	
+	public void setPublications(List<Publication> p);
+	public List<Publication> getPublications();
+	public Publication getPublication();
+	public void setPublication(Publication p);
 	public void removePublication();
 	public void editPublication();
 	

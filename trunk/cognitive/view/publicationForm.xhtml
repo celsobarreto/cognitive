@@ -1,0 +1,30 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	    		xmlns:ui="http://java.sun.com/jsf/facelets"
+	  			xmlns:h="http://java.sun.com/jsf/html"
+	  			xmlns:f="http://java.sun.com/jsf/core"
+	  			xmlns:s="http://jboss.com/products/seam/taglib"
+                xmlns:a="http://richfaces.org/a4j"
+                xmlns:r="http://richfaces.org/rich"
+				template="template.xhtml">
+
+	<ui:define name="navigation">
+		<ui:param name="pageid" value="pagelist"/>
+	</ui:define>
+
+	<ui:define name="content">
+		<strong>
+		<h:outputText rendered="#{profileManager.message ne null}" escape="false" value="#{profileManager.message}" />
+		</strong>
+		
+		<h2>Zarządzanie publikacjami</h2>
+		
+		<r:panel>
+			<f:facet name="header">
+	    		<h:outputText value="Formularz"/>
+	  		</f:facet>
+			
+			
+		</r:panel>
+	</ui:define>
+</ui:composition>

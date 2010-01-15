@@ -43,10 +43,10 @@
 		
 		<r:panel>
 			<f:facet name="header">
-	    		<h:outputText value="Twoje publikacje" rendered="#{profileManager.userPublications.size>0}"/>
+	    		<h:outputText value="Twoje publikacje" rendered="#{profileManager.publications.size>0}"/>
 	  		</f:facet>
-			<h:outputText value="Nie posiadasz jeszcze dodanych publikacji. Możesz dodać nowe." rendered="#{profileManager.userPublications.size==0}" />
-			<h:dataTable border="0" cellpadding="5" cellspacing="0" headerClass="header_table" var="publ" value="#{userProfile.publications}" rendered="#{profileManager.userPublications.size>0}">
+			<h:outputText value="Nie posiadasz jeszcze dodanych publikacji. Możesz dodać nowe." rendered="#{profileManager.publications.size==0}" />
+			<h:dataTable border="0" cellpadding="5" cellspacing="0" headerClass="header_table" var="publ" value="#{profileManager.publications}" rendered="#{profileManager.publications.size>0}">
 	  			<h:column>
 					<f:facet name="header">
 						<h:outputText value="Id" />
