@@ -239,8 +239,10 @@ public class ProfileManagerBean implements ProfileManager {
 		if(valid){
 			//publikacja tego usera
 			if(p!=null){
-				//TODO jak to zmienic by dzialalo?
-				//em.remove(p);
+				
+				user.getPublications().remove(p);
+				if(p.getUsers().size()==0)
+					em.remove(p);
 			}
 			this.userPublications = user.getPublications();
 			this.message = "publikacja usunięta";
