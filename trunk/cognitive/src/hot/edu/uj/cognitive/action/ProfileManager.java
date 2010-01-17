@@ -2,6 +2,7 @@ package edu.uj.cognitive.action;
 
 import java.util.List;
 
+
 import edu.uj.cognitive.model.Publication;
 
 public interface ProfileManager {
@@ -24,6 +25,10 @@ public interface ProfileManager {
 	public void setPublication(Publication p);
 	public void removePublication();
 	public void editPublication();
+	public void newPublication();
+	public String savePublication();
+	public String getAction();
+	public void setAction(String s);
 	
 }
 
