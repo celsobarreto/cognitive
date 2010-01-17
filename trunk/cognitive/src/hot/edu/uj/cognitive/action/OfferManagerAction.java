@@ -46,6 +46,10 @@ public class OfferManagerAction implements OfferManager {
 	
 	private Offer offerUpdate;
 	
+	private String removeParagraphTags(String content){
+		return content.replaceAll("<p>", "").replaceAll("</p>", "");
+	}
+	
 	@SuppressWarnings("unchecked")
 	@Factory("offerList")
 	public void getOffer()
@@ -53,7 +57,7 @@ public class OfferManagerAction implements OfferManager {
 		this.offerList = this.em.createQuery("select o from Offer o").getResultList();
 	}
 	
-	@Override
+	
 	public String getEntrepreneurName(Offer o){
 		int entrepreneurId = o.getEntrepreneur_id();
 		User entrepreneur = (User)this.em.createQuery("select u from User u where id="+entrepreneurId).getSingleResult();
@@ -61,12 +65,15 @@ public class OfferManagerAction implements OfferManager {
 		return entrepreneur.getFullName();
 	}
 	
-	@Override
+	
 	public String addOffer() {
 		User user  = (User)Contexts.getSessionContext().get("loggedUser");
 		
 		offer.setDateAdded(new Date());
 		offer.setEntrepreneur_id(user.getId());
+		
+		String tmpContent = removeParagraphTags(offer.getContent());
+		offer.setContent(tmpContent);
 		
 		em.persist(offer);
 		this.getOffer();
@@ -74,7 +81,7 @@ public class OfferManagerAction implements OfferManager {
 		return "/offer.xhtml";
 	}
 
-	@Override
+	
 	public String removeOffer() {
 		em.remove(offer);
 		
@@ -83,43 +90,49 @@ public class OfferManagerAction implements OfferManager {
 		return "/offer.xhtml";
 	}
 
-	@Override
+	
 	public String saveOffer() {
 		offerUpdate.setDateAdded(new Date());
+		
+		String tmpContent = removeParagraphTags(offerUpdate.getContent());
+		offerUpdate.setContent(tmpContent);
 		
 		em.merge(offerUpdate);
 		log.info("Oferta "+ offerUpdate.getTitle() +" zostala zaktualizowana");
 		return "/offer.xhtml";
 	}
 	
-	@Override
+	
 	public String editOffer(){
 		offerUpdate = offer;
 		return "/editOffer.xhtml";
 	}
 	
-	@Override
+	
 	public Offer getOfferUpdate(){
 		return offerUpdate;
 	}
 	
-	@Override
+	
 	public void setOfferUpdate(Offer o){
 		offerUpdate = o;
 	}
 	
-	@Override
+	
 	public boolean isAllowed() {
 		User user  = (User)Contexts.getSessionContext().get("loggedUser");
 		
 		if(user != null){
 			Role[] roles = user.getRoles().toArray(new Role[0]);
 			
-			for(Role r:roles){
-				if(r.getName().equals("entrepreneur")){
-					return true;
+			if(roles != null){
+				for(Role r:roles){
+					if(r.getName().equals("entrepreneur")){
+						return true;
+					}
 				}
 			}
+			
 		}
 		
 		return false;
