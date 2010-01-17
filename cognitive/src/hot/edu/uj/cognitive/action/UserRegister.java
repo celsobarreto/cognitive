@@ -28,6 +28,14 @@ public interface UserRegister
 	
 	public void setConfirmPassword(String confirmPassword);
 	public String getConfirmPassword();
+		
+	public Boolean getScientistRole();
+	public void setScientistRole(Boolean isScientist);
 
+	public Boolean getEntrepreneurRole();
+	public void setEntrepreneurRole(Boolean isEntrepreneur);
+	
+	
+	
 
 }
