@@ -280,8 +280,20 @@ public class ProfileManagerBean implements ProfileManager {
 		if(action.equals("EDIT")){
 			Publication tmp = validPubl(publication.getId());
 			if(tmp!=null){
+				//tmp to publikacja z bazy
+				//nie mozna zapisac do bazy this.publication:
+				//detached entity passed to persist
 				
-				p = this.publication;
+				tmp.setAuthors(publication.getAuthors());
+				tmp.setTitle(publication.getTitle());
+				tmp.setJournal(publication.getJournal());
+				tmp.setKeywords(publication.getKeywords());
+				tmp.setLink(publication.getLink());
+				tmp.setPages(publication.getPages());
+				tmp.setVolume(publication.getVolume());
+				tmp.setReferences(publication.getReferences());
+				tmp.setYear(publication.getYear());
+				p = tmp;
 				
 			}
 			System.out.println("action: EDIT");
