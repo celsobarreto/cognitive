@@ -4,6 +4,7 @@
         xmlns:ui="http://java.sun.com/jsf/facelets"
         xmlns:h="http://java.sun.com/jsf/html"
         xmlns:f="http://java.sun.com/jsf/core"
+		xmlns:c="http://java.sun.com/jstl/core"
         xmlns:r="http://richfaces.org/rich"
         xmlns:s="http://jboss.com/products/seam/taglib">
 
@@ -58,18 +59,24 @@
 			</div>
 			<div id="handMenu">
 				<ul>
-					<li class="first">
-						<s:link value="Zarejestruj się" view="/userRegister.seam" styleClass="" propagation="none" rendered="#{not identity.loggedIn}"></s:link>
-					</li>
-					<li>
-						<s:link value="Edytuj Profil" view="/userProfile.xhtml" action="#{userManager.show}" propagation="none" rendered="#{identity.loggedIn}">
-				  			<f:param name="userId" value="#{loggedUser.id}"/>
-				  		</s:link>
-					</li>
-			  		<li>
-			  			<s:link value="Wyloguj" view="/homepage.seam" action="#{identity.logout}" propagation="none" rendered="#{identity.loggedIn}"/>
-					</li>					
-
+					<c:if test="${not identity.loggedIn}">
+						<li class="first">
+							<s:link value="Zarejestruj się" view="/userRegister.seam" styleClass="" propagation="none" rendered="#{not identity.loggedIn}"></s:link>
+						</li>
+					</c:if>
+					<c:if test="${identity.loggedIn}">
+						<li>
+							<s:link value="Edytuj Profil" view="/userProfile.xhtml" action="#{userManager.show}" propagation="none">
+					  			<f:param name="userId" value="#{loggedUser.id}"/>
+					  		</s:link>
+						</li>
+				  		<li>
+				  			<s:link value="Zmień hasło" view="/changePassword.seam" propagation="none"/>
+						</li>						
+				  		<li>
+				  			<s:link value="Wyloguj" view="/homepage.seam" action="#{identity.logout}" propagation="none"/>
+						</li>
+					</c:if>					
 				</ul>					
 			</div>
 		</div>
@@ -88,12 +95,15 @@
 					    	<h:commandButton value="Zaloguj" action="#{identity.login}"/>
 				   		</f:facet>
 					</h:panelGrid>
-				</h:form>			
+				</h:form>		
 			</div>
 		</div>
 	</div>
 	<div class="bodyContainer">
 		<div id="body">
+	       <h:messages id="messages" globalOnly="true" styleClass="message"
+	            errorClass="errormsg" infoClass="infomsg" warnClass="warnmsg"
+	            rendered="#{showGlobalMessages != 'false'}"/>
 			<div id="content">
 				<ui:insert name="content"/>
 			</div>
