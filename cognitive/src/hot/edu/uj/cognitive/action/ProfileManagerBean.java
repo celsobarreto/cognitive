@@ -43,6 +43,9 @@ public class ProfileManagerBean implements ProfileManager {
 	private Publication publication;
 
 
+	
+	private String action = "EDIT";
+	
 	@RequestParameter
 	public Integer publId;
 	
@@ -211,40 +214,47 @@ public class ProfileManagerBean implements ProfileManager {
 		
 	}
 
-	@Override
-	public void editPublication() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void removePublication() {
+	private Publication validPubl(Integer pId){
 		User user = (User) Contexts.getSessionContext().get("loggedUser");
-		
 		user = (User)this.em.createQuery("select u from User u where id=:id").setParameter("id", user.getId()).getSingleResult();
-		
 		this.userPublications = user.getPublications();
-		System.out.println("RequestID: "+this.publId);
 		boolean valid = false;
 		Publication p = null;
 		for(Publication pub: this.userPublications){
 			System.out.println("PubID: "+pub.getId());
-			if(pub.getId().equals(this.publId)){
+			if(pub.getId().equals(pId)){
 				valid = true;
 				p = pub;
 				break;
 			}
 		}
+		return p;
 		
-		if(valid){
-			//publikacja tego usera
-			if(p!=null){
-				
-				user.getPublications().remove(p);
+	}
+	
+	@Override
+	public void editPublication() {
+		action = "EDIT";
+		Publication p = validPubl(this.publId);
+		if(p!=null){
+			this.publication = p;
+			
+		} else {
+			this.message = "błędne ID";
+		}
+	}
+
+	@Override
+	public void removePublication() {
+		Publication p = validPubl(this.publId);
+		
+		if(p!=null){
+			//publikacja tego usera	
+				this.userPublications.remove(p);
+				System.out.println("publ.size(): "+this.userPublications.size());
 				if(p.getUsers().size()==0)
 					em.remove(p);
-			}
-			this.userPublications = user.getPublications();
+			
 			this.message = "publikacja usunięta";
 		} else {
 			this.message = "niewłaściwe ID";
@@ -263,4 +273,48 @@ public class ProfileManagerBean implements ProfileManager {
 		this.publication = p;
 		
 	}
+
+	@Override
+	public String savePublication() {
+		Publication p = null;
+		if(action.equals("EDIT")){
+			Publication tmp = validPubl(publication.getId());
+			if(tmp!=null){
+				
+				p = this.publication;
+				
+			}
+			System.out.println("action: EDIT");
+		} else {
+			p = this.publication;
+		}
+		if(p!=null){
+			em.persist(p);
+			if(action.equals("ADD")){
+				//dodajemy userowi te publikacje
+				User user = (User) Contexts.getSessionContext().get("loggedUser");
+				user = (User)this.em.createQuery("select u from User u where id=:id").setParameter("id", user.getId()).getSingleResult();
+				user.getPublications().add(p);
+			}
+			this.message = "zapisano";
+			
+		} else {
+			this.message = "błędne ID";	
+		}
+		return "/profilemanager.xhtml";
+	}
+
+	@Override
+	public void newPublication() {
+		action = "ADD";
+		this.publication = new Publication();
+	}
+	public String getAction(){
+		return this.action;
+	}
+	public void setAction(String s){
+		this.action = s;
+	}
+
+
 }
