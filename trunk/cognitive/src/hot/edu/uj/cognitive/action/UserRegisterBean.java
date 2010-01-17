@@ -65,8 +65,8 @@ public class UserRegisterBean implements UserRegister
     		
     	
     	// implement your business logic here
-        log.info("UserRegister.userRegister() action called with: #{UserRegister.value}");
-        statusMessages.add("userRegister #{UserRegister.value}");
+        log.info("UserRegister.userRegister() action called with: #{UserRegister.fullName}");
+        statusMessages.add("userRegister #{UserRegister.fullName}");
     }
 
     public String getFullName() {
@@ -120,5 +120,29 @@ public class UserRegisterBean implements UserRegister
     
     @Remove
     public void destroy() {}
+
+	@Override
+	public Boolean getEntrepreneurRole() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Boolean getScientistRole() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void setEntrepreneurRole(Boolean isEntrepreneur) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void setScientistRole(Boolean isScientist) {
+		// TODO Auto-generated method stub
+		
+	}
 
 }
