@@ -16,12 +16,14 @@ import org.hibernate.validator.Length;
 import org.hibernate.validator.NotNull;
 import org.hibernate.validator.Pattern;
 import org.jboss.seam.ScopeType;
+import org.jboss.seam.annotations.Logger;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Scope;
 import org.jboss.seam.annotations.security.management.UserEnabled;
 import org.jboss.seam.annotations.security.management.UserPassword;
 import org.jboss.seam.annotations.security.management.UserPrincipal;
 import org.jboss.seam.annotations.security.management.UserRoles;
+import org.jboss.seam.log.Log;
 import org.jboss.seam.security.digest.DigestUtils;
 
 @Entity
@@ -77,10 +79,13 @@ public class User implements Serializable
 		
 	}
 
-	private void setPassword(String password) {
+	public void setPassword(String password) {
 		this.passwordHash = DigestUtils.md5Hex(password);
 	}
 
+	public boolean hasPassword(String password) {
+		return this.passwordHash.equals(DigestUtils.md5Hex(password));		
+	}
 
 	public Boolean getAccepted() {
 		return accepted;

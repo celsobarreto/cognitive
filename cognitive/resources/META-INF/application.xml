@@ -6,7 +6,7 @@
     
    <display-name>cognitive</display-name>
    
-   <module>
+   <module> 
       <web>
          <web-uri>cognitive.war</web-uri>
          <context-root>/cognitive</context-root>
