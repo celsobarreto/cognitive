@@ -48,26 +48,36 @@ public class UserRegisterBean implements UserRegister {
 
 	private ArrayList<Role> roles = new ArrayList<Role>();
 
-	public void userRegister() {
+	public String userRegister() {
 		roles.clear();
 
 		if (isScientist) {
 			roles.add(getRole("scientist"));
-		} else if (isEntrepreneur) {
+		} 
+		
+		if (isEntrepreneur) {
 			roles.add(getRole("entrepreneur"));
-		} else if (roles.isEmpty()) {
+		} 
+		
+		if (roles.isEmpty()) {
 			statusMessages.add("Wybierz grupe do ktorej chcesz nalezec");
 		}
-
 		else {
 
-			if (fullName == null || fullName == "") {
+			if (fullName.equals(null) || fullName == "") {
 				statusMessages.add("Podaj Tytul Imie i Nazwisko");
-			} else if (email == null || email == "") {
+			} 
+			else if (email.equals(null) || email == "") {
 				statusMessages.add("Podaj E-mail");
-			} else if (password.equals(confirmPassword) == false) {
+			}
+			else if(password.equals(null) || password == "")
+			{
+				statusMessages.add("Podaj haslo");
+			}
+			else if (password.equals(confirmPassword) == false) {
 				statusMessages.add("Podane hasla sa rozne");
-			} else {
+			} 
+			else {
 
 				User newUser = new User(fullName, email, password);
 
@@ -82,10 +92,13 @@ public class UserRegisterBean implements UserRegister {
 			log
 			.info("UserRegister.userRegister() action called with: #{UserRegister.fullName}");
 			statusMessages.add("Zarejestrowano uzytkownika #{UserRegister.fullName}");
-
+			
+			return "/profilemanager.xhtml";
+			
 		}
 		// implement your business logic here
 		
+		return "/userregister.xhtml";
 	}
 
 	private Role getRole(String roleName) {

@@ -23,22 +23,22 @@
 				
     			       
  	         <h:panelGrid columns="2">  	
-                <h:outputLabel value="Tytul Imie i Nazwisko" for="name" style=" width : 200px;"/>
+                <h:outputLabel value="Tytul Imie i Nazwisko" for="fullname" style=" width : 200px;"/>
  
-                <h:inputText id="fullname" 
+                <h:inputText id="fullname" required="true"
                              value="#{UserRegister.fullName}" />
                              
            	
            		<h:outputLabel value="E-mail" for="email" />
-            	<h:inputText id="email" 
+            	<h:inputText id="email" required="true"
                              value="#{UserRegister.email}"/>
             
             	<h:outputLabel value="Haslo" for="password" />
-            	<h:inputSecret  id="password" 
+            	<h:inputSecret  id="password" required="true"
                              value="#{UserRegister.password}"/>
            
-           		<h:outputLabel value="Powtorz Haslo" for="confirmPassword" />
-           		<h:inputSecret id="confirmpassword" 
+           		<h:outputLabel value="Powtorz Haslo" for="confirmpassword" />
+           		<h:inputSecret id="confirmpassword" required="true"
                              value="#{UserRegister.confirmPassword}"/>
            
            		<h:selectBooleanCheckbox value="#{UserRegister.scientistRole}" /><h:outputLabel value="Naukowiec" for="scientist" />
