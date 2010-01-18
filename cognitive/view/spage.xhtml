@@ -16,7 +16,7 @@
 			<h2>#{sPage.title}</h2>
 		</h:outputText>
 		<h:outputText rendered="#{sPage ne null}" escape="false" value="#{sPage.content}" />
-		<s:link value="Edytuj tę stronę" view="/pageform.seam" action="#{pageForm.showForm()}" rendered="#{sPage ne null}">
+		<s:link value="Edytuj tę stronę" view="/pageform.seam" action="#{pageForm.showForm()}" rendered="#{sPage ne null and s:hasRole('admin')}">
 		     <f:param name="pageId" value="#{sPage.id}"/>
 		</s:link>
 				

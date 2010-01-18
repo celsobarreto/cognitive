@@ -17,6 +17,7 @@ import javax.persistence.PersistenceContext;
 import org.jboss.seam.annotations.Factory;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.datamodel.DataModel;
+import org.jboss.seam.annotations.security.Restrict;
 import org.jboss.seam.annotations.web.RequestParameter;
 import org.jboss.seam.contexts.Contexts;
 
@@ -26,6 +27,7 @@ import edu.uj.cognitive.model.User;
 
 @Stateless
 @Name("profileManager")
+@Restrict("#{identity.loggedIn}") 
 public class ProfileManagerBean implements ProfileManager {
 	@PersistenceContext
 	private EntityManager em;
