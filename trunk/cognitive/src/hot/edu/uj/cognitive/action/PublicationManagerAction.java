@@ -77,7 +77,7 @@ public class PublicationManagerAction implements PublicationManager
 			{
 				value = 0;
 			}
-			query = this.em.createQuery("select p from Publication p where lower(p.title) like #{pattern} or lower(p.keywords) like #{pattern} or lower(p.link) like #{pattern} or lower(p.references) like #{pattern} or lower(p.journal) like #{pattern} or p.year = " + value + " or p.volume = " + value + " or p.pages = " + value);
+			query = this.em.createQuery("select p from Publication p where lower(p.title) like #{pattern} or lower(p.link) like #{pattern} or lower(p.references) like #{pattern} or lower(p.journal) like #{pattern} or p.year = " + value + " or p.volume = " + value + " or p.pages = " + value);
 		}
 		List<Publication> results = query.setMaxResults(this.pageSize + 1).setFirstResult(this.page * this.pageSize).getResultList();
 		this.nextPageAvailable = results.size() > this.pageSize;

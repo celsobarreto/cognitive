@@ -63,20 +63,32 @@ public class User implements Serializable
 
 	@NotNull
 	private Boolean accepted;
-	
+
 	@NotNull
-	private Boolean activated;
+	private Boolean emailConfirmed;	
+
+	public User() {
+		
+	}
 
 	public User(String fullname, String email, String password) {
+		this(fullname, email, password, false, false);
+	}
+	
+	public User(String fullname, String email, String password, boolean emailConfirmed, boolean accepted) {
 		this.fullName = fullname;
 		this.email = email;
 		this.setPassword(password);
-		this.activated = true;
-		this.accepted = true;
+		this.accepted = accepted;
+		this.emailConfirmed = emailConfirmed;
 	}
 	
-	public User() {
-		
+	public Boolean getEmailConfirmed() {
+		return emailConfirmed;
+	}
+
+	public void setEmailConfirmed(Boolean emailConfirmed) {
+		this.emailConfirmed = emailConfirmed;
 	}
 
 	public void setPassword(String password) {
@@ -96,12 +108,9 @@ public class User implements Serializable
 	}
 
 	public Boolean getActivated() {
-		return activated;
+		return getAccepted() && getEmailConfirmed();
 	}
 
-	public void setActivated(Boolean activated) {
-		this.activated = activated;
-	}
 
 	@UserRoles
 	@ManyToMany(fetch=FetchType.EAGER)

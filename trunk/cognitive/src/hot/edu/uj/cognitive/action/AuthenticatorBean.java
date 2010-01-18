@@ -1,6 +1,7 @@
 package edu.uj.cognitive.action;
 
 import javax.ejb.Stateless;
+import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
@@ -47,10 +48,15 @@ public class AuthenticatorBean implements Authenticator
                    identity.addRole(mr.getName());
              }
              
-             if (!user.getAccepted() || !user.getActivated()) {
-            	 log.info("Konto użytkownika nie zostało aktywowane. Nie możesz się zalogować.");
+             if (!user.getEmailConfirmed()) {
+            	 facesContext.addMessage(null, new FacesMessage("Konto nie jest aktywne. Musisz potwierdzić adres email otwierają przesłany link."));				 
             	 return false;
              }
+  
+             if (!user.getAccepted()) {
+            	 facesContext.addMessage(null, new FacesMessage("Konto nie jest aktywne. Oczekuje na akceptację przed administratora."));				 
+            	 return false;
+             }             
              
              String ip = getIP();
              log.info("IP = "+ip);

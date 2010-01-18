@@ -45,6 +45,9 @@ public class UserRegisterBean implements UserRegister {
 
 	private Boolean isEntrepreneur;
 	private Boolean isScientist;
+	
+	private final boolean REQUIRE_EMAIL_CONFIRMATION = false;
+	private final boolean REQUIRE_ADMIN_ACCEPTATION = false;
 
 	private ArrayList<Role> roles = new ArrayList<Role>();
 
@@ -85,8 +88,8 @@ public class UserRegisterBean implements UserRegister {
 
 				em.persist(newUser);
 
-				newUser.setAccepted(true);
-				newUser.setActivated(true);
+				newUser.setEmailConfirmed(!REQUIRE_EMAIL_CONFIRMATION);
+				newUser.setAccepted(!REQUIRE_ADMIN_ACCEPTATION);
 			}
 			
 			log
