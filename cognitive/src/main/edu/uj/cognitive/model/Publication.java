@@ -33,9 +33,6 @@ public class Publication implements Serializable
 	private String				title;
 
 	@Length(max = 1000)
-	private String				keywords;
-
-	@Length(max = 1000)
 	private String				authors;
 
 	@Length(max = 255)
@@ -56,6 +53,9 @@ public class Publication implements Serializable
 	@ManyToMany(mappedBy = "publications")
 	private List<User>			users;
 
+	@ManyToMany
+	private List<Keyword>	keywords;	
+	
 	public void setId(Integer id)
 	{
 		this.id = id;
@@ -76,14 +76,12 @@ public class Publication implements Serializable
 		return this.title;
 	}
 
-	public void setKeywords(String keywords)
-	{
-		this.keywords = keywords;
+	public List<Keyword> getKeywords() {
+		return keywords;
 	}
 
-	public String getKeywords()
-	{
-		return this.keywords;
+	public void setKeywords(List<Keyword> keywords) {
+		this.keywords = keywords;
 	}
 
 	public void setAuthors(String authors)

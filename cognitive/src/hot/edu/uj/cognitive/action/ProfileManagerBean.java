@@ -20,6 +20,7 @@ import org.jboss.seam.annotations.datamodel.DataModel;
 import org.jboss.seam.annotations.web.RequestParameter;
 import org.jboss.seam.contexts.Contexts;
 
+import edu.uj.cognitive.model.KeywordFactory;
 import edu.uj.cognitive.model.Publication;
 import edu.uj.cognitive.model.User;
 

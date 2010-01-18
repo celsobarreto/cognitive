@@ -66,7 +66,10 @@
 					</c:if>
 					<c:if test="${identity.loggedIn}">
 						<li>
-							<s:link value="Edytuj Profil" view="/userProfile.xhtml" action="#{userManager.show}" propagation="none">
+							<em><h:outputText value="#{loggedUser.fullName}" /></em>
+						</li>
+						<li>
+							<s:link value="Profil" view="/userProfile.xhtml" action="#{userManager.show}" propagation="none">
 					  			<f:param name="userId" value="#{loggedUser.id}"/>
 					  		</s:link>
 						</li>
@@ -92,7 +95,7 @@
 					    <h:outputLabel for="password" value="Password: "/>
 					    <h:inputSecret id="password" value="#{credentials.password}" redisplay="false"/>
 					    <f:facet name="footer">
-					    	<h:commandButton value="Zaloguj" action="#{identity.login}"/>
+					    	<h:commandButton value="Zaloguj" action="#{identity.login}" view="/homepage.seam" propagation="none" />
 				   		</f:facet>
 					</h:panelGrid>
 				</h:form>		
@@ -152,7 +155,9 @@
 			<s:link value="Science Domain" view="/scienceDomainList.seam"  propagation="none" rendered="#{pageid ne 'sd'}"></s:link>
 		</li>										
 		<li>
-			<s:link value="Wstaw dane testowe" view="/testData.seam" rendered="#{pageid ne 'testdata'}" propagation="none" />
+			<s:link value="Wstaw dane testowe" view="/homepage.seam" action="#{TestData.insert}" rendered="#{pageid ne 'testdata'}" propagation="none">
+				<f:param name="token" value="6936598e6e25e96bb9694b30187b42a4"></f:param>
+			</s:link>
 		</li>
 	</ul>
 </div>

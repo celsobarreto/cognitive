@@ -5,6 +5,6 @@ import javax.ejb.Local;
 @Local
 public interface TestData
 {
-    public void insert();
+    public String insert();
 
 }

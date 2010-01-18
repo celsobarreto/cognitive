@@ -11,6 +11,7 @@ import javax.persistence.PersistenceContext;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Logger;
 import org.jboss.seam.annotations.Name;
+import org.jboss.seam.annotations.web.RequestParameter;
 import org.jboss.seam.international.StatusMessages;
 import org.jboss.seam.log.Log;
 
@@ -30,6 +31,12 @@ public class TestDataBean implements TestData
 
     @In StatusMessages statusMessages;
 
+    @RequestParameter
+    private String token;
+    
+    // top secret
+    private final String EXPECTED_TOKEN = "6936598e6e25e96bb9694b30187b42a4";
+    
 	@PersistenceContext
 	private EntityManager em;  
 	
@@ -49,26 +56,37 @@ public class TestDataBean implements TestData
 			"<p>Proin sit amet semper nunc. Nullam urna dolor, placerat at accumsan blandit, dictum in magna. Vivamus semper ornare purus a rhoncus. Sed pretium volutpat gravida. Nunc et mi non nisl accumsan blandit. Sed scelerisque orci et libero vestibulum quis tincidunt nisi sollicitudin. Vivamus ut consequat sem. Pellentesque eu leo ipsum. Fusce leo urna, molestie sed aliquam sed, pharetra eu tellus. Phasellus sed lobortis tortor. Duis convallis sapien quis est suscipit in vestibulum arcu convallis. Sed ac purus diam. Praesent pulvinar rutrum sem, a sodales felis dignissim quis. Suspendisse non risus ipsum. Sed dictum viverra ornare. In hac habitasse platea dictumst." +
 			"</p>";
 	
-	public void insert()
+	public String insert()
 	{
-		this.clearTables();
-		this.insertRoles();
-		this.insertUsers();
-		this.insertSpecialPages();
-		this.insertPublications();
-		this.insertPropositions();
-		this.insertNews();
-    	
-        statusMessages.add("Test data loaded successfully.");
+		if (token == null || !token.equals(EXPECTED_TOKEN)) {
+			statusMessages.add("Niepoprawny token. Nie masz możesz wykonać tej operacji.");
+		} else {
+			this.clearTables();
+			this.insertRoles();
+			this.insertUsers();
+			this.insertSpecialPages();
+			this.insertPublications();
+			this.insertPropositions();
+			this.insertNews();
+	        statusMessages.add("Test data loaded successfully.");
+		}
+		
+        return "/homepage.xhtml";
     }
 	
 	private void clearTables() {
 		em.createQuery("DELETE SpecialPage s").executeUpdate();
+		
+		em.createNativeQuery("DELETE FROM publications_keywords").executeUpdate();
+		em.createQuery("DELETE Keyword p").executeUpdate();
+		
 		em.createNativeQuery("DELETE FROM users_publications").executeUpdate();
 		em.createQuery("DELETE Publication p").executeUpdate();
+		
 		em.createNativeQuery("DELETE FROM users_roles").executeUpdate();
 		em.createQuery("DELETE User u").executeUpdate();
 		em.createQuery("DELETE Role r").executeUpdate();
+		
 		em.createQuery("DELETE News n").executeUpdate();
 		em.createQuery("DELETE Offer o").executeUpdate();
 		em.flush();		
@@ -91,19 +109,19 @@ public class TestDataBean implements TestData
 	}
 
 	private void insertUsers() {
-		doktor = new User("mgr Doktor", "doktor@uj.pl", "doktor");
+		doktor = new User("mgr Doktor", "doktor@uj.pl", "doktor", true, true);
 		doktor.setRoles(new HashSet<Role>(Arrays.asList(new Role[] {scientistRole})));
 		this.em.persist(doktor);
 
-		profesor = new User("prof. Wit A�a", "profesor@uj.pl", "profesor");
+		profesor = new User("prof. Wit A�a", "profesor@uj.pl", "profesor", true, true);
 		doktor.setRoles(new HashSet<Role>(Arrays.asList(new Role[] {scientistRole})));
 		this.em.persist(profesor);		
 		
-		milioner = new User("the Milioner II", "milioner@uj.pl", "milioner");
+		milioner = new User("the Milioner II", "milioner@uj.pl", "milioner", true, true);
 		milioner.setRoles(new HashSet<Role>(Arrays.asList(new Role[] {entrepreneurRole})));
 		this.em.persist(milioner);		
 
-		admin = new User("Administrator", "admin@uj.pl", "admin");
+		admin = new User("Administrator", "admin@uj.pl", "admin", true, true);
 		admin.setRoles(new HashSet<Role>(Arrays.asList(new Role[] {adminRole})));
 		admin.setAllowedIPs("127.0.0.1"); // oddzielone przecinkiem
 		this.em.persist(admin);

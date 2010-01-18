@@ -16,7 +16,7 @@
    <module>
       <ejb>cognitive.jar</ejb>
    </module>
-   
+    
    <!-- Seam and EL -->
    <module>
        <ejb>jboss-seam.jar</ejb>
