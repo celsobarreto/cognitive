@@ -5,7 +5,7 @@ import javax.ejb.Local;
 @Local
 public interface UserRegister
 {
-    public void userRegister();
+    public String userRegister();
     public void destroy();
 
     // add additional interface methods here
