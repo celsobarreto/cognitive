@@ -61,9 +61,9 @@ public class UserRegisterBean implements UserRegister {
 
 		else {
 
-			if (fullName.equals(null)) {
+			if (fullName == null || fullName == "") {
 				statusMessages.add("Podaj Tytul Imie i Nazwisko");
-			} else if (email.equals(null)) {
+			} else if (email == null || email == "") {
 				statusMessages.add("Podaj E-mail");
 			} else if (password.equals(confirmPassword) == false) {
 				statusMessages.add("Podane hasla sa rozne");
@@ -78,12 +78,14 @@ public class UserRegisterBean implements UserRegister {
 				newUser.setAccepted(true);
 				newUser.setActivated(true);
 			}
+			
+			log
+			.info("UserRegister.userRegister() action called with: #{UserRegister.fullName}");
+			statusMessages.add("Zarejestrowano uzytkownika #{UserRegister.fullName}");
 
 		}
 		// implement your business logic here
-		log
-				.info("UserRegister.userRegister() action called with: #{UserRegister.fullName}");
-		statusMessages.add("Zarejestrowano uzytkownika #{UserRegister.fullName}");
+		
 	}
 
 	private Role getRole(String roleName) {
