@@ -1,75 +1,105 @@
 package edu.uj.cognitive.action;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+
 import javax.ejb.Remove;
 import javax.ejb.Stateful;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Logger;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.international.StatusMessages;
 import org.jboss.seam.log.Log;
+import org.jboss.seam.security.digest.DigestUtils;
 
+import edu.uj.cognitive.model.Role;
 import edu.uj.cognitive.model.User;
 
 @Stateful
 @Name("UserRegister")
-public class UserRegisterBean implements UserRegister
-{
-    @Logger private Log log;
+public class UserRegisterBean implements UserRegister {
+	@Logger
+	private Log log;
 
-    @In StatusMessages statusMessages;
-    
-    
+	@In
+	StatusMessages statusMessages;
+
 	@PersistenceContext
-	private EntityManager em;  
+	private EntityManager em;
 
-    //private String value;
-    
-    private String fullName;
-   
+	// private String value;
+
+	private String fullName;
 
 	private String email;
-    private String competences;
-    private String allowedIPs;
-    
-    private String password;
-    private String confirmPassword;
-    
-    public void userRegister()
-    {
-    	if(fullName.equals(null))
-    	{
-    		
-    	}
-    	else if(email.equals(null))
-    	{
-    		
-    	}
-    	else if(password.equals(confirmPassword) == false)
-    	{
-    		
-    			
-    	}
-    	else
-    	{
-    		User newUser = new User(fullName, email, password);
-    	//	newUser.setRoles(new HashSet<Role>(Arrays.asList(new Role[] {scientistRole})));
-    		
-    		em.persist(newUser);
-    		
-    		newUser.setAccepted(true);
-    		newUser.setActivated(true);
-    	}
-    		
-    	
-    	// implement your business logic here
-        log.info("UserRegister.userRegister() action called with: #{UserRegister.fullName}");
-        statusMessages.add("userRegister #{UserRegister.fullName}");
-    }
+	private String competences;
+	private String allowedIPs;
 
-    public String getFullName() {
+	private String password;
+	private String confirmPassword;
+
+	private Boolean isEntrepreneur;
+	private Boolean isScientist;
+
+	private ArrayList<Role> roles = new ArrayList<Role>();
+
+	public void userRegister() {
+		roles.clear();
+
+		if (isScientist) {
+			roles.add(getRole("scientist"));
+		} else if (isEntrepreneur) {
+			roles.add(getRole("entrepreneur"));
+		} else if (roles.isEmpty()) {
+			statusMessages.add("Wybierz grupe do ktorej chcesz nalezec");
+		}
+
+		else {
+
+			if (fullName.equals(null)) {
+				statusMessages.add("Podaj Tytul Imie i Nazwisko");
+			} else if (email.equals(null)) {
+				statusMessages.add("Podaj E-mail");
+			} else if (password.equals(confirmPassword) == false) {
+				statusMessages.add("Podane hasla sa rozne");
+			} else {
+
+				User newUser = new User(fullName, email, password);
+
+				newUser.setRoles(new HashSet<Role>(roles));
+
+				em.persist(newUser);
+
+				newUser.setAccepted(true);
+				newUser.setActivated(true);
+			}
+
+		}
+		// implement your business logic here
+		log
+				.info("UserRegister.userRegister() action called with: #{UserRegister.fullName}");
+		statusMessages.add("Zarejestrowano uzytkownika #{UserRegister.fullName}");
+	}
+
+	private Role getRole(String roleName) {
+
+		Role role = (Role) em.createQuery("from Role where name = :name")
+				.setParameter("name", roleName).getSingleResult();
+
+		if (role != null) {
+			return role;
+		}
+
+		return null;
+
+	}
+
+	public String getFullName() {
 		return fullName;
 	}
 
@@ -117,32 +147,32 @@ public class UserRegisterBean implements UserRegister
 		this.confirmPassword = confirmPassword;
 	}
 
-    
-    @Remove
-    public void destroy() {}
+	@Remove
+	public void destroy() {
+	}
 
 	@Override
 	public Boolean getEntrepreneurRole() {
 		// TODO Auto-generated method stub
-		return null;
+		return isEntrepreneur;
 	}
 
 	@Override
 	public Boolean getScientistRole() {
 		// TODO Auto-generated method stub
-		return null;
+		return isScientist;
 	}
 
 	@Override
 	public void setEntrepreneurRole(Boolean isEntrepreneur) {
-		// TODO Auto-generated method stub
-		
+		this.isEntrepreneur = isEntrepreneur;
+
 	}
 
 	@Override
 	public void setScientistRole(Boolean isScientist) {
-		// TODO Auto-generated method stub
-		
+		this.isScientist = isScientist;
+
 	}
 
 }
