@@ -69,9 +69,9 @@
 							<em><h:outputText value="#{loggedUser.fullName}" /></em>
 						</li>
 						<li>
-							<s:link value="Profil" view="/userProfile.xhtml" action="#{userManager.show}" propagation="none">
+							<s:link value="Profil " view="/userProfile.xhtml" action="#{userManager.show}" propagation="none">
 					  			<f:param name="userId" value="#{loggedUser.id}"/>
-					  		</s:link>
+					  		</s:link><s:link value="(edytuj)" view="/profilemanager.seam" />
 						</li>
 				  		<li>
 				  			<s:link value="Zmień hasło" view="/changePassword.seam" propagation="none"/>
@@ -146,10 +146,7 @@
 			<s:link value="Oferty pracy" view="/offer.seam" action="#{offerManager.getOffer}" styleClass="active" propagation="none" rendered="#{pageid eq 'offer'}"></s:link>
 			<s:link value="Oferty pracy" view="/offer.seam" action="#{offerManager.getOffer}" propagation="none" rendered="#{pageid ne 'offer'}"></s:link>
 		</li>
-		<li>
-			<s:link value="Mój profil (dla zalogowanych;))" view="/profilemanager.seam"  styleClass="active" propagation="none" rendered="#{pageid eq 'pagelist'}"></s:link>
-			<s:link value="Mój profil (dla zalogowanych;))" view="/profilemanager.seam"  propagation="none" rendered="#{pageid ne 'pagelist'}"></s:link>
-		</li>
+		
 		<li>
 			<s:link value="Science Domain" view="/scienceDomainList.seam" styleClass="active" propagation="none" rendered="#{pageid eq 'sd'}"></s:link>
 			<s:link value="Science Domain" view="/scienceDomainList.seam"  propagation="none" rendered="#{pageid ne 'sd'}"></s:link>

@@ -14,6 +14,7 @@ import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Out;
 import org.jboss.seam.annotations.datamodel.DataModel;
 import org.jboss.seam.annotations.datamodel.DataModelSelection;
+import org.jboss.seam.annotations.security.Restrict;
 import org.jboss.seam.annotations.web.RequestParameter;
 import org.jboss.seam.log.Log;
 
@@ -72,7 +73,7 @@ public class PageEditAction implements PageEdit
 		if (this.text != null)
 			this.text = "";
 	}
-	
+	@Restrict("#{s:hasRole('admin')}")
 	public void savePage() {
 		log.info("savePage");
 		log.info(this.pageId);
