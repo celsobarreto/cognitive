@@ -16,4 +16,9 @@ public interface NewsManager
 	public News getNews();
 	public void setNews(News news);
 	public boolean manageEnabled();
+	public String getSearchString();
+	public void setSearchString(String searchString);
+	public String getCriterion();
+	public void setCriterion(String criterion);
+	public void searchNews();
 }

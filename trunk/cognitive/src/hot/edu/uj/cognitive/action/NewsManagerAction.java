@@ -38,6 +38,9 @@ public class NewsManagerAction implements NewsManager
 	@Out(required=false, value="news")
 	@In(required=false, value="news")
 	private News news;
+
+	private String searchString;
+	private String criterion;
 	
 	private actionType action;
 	
@@ -107,21 +110,52 @@ public class NewsManagerAction implements NewsManager
 		return "/News.xhtml";
 	}
 	
+	@SuppressWarnings("unchecked")
+	public void searchNews()
+	{
+		System.out.println("@@ search news");
+		System.out.println("  searchString: " + searchString);
+		System.out.println("  criterion: " + criterion);
+		
+		String likeString = (this.searchString == null ? "%" : "'%" + this.searchString.toLowerCase().replace('*', '%') + "%'");
+		
+		if(criterion.equals("title"))
+			this.newsList = this.em.createQuery("select n from News n where lower(n.title) like " + likeString + " order by n.date DESC").getResultList();
+		
+		if(criterion.equals("content"))
+			this.newsList = this.em.createQuery("select n from News n where lower(n.content) like " + likeString + " order by n.date DESC").getResultList();
+	}
+	
 	public News getNews()
 	{
-		System.out.println("## getNews()");
-		if(this.news == null)
-			System.out.println("## getNews() return null");
-		
 		return this.news;
 	}
 	
 	public void setNews(News news)
 	{
-		System.out.println("## setNews()");
 		this.news = news;
 	}
 	
+	public String getSearchString() 
+	{
+		return searchString;
+	}
+
+	public void setSearchString(String searchString) 
+	{
+		this.searchString = searchString;
+	}
+
+	public String getCriterion() 
+	{
+		return criterion;
+	}
+
+	public void setCriterion(String criterion) 
+	{
+		this.criterion = criterion;
+	}
+
 	@Override
 	public boolean manageEnabled() 
 	{

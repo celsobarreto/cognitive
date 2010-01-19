@@ -13,7 +13,24 @@
 				
 	<ui:define name="content">
 		<h:form>
-            <h:outputText value="No news to display" rendered="#{newsList.rowCount==0}" />
+			<a:panel>
+				<f:facet name="header">
+	    			<h:outputText value="Wyszukiwanie aktualności"/>
+	  			</f:facet>
+				<h:panelGrid columns="2">
+					<h:inputText id="searchString" value="#{newsManager.searchString}" style="width: 250px;"/>
+					<h:commandButton id="findNews" value="Szukaj" action="#{newsManager.searchNews()}"/>
+				</h:panelGrid>	
+				<h:panelGrid columns="2">
+					<h:outputText value="Szukaj w:"/>
+					<h:selectOneMenu id="criterion" value="#{newsManager.criterion}" style="width: 120px;">
+						<f:selectItem id="criterion1" itemLabel="tytule" itemValue="title"/>
+						<f:selectItem id="criterion2" itemLabel="treści" itemValue="content"/>
+					</h:selectOneMenu>					
+				</h:panelGrid>
+			</a:panel>
+		
+			<h:outputText value="Brak wiadomości" rendered="#{newsList.rowCount == 0}"/>
             <h:dataTable border="0" cellpadding="3" cellspacing="0" headerClass="header_table" var="n" value="#{newsList}" rendered="#{newsList.rowCount>0}" width="100%">
             	<f:facet name="header">
     				<h:outputText value="News:"/>
@@ -32,7 +49,7 @@
             </h:dataTable>
             
             <a:panel rendered="#{newsManager.manageEnabled()}">
-            	<s:link value="Zarządzaj wiadomościami" view="/manageNews.seam" />
+            	<s:link value="Zarządzaj wiadomościami" view="/manageNews.seam" action="#{newsManager.getListOfNews()}"/>
             </a:panel>
             
 		</h:form>
