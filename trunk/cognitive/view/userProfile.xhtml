@@ -19,7 +19,12 @@
 	  		</f:facet>
 			<ul>
 				<li>
-					<s:link value="Wyślij e-mail do tego użytkownika" view="/sendEmail.xhtml"  action="#{emailSender.updateRecipientAddress()}" propagation="none">
+					<s:link value="Wyślij e-mail do tego użytkownika" view="/sendEmail.xhtml" action="#{emailSender.updateRecipientAddress}" propagation="none">
+					     <f:param name="userId" value="#{userProfile.id}"/>
+					</s:link>
+				</li>
+				<li>
+					<s:link value="Edytuj profil" view="/editUserProfile.xhtml" action="#{userManager.show}" propagation="none">
 					     <f:param name="userId" value="#{userProfile.id}"/>
 					</s:link>
 				</li>
@@ -84,6 +89,20 @@
 						<h:outputText value="Pages" />
 					</f:facet>
 					<h:outputText value="#{publ.pages}"/>
+				</h:column>
+			</h:dataTable>
+		</r:panel>
+		<r:panel>
+			<f:facet name="header">
+	    		<h:outputText value="Dziedziny naukowe" rendered="#{userProfile.scienceDomains.size>0}"/>
+	  		</f:facet>
+	  		<h:outputText value="Ten użytkownik nie posiada żadnych dziedzin naukowych" rendered="#{userProfile.scienceDomains.size==0}" />
+			<h:dataTable border="0" cellpadding="2" cellspacing="0" var="sd" value="#{userProfile.scienceDomains}" rendered="#{userProfile.scienceDomains.size>0}">
+				<h:column>
+					<h:outputText value="#{sd.name}"/>
+				</h:column>
+				<h:column>
+					<h:outputText value="#{sd.description}"/>
 				</h:column>
 			</h:dataTable>
 		</r:panel>
