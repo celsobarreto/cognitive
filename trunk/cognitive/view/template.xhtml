@@ -44,10 +44,10 @@
 						<s:link value="O projekcie" view="/spage.seam" action="#{specialPages.toPage('info')}" styleClass="active" propagation="none" ></s:link>
 					</li>
 					<li>
-						<s:link value="Naukowcy" view="/userList.seam" action="#{userManager.destroy}" styleClass="active" propagation="none" ></s:link>
+						<s:link value="Naukowcy" view="/userList.seam" action="#{userManager.setMode('scientist')}" styleClass="active" propagation="none" ></s:link>
 					</li>
 					<li>
-						<s:link value="Przedsiębiorcy" view="/userList.seam" action="#{userManager.destroy}" styleClass="active" propagation="none" ></s:link>
+						<s:link value="Przedsiębiorcy" view="/userList.seam" action="#{userManager.setMode('entrepreneur')}" styleClass="active" propagation="none" ></s:link>
 					</li>
 					<li>
 						<s:link value="Publikacje" view="/offer.seam" action="#{offerManager.getOffer}" styleClass="active" propagation="none" ></s:link>
