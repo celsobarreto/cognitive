@@ -55,7 +55,6 @@ public class NewsManagerAction implements NewsManager
 	public String addNewsAction() 
 	{
 		action = actionType.ADD;
-		System.out.println("CHANGE ACTION TYPE:" + action);
 		this.news = new News();
 		
 		return "/addNewsForm.xhtml";
@@ -80,11 +79,6 @@ public class NewsManagerAction implements NewsManager
 	@Override
 	public String performNewsAction() 
 	{
-		System.out.println("ACTION: " + action);
-		
-		if(news != null)
-			System.out.println(news);		
-		
 		switch(action)
 		{
 			case ADD:
@@ -112,11 +106,7 @@ public class NewsManagerAction implements NewsManager
 	
 	@SuppressWarnings("unchecked")
 	public void searchNews()
-	{
-		System.out.println("@@ search news");
-		System.out.println("  searchString: " + searchString);
-		System.out.println("  criterion: " + criterion);
-		
+	{		
 		String likeString = (this.searchString == null ? "%" : "'%" + this.searchString.toLowerCase().replace('*', '%') + "%'");
 		
 		if(criterion.equals("title"))
