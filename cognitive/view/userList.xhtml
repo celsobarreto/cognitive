@@ -69,11 +69,17 @@
 						<h:outputText value="#{usr.publications.size}"/>
 					</h:column>
 					<h:column>
-							<f:facet name="header">
-								<h:outputText value="Aktywny"/>
-							</f:facet>
-							<h:selectBooleanCheckbox value="#{pusr.activated}" disabled="true"/>
-						</h:column>
+						<f:facet name="header">
+							<h:outputText value="Aktywny"/>
+						</f:facet>
+						<h:selectBooleanCheckbox value="#{usr.activated}" disabled="true"/>
+					</h:column>
+					<h:column>
+						<f:facet name="header">
+							<h:outputText value="Kompetencje"/>
+						</f:facet>
+						<h:outputText value="#{usr.competences}"/>
+					</h:column>
 				</h:dataTable>
 			</r:panel>
 		</h:form>

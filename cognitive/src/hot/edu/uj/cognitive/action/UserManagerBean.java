@@ -1,28 +1,41 @@
 package edu.uj.cognitive.action;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 import javax.ejb.Remove;
 import javax.ejb.Stateful;
+import javax.faces.context.FacesContext;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceContextType;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.jboss.seam.ScopeType;
+
 import org.jboss.seam.annotations.Factory;
+import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Out;
 import org.jboss.seam.annotations.Scope;
 import org.jboss.seam.annotations.datamodel.DataModel;
 import org.jboss.seam.annotations.web.RequestParameter;
+import org.jboss.seam.contexts.Contexts;
+
+
+import edu.uj.cognitive.model.Publication;
+import edu.uj.cognitive.model.ScienceDomain;
+import edu.uj.cognitive.model.SpecialPage;
 
 import edu.uj.cognitive.model.Role;
-import edu.uj.cognitive.model.ScienceDomain;
+
 import edu.uj.cognitive.model.User;
 
 @Stateful
+@Scope(ScopeType.SESSION)
 @Name("userManager")
 @Scope(ScopeType.SESSION)
 public class UserManagerBean implements UserManager
@@ -33,15 +46,23 @@ public class UserManagerBean implements UserManager
 	@DataModel(scope = ScopeType.PAGE)
 	private List<User> userList;
 	
+	@DataModel
+	private List<ScienceDomain> sdList;
+	
 	@RequestParameter 
 	private Integer userId;
 	
+
+	private Integer editUserId;
+	
+
 	private String mode;
 	
 	private String searchText;
 	
 	private String searchCriteria;
 	
+
 	public Integer getUserId() {
 		return userId;
 	}
@@ -50,8 +71,15 @@ public class UserManagerBean implements UserManager
 		this.userId = id;
 	}
 	
-	@Out(value="userProfile", required = false)	
+	@In(required = false)
+	@Out(required = false)	
 	private User user;
+	
+	@Out(required=false, value="userProfile")
+	private User userProfile;
+	
+	@In 
+	private FacesContext facesContext;
 	
 	@SuppressWarnings("unchecked")
 	@Factory("userList")
@@ -71,6 +99,28 @@ public class UserManagerBean implements UserManager
 		searchText = null;
 		searchCriteria = null;
 	}
+
+	
+	@SuppressWarnings("unchecked")
+	@Factory("sdList")
+	public void scienceDomainList()
+	{
+		sdList = em.createQuery("select sc from ScienceDomain sc").getResultList();
+		for (ScienceDomain sd : sdList)
+		{
+			boolean sel = false;
+			for (ScienceDomain userSd : user.getScienceDomains())
+			{
+				if (userSd.getName().equals(sd.getName()))
+				{
+					sel = true;
+					break;
+				}
+			}
+			sd.setSelected(sel);
+		}
+	}
+
 	
 	private void searchUserScienceDomains(){
 		Set<User> tmpList = new HashSet<User>();
@@ -104,6 +154,7 @@ public class UserManagerBean implements UserManager
 		}
 		userList.removeAll(tmpList);
 	}
+
 
 	public void setSearchText(String text){
 		this.searchText = text;
@@ -146,13 +197,49 @@ public class UserManagerBean implements UserManager
 	{
 		this.userList = null;
 		this.user = null;
+		userProfile = null;
+		sdList = null;
 	}
 
 	public void show()
 	{
+		this.userProfile = (User) this.em.createQuery("select u from User u where u.id = " + userId.toString()).getSingleResult();
+		editUserId = userId;
+		user = userProfile;
+	}
+	
+	public void edit()
+	{
+		List<ScienceDomain> newList = new ArrayList<ScienceDomain>();
+		for(ScienceDomain sd : sdList)
+		{
+			if (sd.getSelected())
+				newList.add(sd);
+		}
 		
-		this.user = (User) this.em.createQuery("select u from User u where u.id = "+userId.toString()).getSingleResult();
+		User logUsr = (User) Contexts.getSessionContext().get("loggedUser");
+		boolean changeAllowedIp = false;
+		if (logUsr != null && logUsr.getId().equals(editUserId)) 
+		{
+			String IP = ((HttpServletRequest) facesContext.getExternalContext().getRequest()).getRemoteAddr();
+			for (String userIp : user.getAllowedIPs().split(","))
+			{
+				if (userIp.equals(IP))
+				{
+					changeAllowedIp = true;
+					break;
+				}
+			}
+			if (!changeAllowedIp)
+			{
+				userProfile.setAllowedIPs(logUsr.getAllowedIPs());
+			}
+		}
 
-
+		userProfile.setScienceDomains(newList);
+		em.merge(userProfile);
+		em.flush();
+		sdList = null;
+		System.out.println(userProfile.getAllowedIPs());
 	}
 }

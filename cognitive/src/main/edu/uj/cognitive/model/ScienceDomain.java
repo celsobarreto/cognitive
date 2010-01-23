@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.GeneratedValue;
 import javax.persistence.ManyToMany;
+import javax.persistence.Transient;
 import javax.persistence.Version;
 import org.hibernate.validator.Length;
 
@@ -14,13 +15,19 @@ import org.hibernate.validator.Length;
 @Entity
 public class ScienceDomain implements Serializable
 {
-    // seam-gen attributes (you should probably edit these)
+    /**
+	 * 
+	 */
+	private static final long	serialVersionUID	= 6772441454695425796L;
+	// seam-gen attributes (you should probably edit these)
     private Long id;
     private Integer version;
     private String name;
     private String description;
     private Boolean isDefault;
     private List<User> users;
+
+    private Boolean selected;
 
     // add additional entity attributes
 
@@ -78,6 +85,13 @@ public class ScienceDomain implements Serializable
 		this.users = users;
 	}
 
-	
+	@Transient
+	public Boolean getSelected(){
+		return selected;
+	}
+
+	public void setSelected(Boolean selected){
+		this.selected = selected;
+	}
 
 }
