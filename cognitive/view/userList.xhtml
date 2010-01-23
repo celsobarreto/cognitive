@@ -16,6 +16,26 @@
 		<h:form>
 			<r:panel>
 				<f:facet name="header">
+	    			<h:outputText value="Wyszukiwanie uzytkownikow"/>
+	  			</f:facet>
+				<h:panelGrid columns="2">
+					<h:inputText id="searchText" value="#{userManager.searchText}" style="width: 250px;"/>
+					<h:commandButton id="findUsers" value="Szukaj" action="#{userManager.list()}"/>
+				</h:panelGrid>	
+				<h:panelGrid columns="2">
+					<h:outputText value="Szukaj wedlug:"/>
+					<h:selectOneMenu id="criterion1" value="#{userManager.searchCriteria}" style="width: 120px;" rendered="#{userManager.mode eq 'scientist'}">
+						<f:selectItem id="criterion11" itemLabel="imie/nazwisko" itemValue="fullName"/>
+						<f:selectItem id="criterion12" itemLabel="dziedzina naukowa" itemValue="scienceDomains"/>
+						<f:selectItem id="criterion13" itemLabel="kompetencje" itemValue="competences"/>
+					</h:selectOneMenu>
+					<h:selectOneMenu id="criterion2" value="#{userManager.searchCriteria}" style="width: 120px;" rendered="#{userManager.mode eq 'entrepreneur'}">
+						<f:selectItem id="criterion21" itemLabel="imie/nazwisko" itemValue="fullName"/>
+					</h:selectOneMenu>					
+				</h:panelGrid>
+			</r:panel>
+			<r:panel>
+				<f:facet name="header">
 		    		<h:outputText value="Lista użytkowników" rendered="#{userList.rowCount>0}"/>
 		  		</f:facet>
 				<h:outputText value="Nie ma żadnych użytkowników w systemie" rendered="#{userList.rowCount==0}" />
