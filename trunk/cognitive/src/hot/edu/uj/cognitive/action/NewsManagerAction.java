@@ -48,7 +48,6 @@ public class NewsManagerAction implements NewsManager
 	private int homePageMessageAmount = 5;
 	
 	@SuppressWarnings("unchecked")
-	@Factory("newsList")
 	public void getListOfNews()
 	{
 		this.newsList = this.em.createQuery("select n from News n order by n.date DESC").getResultList();
@@ -185,6 +184,7 @@ public class NewsManagerAction implements NewsManager
 	}
 
 	@SuppressWarnings("unchecked")
+	@Factory("newsList")
 	@Override
 	public void getListOfNewsForHomePage() 
 	{
