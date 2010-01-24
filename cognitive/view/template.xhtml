@@ -119,8 +119,8 @@
 			<s:link value="Strona główna" view="/homepage.seam" propagation="none" rendered="#{pageid ne 'home'}"></s:link>
 		</li>
 		<li>
-			<s:link value="Aktualności" view="/News.seam" action="#{newsManager.getNews}" styleClass="active" propagation="none" rendered="#{pageid eq 'news'}"></s:link>
-			<s:link value="Aktualności" view="/News.seam" action="#{newsManager.getNews}" propagation="none" rendered="#{pageid ne 'news'}"></s:link>
+			<s:link value="Aktualności" view="/News.seam" action="#{newsManager.getListOfNews}" styleClass="active" propagation="none" rendered="#{pageid eq 'news'}"></s:link>
+			<s:link value="Aktualności" view="/News.seam" action="#{newsManager.getListOfNews}" propagation="none" rendered="#{pageid ne 'news'}"></s:link>
 		</li>					
 		<li>
 			<s:link value="Publikacje" view="/publication.seam" action="#{publicationManager.newSearch}" styleClass="active" propagation="none" rendered="#{pageid eq 'publ'}"></s:link>
