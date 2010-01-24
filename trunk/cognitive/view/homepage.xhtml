@@ -4,14 +4,28 @@
 	  			xmlns:h="http://java.sun.com/jsf/html"
 	  			xmlns:f="http://java.sun.com/jsf/core"
 	  			xmlns:s="http://jboss.com/products/seam/taglib"
-                xmlns:a="http://richfaces.org/a4j"
-				template="template.xhtml">
+                xmlns:a="http://richfaces.org/rich"
+				template="sgtemplate.xhtml">
 
 	<ui:define name="navigation">
 		<ui:param name="pageid" value="home" />
 	</ui:define>
 	
-	<ui:define name="content">
-		<h1>Cognitive project</h1>
+	<ui:define name="aktualnosci">
+		<h2>Aktualności</h2>
+		<h:outputText value="Brak wiadomo�ci" rendered="#{newsList.rowCount == 0}"/>
+		<h:dataTable border="0" cellpadding="3" cellspacing="0" headerClass="header_table" var="n" value="#{newsList}" rendered="#{newsList.rowCount>0}" width="100%">
+			<h:column>
+      			<a:panel>
+      				<f:facet name="header">
+      					<h:outputFormat value="{0}	{1, date, yyyy-MM-dd HH:mm:ss}">
+      						<f:param value="#{n.title}"/>
+      						<f:param value="#{n.date}"/>
+      					</h:outputFormat>
+      				</f:facet>
+      				<h:outputText value="#{n.content}" escape="false"/>
+      			</a:panel>
+      		</h:column>
+      	</h:dataTable>
 	</ui:define>
 </ui:composition>
