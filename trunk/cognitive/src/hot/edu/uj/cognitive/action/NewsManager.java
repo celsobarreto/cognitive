@@ -21,4 +21,5 @@ public interface NewsManager
 	public String getCriterion();
 	public void setCriterion(String criterion);
 	public void searchNews();
+	public void getListOfNewsForHomePage();
 }

@@ -1,5 +1,6 @@
 package edu.uj.cognitive.action;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -43,6 +44,8 @@ public class NewsManagerAction implements NewsManager
 	private String criterion;
 	
 	private actionType action;
+	private int homePageMessageLength = 300;
+	private int homePageMessageAmount = 5;
 	
 	@SuppressWarnings("unchecked")
 	@Factory("newsList")
@@ -179,5 +182,23 @@ public class NewsManagerAction implements NewsManager
 	enum actionType
 	{
 		ADD, EDIT, DELETE, NONE
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public void getListOfNewsForHomePage() 
+	{
+		List<News> tmp = this.em.createQuery("select n from News n order by n.date DESC").setMaxResults(homePageMessageAmount).getResultList(); 
+		this.newsList = new ArrayList<News>();
+
+		this.em.clear();
+		
+		for(News n : tmp)
+		{
+			if(n.getContent().length() > homePageMessageLength)
+				n.setContent(n.getContent().substring(0, homePageMessageLength));
+			
+			newsList.add(n);
+		}
 	}
 }
