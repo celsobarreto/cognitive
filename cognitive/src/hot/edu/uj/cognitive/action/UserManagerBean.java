@@ -37,7 +37,6 @@ import edu.uj.cognitive.model.User;
 @Stateful
 @Scope(ScopeType.SESSION)
 @Name("userManager")
-@Scope(ScopeType.SESSION)
 public class UserManagerBean implements UserManager
 {
 	@PersistenceContext(type = PersistenceContextType.EXTENDED)
