@@ -103,62 +103,64 @@
 		</div>
 	</div>
 	<div class="bodyContainer">
-		<div id="body" class="columnLayout">
+		<div id="body" class="sg rowLayout">
 	       <h:messages id="messages" globalOnly="true" styleClass="message"
 	            errorClass="errormsg" infoClass="infomsg" warnClass="warnmsg"
 	            rendered="#{showGlobalMessages != 'false'}"/>
-			<div id="content">
-				<ui:insert name="content"/>
+			<div class="contentHead">
+				<div class="zajawka">
+					<div class="headline">
+						<h2>NAUKOWCY</h2>
+					</div>
+					<div class="foto">
+						<img src="images/foto1.jpg" />
+					</div>
+					<div class="description">
+						Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+					</div>
+					<div class="more">
+						<a href="#">WIĘCEJ</a>
+					</div>
+				</div>
+				
+				<div class="zajawka">
+					<div class="headline">
+						<h2>PUBLIKACJE</h2>
+					</div>
+					<div class="foto">
+						<img src="images/foto2.jpg" />
+					</div>
+					<div class="description">
+						Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+					</div>
+					<div class="more">
+						<a href="#">WIĘCEJ</a>
+					</div>
+				</div>
+				
+				<div class="zajawka">
+					<div class="headline">
+						<h2>PRZEDSĘBIORCY</h2>
+					</div>
+					<div class="foto">
+						<img src="images/foto3.jpg" />
+					</div>
+					<div class="description">
+						Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+					</div>
+					<div class="more">
+						<a href="#">WIĘCEJ</a>
+					</div>
+				</div>
 			</div>
-			<div id="extra">
-			
-<div id="temporaryNavigation navigation">
-	<ul>
-		<li class="begin">
-			<s:link value="Strona główna" view="/homepage.seam" styleClass="active" propagation="none" rendered="#{pageid eq 'home'}"></s:link>
-			<s:link value="Strona główna" view="/homepage.seam" propagation="none" rendered="#{pageid ne 'home'}"></s:link>
-		</li>
-		<li>
-			<s:link value="Aktualności" view="/News.seam" action="#{newsManager.getListOfNews}" styleClass="active" propagation="none" rendered="#{pageid eq 'news'}"></s:link>
-			<s:link value="Aktualności" view="/News.seam" action="#{newsManager.getListOfNews}" propagation="none" rendered="#{pageid ne 'news'}"></s:link>
-		</li>					
-		<li>
-			<s:link value="Publikacje" view="/publication.seam" action="#{publicationManager.newSearch}" styleClass="active" propagation="none" rendered="#{pageid eq 'publ'}"></s:link>
-			<s:link value="Publikacje" view="/publication.seam" action="#{publicationManager.newSearch}" propagation="none" rendered="#{pageid ne 'publ'}"></s:link>
-		</li>
-		<li>
-			<s:link value="Użytkownicy" view="/userList.seam" action="#{userManager.destroy}" styleClass="active" propagation="none" rendered="#{pageid eq 'users'}"></s:link>
-			<s:link value="Uzytkownicy" view="/userList.seam" action="#{userManager.destroy}" propagation="none" rendered="#{pageid ne 'users'}"></s:link>
-		</li>
-		<li>
-			<s:link value="O projekcie" view="/spage.seam" action="#{specialPages.toPage('info')}" styleClass="active" propagation="none" rendered="#{pageid eq 'info'}"></s:link>
-			<s:link value="O projekcie" view="/spage.seam" action="#{specialPages.toPage('info')}" propagation="none" rendered="#{pageid ne 'info'}"></s:link>
-		</li>
-		<li>
-			<s:link value="Wykonawcy" view="/spage.seam" action="#{specialPages.toPage('staff')}" styleClass="active" propagation="none" rendered="#{pageid eq 'staff'}"></s:link>
-			<s:link value="Wykonawcy" view="/spage.seam" action="#{specialPages.toPage('staff')}" propagation="none" rendered="#{pageid ne 'staff'}"></s:link>
-		</li>			
-		<li>
-			<s:link value="Linki" view="/spage.seam" action="#{specialPages.toPage('links')}" styleClass="active" propagation="none" rendered="#{pageid eq 'links'}"></s:link>
-			<s:link value="Linki" view="/spage.seam" action="#{specialPages.toPage('links')}" propagation="none" rendered="#{pageid ne 'links'}"></s:link>
-		</li>							
-		<li>
-			<s:link value="Oferty pracy" view="/offer.seam" action="#{offerManager.getOffer}" styleClass="active" propagation="none" rendered="#{pageid eq 'offer'}"></s:link>
-			<s:link value="Oferty pracy" view="/offer.seam" action="#{offerManager.getOffer}" propagation="none" rendered="#{pageid ne 'offer'}"></s:link>
-		</li>
-		
-		<li>
-			<s:link value="Science Domain" view="/scienceDomainList.seam" styleClass="active" propagation="none" rendered="#{pageid eq 'sd'}"></s:link>
-			<s:link value="Science Domain" view="/scienceDomainList.seam"  propagation="none" rendered="#{pageid ne 'sd'}"></s:link>
-		</li>										
-		<li>
-			<s:link value="Wstaw dane testowe" view="/homepage.seam" action="#{TestData.insert}" rendered="#{pageid ne 'testdata'}" propagation="none">
-				<f:param name="token" value="6936598e6e25e96bb9694b30187b42a4"></f:param>
-			</s:link>
-		</li>
-	</ul>
-</div>
-			
+			<div class="contentBox">
+				<div class="con1">
+					<ui:insert name="aktualnosci"/>
+				</div>
+				<div class="con2"></div>
+			</div>
+			<div class="contentFoot">
+				
 			</div>
 		</div>
 	</div>
