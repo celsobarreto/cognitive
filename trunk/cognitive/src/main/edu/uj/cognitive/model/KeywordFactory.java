@@ -9,7 +9,7 @@ import javax.persistence.NoResultException;
 public class KeywordFactory {
 	private EntityManager em;
 	
-	KeywordFactory(EntityManager em) {
+	public KeywordFactory(EntityManager em) {
 		this.em = em;
 	}
 	
@@ -20,6 +20,9 @@ public class KeywordFactory {
 		String[] kwNames = text.split("\\W"); // podziel na wszystkim co nie jest alfanumeryczne
 		List<Keyword> keywords = new ArrayList<Keyword>();
 		for (String name: kwNames) {
+			if(name.length()<3) 
+				continue;
+			
 			try {
 				Keyword kw = (Keyword) this.em.createQuery("select kw from Keyword kw where name=:name")
 					.setParameter("name", name).getSingleResult();

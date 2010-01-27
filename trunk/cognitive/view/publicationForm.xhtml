@@ -13,9 +13,6 @@
 	</ui:define>
 
 	<ui:define name="content">
-		<strong>
-		<h:outputText rendered="#{profileManager.message ne null}" escape="false" value="#{profileManager.message}" />
-		</strong>
 		
 		<h2>Zarządzanie publikacjami</h2>
 		
@@ -31,7 +28,7 @@
 					Title: <h:inputText value="#{profileManager.publication.title}"/>
 					Authors: <h:inputText value="#{profileManager.publication.authors}"/>
 					Link: <h:inputText value="#{profileManager.publication.link}"/>
-					Keywords: <h:inputText value="#{profileManager.publication.keywords}"/>
+					Keywords: <h:inputText value="#{profileManager.publicationKeywords}"/>
 					Year: <h:inputText value="#{profileManager.publication.year}"/>
 					References: <h:inputText value="#{profileManager.publication.references}"/>
 					Journal: <h:inputText value="#{profileManager.publication.journal}"/>
