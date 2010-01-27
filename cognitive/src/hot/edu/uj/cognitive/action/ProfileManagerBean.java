@@ -11,16 +11,20 @@ import java.util.StringTokenizer;
 
 import javax.ejb.Remove;
 import javax.ejb.Stateless;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import org.jboss.seam.annotations.Factory;
+import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.datamodel.DataModel;
 import org.jboss.seam.annotations.security.Restrict;
 import org.jboss.seam.annotations.web.RequestParameter;
 import org.jboss.seam.contexts.Contexts;
 
+import edu.uj.cognitive.model.Keyword;
 import edu.uj.cognitive.model.KeywordFactory;
 import edu.uj.cognitive.model.Publication;
 import edu.uj.cognitive.model.User;
@@ -38,13 +42,13 @@ public class ProfileManagerBean implements ProfileManager {
 
 	private String newAddressConfirm;
 
-	private String message;
-	
+	@In private FacesContext facesContext;  
 	
 	private List<Publication> userPublications;
 	
 	private Publication publication;
 
+	private String publicationKeywords;
 
 	
 	private String action = "EDIT";
@@ -100,12 +104,12 @@ public class ProfileManagerBean implements ProfileManager {
 
 	@Override
 	public String changeRequest() {
-		this.message = "";
+		
 		System.out.println(this.newAddress);
 		if (!this.newAddress.equals(this.newAddressConfirm))
-			this.message = "emaile są różne";
+			facesContext.addMessage(null, new FacesMessage("Emaile są różne"));
 		else if (!this.validateEmail(this.newAddress))
-			this.message = "niewłaściwy email";
+			facesContext.addMessage(null, new FacesMessage("Niewłaściwy email"));
 		else {
 			// wysylanie maila z informacja
 			// tworzony link do zmiany maila
@@ -125,7 +129,7 @@ public class ProfileManagerBean implements ProfileManager {
 			
 			//mailer.postMail();
 			System.out.println("Token: "+token);
-			this.message = "dalsze informacje zostały wysłane na podany email";
+			facesContext.addMessage(null, new FacesMessage("dalsze informacje zostały wysłane na podany email"));
 			
 		}
 
@@ -134,7 +138,6 @@ public class ProfileManagerBean implements ProfileManager {
 
 	@Override
 	public String changePerform() {
-		this.message = "błędne dane";
 		
 		//liczymy ponownie hash
 		User user = (User) Contexts.getSessionContext().get("loggedUser");
@@ -149,7 +152,7 @@ public class ProfileManagerBean implements ProfileManager {
 			em.persist(user);
 			//zmieniamy usera w sesji, by odpowiadala stanowi aktualnemu
 			Contexts.getSessionContext().set("loggedUser", user);
-			this.message = "adres e-mail został zmieniony";
+			facesContext.addMessage(null, new FacesMessage("Adres e-mail został zmieniony"));
 		}
 		
 		return null;
@@ -177,15 +180,6 @@ public class ProfileManagerBean implements ProfileManager {
 
 	}
 
-	@Override
-	public String getMessage() {
-		return this.message;
-	}
-
-	@Override
-	public void setMessage(String s) {
-		this.message = s;
-	}
 	@Override
 	public String getToken() {
 		return this.token;
@@ -236,15 +230,23 @@ public class ProfileManagerBean implements ProfileManager {
 	}
 	
 	@Override
-	public void editPublication() {
+	public String editPublication() {
 		action = "EDIT";
 		Publication p = validPubl(this.publId);
 		if(p!=null){
 			this.publication = p;
+			StringBuilder sb = new StringBuilder();
+			for (Keyword kw : p.getKeywords()) {
+				sb.append(kw.getName());
+			    sb.append(",");
+			}
+			this.publicationKeywords = sb.toString();
 			
 		} else {
-			this.message = "błędne ID";
+			facesContext.addMessage(null, new FacesMessage("błędne ID"));
+			return "/editUserProfile.xhtml";
 		}
+		return "";
 	}
 
 	@Override
@@ -258,9 +260,9 @@ public class ProfileManagerBean implements ProfileManager {
 				if(p.getUsers().size()==0)
 					em.remove(p);
 			
-			this.message = "publikacja usunięta";
+				facesContext.addMessage(null, new FacesMessage("publikacja usunięta"));
 		} else {
-			this.message = "niewłaściwe ID";
+			facesContext.addMessage(null, new FacesMessage("niewłaściwe ID"));
 		}
 		
 	}
@@ -287,10 +289,11 @@ public class ProfileManagerBean implements ProfileManager {
 				//nie mozna zapisac do bazy this.publication:
 				//detached entity passed to persist
 				
+				
 				tmp.setAuthors(publication.getAuthors());
 				tmp.setTitle(publication.getTitle());
 				tmp.setJournal(publication.getJournal());
-				tmp.setKeywords(publication.getKeywords());
+				
 				tmp.setLink(publication.getLink());
 				tmp.setPages(publication.getPages());
 				tmp.setVolume(publication.getVolume());
@@ -304,6 +307,8 @@ public class ProfileManagerBean implements ProfileManager {
 			p = this.publication;
 		}
 		if(p!=null){
+			KeywordFactory kfact = new KeywordFactory(this.em);
+			p.setKeywords(kfact.createFromText(this.publicationKeywords));
 			em.persist(p);
 			if(action.equals("ADD")){
 				//dodajemy userowi te publikacje
@@ -311,24 +316,35 @@ public class ProfileManagerBean implements ProfileManager {
 				user = (User)this.em.createQuery("select u from User u where id=:id").setParameter("id", user.getId()).getSingleResult();
 				user.getPublications().add(p);
 			}
-			this.message = "zapisano";
+			facesContext.addMessage(null, new FacesMessage("zapisano"));
 			
 		} else {
-			this.message = "błędne ID";	
+			facesContext.addMessage(null, new FacesMessage("błędne ID"));	
 		}
-		return "/profilemanager.xhtml";
+		return "/editUserProfile.xhtml";
 	}
 
 	@Override
 	public void newPublication() {
 		action = "ADD";
 		this.publication = new Publication();
+		this.publicationKeywords = "";
 	}
 	public String getAction(){
 		return this.action;
 	}
 	public void setAction(String s){
 		this.action = s;
+	}
+
+	@Override
+	public String getPublicationKeywords() {
+		return this.publicationKeywords;
+	}
+
+	@Override
+	public void setPublicationKeywords(String k) {
+		this.publicationKeywords = k;
 	}
 
 

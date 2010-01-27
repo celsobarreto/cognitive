@@ -14,8 +14,6 @@ public interface ProfileManager {
 	public void setNewAddressConfirm(String s);
 	public String getNewAddressConfirm();
 	public String getNewAddress();
-	public String getMessage();
-	public void setMessage(String s);
 	public String getToken();
 	public void setToken(String s);
 
@@ -24,11 +22,12 @@ public interface ProfileManager {
 	public Publication getPublication();
 	public void setPublication(Publication p);
 	public void removePublication();
-	public void editPublication();
+	public String editPublication();
 	public void newPublication();
 	public String savePublication();
 	public String getAction();
 	public void setAction(String s);
-	
+	public String getPublicationKeywords();
+	public void setPublicationKeywords(String k);
 }
 

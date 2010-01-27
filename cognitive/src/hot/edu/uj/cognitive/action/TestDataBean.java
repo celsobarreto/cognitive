@@ -20,6 +20,7 @@ import edu.uj.cognitive.model.Offer;
 import edu.uj.cognitive.model.OfferTypeEnum;
 import edu.uj.cognitive.model.Publication;
 import edu.uj.cognitive.model.Role;
+import edu.uj.cognitive.model.ScienceDomain;
 import edu.uj.cognitive.model.SpecialPage;
 import edu.uj.cognitive.model.User;
 
@@ -68,6 +69,7 @@ public class TestDataBean implements TestData
 			this.insertPublications();
 			this.insertPropositions();
 			this.insertNews();
+			this.insertScienceDomains();
 	        statusMessages.add("Test data loaded successfully.");
 		}
 		
@@ -166,7 +168,16 @@ public class TestDataBean implements TestData
 		news2.setDate(new Date());
 		this.em.persist(news2);		
 	}
-
+	private void insertScienceDomains(){
+		ScienceDomain domain = new ScienceDomain();
+		domain.setName("Matematyka dyskretna");
+		domain.setDescription("bardzo skomplikowana dziedzina");
+		this.em.persist(domain);
+		ScienceDomain domain2 = new ScienceDomain();
+		domain2.setName("Teoria mnogości");
+		domain2.setDescription("jeszcze bardziej skomplikowana dziedzina");
+		this.em.persist(domain2);
+	}
 	private void insertPublications() {
 		Publication publ1 = new Publication();
 		publ1.setTitle("publication 1");
@@ -180,7 +191,7 @@ public class TestDataBean implements TestData
 		publ2.setTitle("publication 2");
 		this.em.persist(publ2);
 		profesor.getPublications().add(publ1);
-		profesor.getPublications().add(publ2);		
+		profesor.getPublications().add(publ2);
 	}
 	
 	private void insertPropositions(){

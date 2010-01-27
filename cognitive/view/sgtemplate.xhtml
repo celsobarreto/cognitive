@@ -71,11 +71,8 @@
 						<li>
 							<s:link value="Profil " view="/userProfile.xhtml" action="#{userManager.show}" propagation="none">
 					  			<f:param name="userId" value="#{loggedUser.id}"/>
-					  		</s:link><s:link value="(edytuj)" view="/profilemanager.seam" />
-						</li>
-				  		<li>
-				  			<s:link value="Zmień hasło" view="/changePassword.seam" propagation="none"/>
-						</li>						
+					  		</s:link><s:link value="(edytuj)" view="/editUserProfile.seam" />
+						</li>				
 				  		<li>
 				  			<s:link value="Wyloguj" view="/homepage.seam" action="#{identity.logout}" propagation="none"/>
 						</li>
