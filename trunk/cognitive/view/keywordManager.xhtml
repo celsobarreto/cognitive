@@ -1,0 +1,79 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:s="http://jboss.com/products/seam/taglib"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:rich="http://richfaces.org/rich"
+    xmlns:a="http://richfaces.org/a4j"
+    template="template.xhtml">
+
+<ui:define name="navigation">
+	<ui:param name="keywords" value="keywords" />
+</ui:define>	
+	
+	<ui:define name="content">
+	    <rich:panel>
+	        <f:facet name="header">Slowa kluczowe</f:facet>
+	
+	        <h:form id="KeywordManagerForm">
+				
+				<h:panelGroup columns="2" cellpading="0">
+					<h:inputText id="keywordsString" value="#{keywordManager.searchKeywords}" style="width: 250px;"/>
+					<h:commandButton id="searchKeywords" value="Szukaj" action="#{keywordManager.search}"/>	
+				</h:panelGroup>	
+	        </h:form>
+	
+	    </rich:panel>
+	    <rich:panel rendered="#{keywordManager.allKeywords}">
+	    	<f:facet name="header">
+	  			<h:outputText value="Wszystkie slowa kluczowe" />
+	  		</f:facet>
+	  		<h:outputText value="Brak slow kluczowych" rendered="#{keywordList.rowCount==0}" />
+	  			<h:dataTable border="0" cellpadding="2" cellspacing="0" var="keyw" value="#{keywordList}" rendered="#{keywordList.rowCount>0}">
+					<h:column>
+						<f:facet name="header">
+							<h:outputText value="Id" />
+						</f:facet>
+						<h:outputText value="#{keyw.id}"/>
+					</h:column>
+					<h:column>
+						<f:facet name="header">
+							<h:outputText value="Slowo kluczowe" />
+						</f:facet>
+						[<s:link value="#{keyw.name}" propagation="none" action="#{keywordManager.addKeyword}"/>]
+					</h:column>
+				</h:dataTable>
+	    	
+	    </rich:panel>
+	    
+	    <rich:panel rendered="#{keywordManager.statisticKeywords}" >
+	    	<f:facet name="header">
+	  			<h:outputText value="Statystyka slow kluczowych" />
+	  		</f:facet>
+	  		<h:outputText value="Brak slow kluczowych" rendered="#{statisticsList.rowCount==0}" />
+	  			<h:dataTable border="0" cellpadding="5" cellspacing="0" var="statistics" value="#{statisticsList}" rendered="#{statisticsList.rowCount>0}" >
+					<h:column  >
+						<f:facet name="header">
+							<h:outputText value="Slowo" />
+						</f:facet>
+						<h:outputText value="#{statistics.name}"  />
+					</h:column>
+					<h:column>
+						<f:facet name="header">
+							<h:outputText value="Ilosc wystapien" />
+						</f:facet>
+						<h:outputText value="#{statistics.count}" />
+					</h:column>
+					<h:column>
+						<f:facet name="header">
+							<h:outputText value="Slowa powiazane" />
+						</f:facet>
+						<h:outputText value="#{statistics.link}" />
+					</h:column>
+				</h:dataTable>
+	    </rich:panel>
+	</ui:define>
+
+</ui:composition>

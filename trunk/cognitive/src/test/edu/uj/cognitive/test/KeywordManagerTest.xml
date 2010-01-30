@@ -1,0 +1,9 @@
+<!DOCTYPE suite SYSTEM "http://beust.com/testng/testng-1.0.dtd" >
+
+<suite name="KeywordManager Tests" verbose="2" parallel="false">
+   <test name="KeywordManager Test">
+     <classes>
+       <class name="edu.uj.cognitive.test.KeywordManagerTest"/>       
+     </classes>
+   </test>	
+</suite>
