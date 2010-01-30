@@ -51,7 +51,7 @@ public class UserRegisterBean implements UserRegister {
 
 	private ArrayList<Role> roles = new ArrayList<Role>();
 
-	public String userRegister() {
+	public void userRegister() {
 		roles.clear();
 
 		if (isScientist) {
@@ -90,18 +90,24 @@ public class UserRegisterBean implements UserRegister {
 
 				newUser.setEmailConfirmed(!REQUIRE_EMAIL_CONFIRMATION);
 				newUser.setAccepted(!REQUIRE_ADMIN_ACCEPTATION);
+				
+				log
+				.info("UserRegister.userRegister() action called with: #{UserRegister.fullName}");
+				statusMessages.add("Zarejestrowano uzytkownika #{UserRegister.fullName}");
+			
+			//	return "/profileManager.xhtml";
+				
+				//czyscimy zawartosc formularza
+				
 			}
-			
-			log
-			.info("UserRegister.userRegister() action called with: #{UserRegister.fullName}");
-			statusMessages.add("Zarejestrowano uzytkownika #{UserRegister.fullName}");
-			
-			return "/profilemanager.xhtml";
-			
+			fullName 		= null;
+			email			= null;
+			password 		= null;
+			confirmPassword	= null;
 		}
 		// implement your business logic here
 		
-		return "/userregister.xhtml";
+	//	return "/userRegister.xhtml";
 	}
 
 	private Role getRole(String roleName) {
