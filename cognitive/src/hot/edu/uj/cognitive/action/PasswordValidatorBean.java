@@ -23,12 +23,12 @@ public class PasswordValidatorBean implements PasswordValidator {
 			{
 				((EditableValueHolder) component).setValid(false);
 				context.addMessage(component.getClientId(context),
-						new FacesMessage("Hasło musi mieć co najmniej 5 znaków."));				
+						new FacesMessage("  Hasło musi mieć co najmniej 5 znaków."));				
 				
 			} else if (!input1.equals(input2)) {
 				((EditableValueHolder) component).setValid(false);
 				context.addMessage(component.getClientId(context),
-						new FacesMessage("Hasło i hasło wpisane ponownie różnią się."));
+						new FacesMessage("  Hasło i hasło wpisane ponownie różnią się."));
 			}
 		} else {
 			input1Set = true;

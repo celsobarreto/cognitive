@@ -21,32 +21,37 @@
             <f:facet name="header">Rejestracja Uzytkownika</f:facet>
 			
 				
-    			       
- 	         <h:panelGrid columns="2">  	
-                <h:outputLabel value="Tytul Imie i Nazwisko" for="fullname" style=" width : 200px;"/>
- 
-                <h:inputText id="fullname" required="true"
-                             value="#{UserRegister.fullName}" />
-                             
-           	
-           		<h:outputLabel value="E-mail" for="email" />
-            	<h:inputText id="email" required="true"
-                             value="#{UserRegister.email}"/>
-            
-            	<h:outputLabel value="Haslo" for="password" />
-            	<h:inputSecret  id="password" required="true"
-                             value="#{UserRegister.password}"/>
-           
-           		<h:outputLabel value="Powtorz Haslo" for="confirmpassword" />
-           		<h:inputSecret id="confirmpassword" required="true"
-                             value="#{UserRegister.confirmPassword}"/>
-           
-           		<h:selectBooleanCheckbox value="#{UserRegister.scientistRole}" /><h:outputLabel value="Naukowiec" for="scientist" />
-					
-				<h:selectBooleanCheckbox value="#{UserRegister.entrepreneurRole}" /> <h:outputLabel value="Przedsiebiorca" for="entrepreneur" />
-           
-            </h:panelGrid>
-                    
+ 			<s:validateAll>   			       
+	 	         <h:panelGrid columns="2">  	
+	                <h:outputLabel value="Tytul Imie i Nazwisko" for="fullname" style=" width : 200px;"/>
+	 
+	                <s:decorate><h:inputText id="fullname" required="true"
+	                             value="#{UserRegister.fullName}" /></s:decorate>
+	                             
+	           	
+	           		<h:outputLabel value="E-mail" for="email" />
+	            	<s:decorate><h:inputText id="email" required="true"
+	                             value="#{UserRegister.email}"/></s:decorate>
+	            
+	            	
+	            
+	            		<h:outputLabel value="Haslo" for="password" />
+		            	<s:decorate><h:inputSecret  id="password" required="true"
+		                             value="#{UserRegister.password}"
+		                             validator="#{passwordValidator.validateField}"/></s:decorate>
+		           
+		           		<h:outputLabel value="Powtorz Haslo" for="confirmpassword" />
+		           		<s:decorate><h:inputSecret id="confirmpassword" required="true"
+		                             value="#{UserRegister.confirmPassword}"
+		                             validator="#{passwordValidator.validateField}"/></s:decorate>
+		           
+	           
+	           		<h:selectBooleanCheckbox value="#{UserRegister.scientistRole}" /><h:outputLabel value="Naukowiec" for="scientist" />
+						
+					<h:selectBooleanCheckbox value="#{UserRegister.entrepreneurRole}" /> <h:outputLabel value="Przedsiebiorca" for="entrepreneur" />
+	           
+	            </h:panelGrid>
+            </s:validateAll>        
             
            
 			

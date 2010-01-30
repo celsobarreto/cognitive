@@ -12,6 +12,8 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+
+import org.hibernate.validator.Email;
 import org.hibernate.validator.Length;
 import org.hibernate.validator.NotNull;
 import org.hibernate.validator.Pattern;
@@ -55,6 +57,7 @@ public class User implements Serializable
 	private String passwordHash;
 
 	@NotNull
+	@Email
 	private String email; // acts as a login
 	
 	private String competences;
