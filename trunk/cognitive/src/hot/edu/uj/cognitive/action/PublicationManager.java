@@ -14,6 +14,7 @@ public interface PublicationManager
 	public boolean isNextPageAvailable();
 	public boolean isPrevPageAvailable();
 	public boolean isDetails();
+	public int getRowIndex();
 	public String getSearchString();
 	public void setSearchString(String searchString);
 	public String getSearchPattern();

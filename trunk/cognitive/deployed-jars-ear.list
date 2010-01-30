@@ -7,6 +7,9 @@ drools-compiler.jar
 drools-api.jar
 drools-core.jar
 groovy-all.jar
+httpclient-4.0.1.jar
+httpcore-4.0.1.jar
+httpmime-4.0.1.jar
 janino.jar
 jboss-el.jar
 jboss-seam-remoting.jar

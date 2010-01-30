@@ -28,6 +28,7 @@ public class PublicationManagerAction implements PublicationManager
 	private boolean nextPageAvailable;
 	private boolean prevPageAvailable;
 	private String searchString;
+	private int rowIndex = 0;
 
 	@Out(required = false, scope = ScopeType.EVENT)
 	private boolean details;
@@ -60,11 +61,19 @@ public class PublicationManagerAction implements PublicationManager
 			{
 				value = 0;
 			}
-			query = this.em.createQuery("select p from Publication p where p." + this.criterion + " = " + value);
+			query = this.em.createQuery("from Publication where " + this.criterion + " = :value").setParameter("value", value);
+		}
+		else if (this.criterion != null && this.criterion.equalsIgnoreCase("keywords"))
+		{
+			query = this.em.createQuery("select distinct p from Publication p join p.keywords k where lower(k.name) like #{pattern}");
+		}
+		else if (this.criterion != null && this.criterion.equalsIgnoreCase("users"))
+		{
+			query = this.em.createQuery("select distinct p from Publication p join p.users u where lower(u.fullName) like #{pattern}");
 		}
 		else if (this.criterion != null && this.criterion.length() > 0)
 		{
-			query = this.em.createQuery("select p from Publication p where lower(p." + this.criterion + ") like #{pattern}");
+			query = this.em.createQuery("from Publication where lower(" + this.criterion + ") like #{pattern}");
 		}
 		else
 		{
@@ -77,7 +86,7 @@ public class PublicationManagerAction implements PublicationManager
 			{
 				value = 0;
 			}
-			query = this.em.createQuery("select p from Publication p where lower(p.title) like #{pattern} or lower(p.link) like #{pattern} or lower(p.references) like #{pattern} or lower(p.journal) like #{pattern} or p.year = " + value + " or p.volume = " + value + " or p.pages = " + value);
+			query = this.em.createQuery("from Publication where lower(title) like #{pattern} or lower(link) like #{pattern} or lower(references) like #{pattern} or lower(journal) like #{pattern} or year = :value or volume = :value or pages = :value").setParameter("value", value);
 		}
 		List<Publication> results = query.setMaxResults(this.pageSize + 1).setFirstResult(this.page * this.pageSize).getResultList();
 		this.nextPageAvailable = results.size() > this.pageSize;
@@ -91,6 +100,7 @@ public class PublicationManagerAction implements PublicationManager
 		}
 		this.prevPageAvailable = (this.page > 0);
 		this.details = false;
+		this.rowIndex = 0;
 	}
 
 	@Factory(value="pattern", scope=ScopeType.EVENT)
@@ -191,5 +201,10 @@ public class PublicationManagerAction implements PublicationManager
 	public List<Publication> getPublicationList()
 	{
 		return this.publicationList;
+	}
+
+	public int getRowIndex()
+	{
+		return ++this.rowIndex + this.page * this.pageSize;
 	}
 }

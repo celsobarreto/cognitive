@@ -1,8 +1,10 @@
 package edu.uj.cognitive.action;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -15,6 +17,8 @@ import org.jboss.seam.annotations.web.RequestParameter;
 import org.jboss.seam.international.StatusMessages;
 import org.jboss.seam.log.Log;
 
+import edu.uj.cognitive.model.Keyword;
+import edu.uj.cognitive.model.KeywordFactory;
 import edu.uj.cognitive.model.News;
 import edu.uj.cognitive.model.Offer;
 import edu.uj.cognitive.model.OfferTypeEnum;
@@ -62,7 +66,7 @@ public class TestDataBean implements TestData
 		if (token == null || !token.equals(EXPECTED_TOKEN)) {
 			statusMessages.add("Niepoprawny token. Nie masz możesz wykonać tej operacji.");
 		} else {
-			this.clearTables();
+			//this.clearTables();
 			this.insertRoles();
 			this.insertUsers();
 			this.insertSpecialPages();
@@ -84,6 +88,9 @@ public class TestDataBean implements TestData
 		
 		em.createNativeQuery("DELETE FROM users_publications").executeUpdate();
 		em.createQuery("DELETE Publication p").executeUpdate();
+		
+		em.createNativeQuery("DELETE FROM users_sciencedomain").executeUpdate();
+		//em.createQuery("DELETE ScienceDomain sc").executeUpdate();
 		
 		em.createNativeQuery("DELETE FROM users_roles").executeUpdate();
 		em.createQuery("DELETE User u").executeUpdate();
@@ -181,14 +188,22 @@ public class TestDataBean implements TestData
 	private void insertPublications() {
 		Publication publ1 = new Publication();
 		publ1.setTitle("publication 1");
+		publ1.setAuthors("anonim");
+		publ1.setLink("http://www.wp.pl");
+		publ1.setJournal("journal");
 		publ1.setYear(2000);
 		publ1.setVolume(2);
 		publ1.setPages(1234);
+		publ1.setKeywords(new KeywordFactory(this.em).createFromText("test keyword"));
 		this.em.persist(publ1);
 		doktor.getPublications().add(publ1);
 		
 		Publication publ2 = new Publication();
 		publ2.setTitle("publication 2");
+		publ2.setPages(546);
+		publ2.setLink("http://www.onet.pl");
+		publ2.setYear(2010);
+		publ2.setKeywords(new KeywordFactory(this.em).createFromText("cognitive test"));
 		this.em.persist(publ2);
 		profesor.getPublications().add(publ1);
 		profesor.getPublications().add(publ2);
