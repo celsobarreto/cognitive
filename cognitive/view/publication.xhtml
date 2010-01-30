@@ -28,6 +28,7 @@
 						<f:selectItem id="PageSize5" itemLabel="5" itemValue="5"/>
 						<f:selectItem id="PageSize10" itemLabel="10" itemValue="10"/>
 						<f:selectItem id="PageSize20" itemLabel="20" itemValue="20"/>
+						<f:selectItem id="PageSize50" itemLabel="50" itemValue="50"/>
 					</h:selectOneMenu>
 					<h:outputLabel id="CriterionLabel" for="criterion">Criterion:</h:outputLabel>
 					<h:selectOneMenu id="criterion" value="#{publicationManager.criterion}" style="width: 120px;">
@@ -36,10 +37,12 @@
 						<f:selectItem id="Criterion2" itemLabel="keywords" itemValue="keywords"/>
 						<f:selectItem id="Criterion3" itemLabel="year" itemValue="year"/>
 						<f:selectItem id="Criterion4" itemLabel="link" itemValue="link"/>
-						<f:selectItem id="Criterion5" itemLabel="references" itemValue="references"/>
-						<f:selectItem id="Criterion6" itemLabel="journal" itemValue="journal"/>
-						<f:selectItem id="Criterion7" itemLabel="volume" itemValue="volume"/>
-						<f:selectItem id="Criterion8" itemLabel="pages" itemValue="pages"/>
+						<f:selectItem id="Criterion5" itemLabel="authors" itemValue="authors"/>
+						<f:selectItem id="Criterion6" itemLabel="references" itemValue="references"/>
+						<f:selectItem id="Criterion7" itemLabel="journal" itemValue="journal"/>
+						<f:selectItem id="Criterion8" itemLabel="volume" itemValue="volume"/>
+						<f:selectItem id="Criterion9" itemLabel="pages" itemValue="pages"/>
+						<f:selectItem id="Criterion10" itemLabel="users" itemValue="users"/>
 					</h:selectOneMenu>
 				</h:panelGrid>
 			</r:panel>
@@ -48,12 +51,12 @@
 	    			<h:outputText value="Publication list" rendered="#{publicationList.rowCount>0}"/>
 	  			</f:facet>
 	  			<h:outputText value="No publication to display" rendered="#{publicationList.rowCount==0}" />
-				<h:dataTable border="0" cellpadding="5" cellspacing="0" footerClass="footer_table" var="publ" value="#{publicationList}" rendered="#{publicationList.rowCount>0}">
+				<h:dataTable border="0" cellpadding="5" cellspacing="0" var="publ" value="#{publicationList}" rendered="#{publicationList.rowCount>0}">
 					<h:column>
 						<f:facet name="header">
-							<h:outputText value="Id" />
+							<h:outputText value="No." />
 						</f:facet>
-						<h:outputText value="#{publ.id}"/>
+						<h:outputText value="#{publicationManager.rowIndex}."/>
 					</h:column>
 					<h:column>
 						<f:facet name="header">
@@ -63,21 +66,9 @@
 					</h:column>
 					<h:column>
 						<f:facet name="header">
-							<h:outputText value="Year" />
+							<h:outputText value="Authors" />
 						</f:facet>
-						<h:outputText value="#{publ.year}"/>
-					</h:column>
-					<h:column>
-						<f:facet name="header">
-							<h:outputText value="Keywords" />
-						</f:facet>
-						<h:outputText value="#{publ.keywords}"/>
-					</h:column>
-					<h:column>
-						<f:facet name="header">
-							<h:outputText value="Pages" />
-						</f:facet>
-						<h:outputText value="#{publ.pages}"/>
+						<h:outputText value="#{publ.authors}"/>
 					</h:column>
 					<h:column>
 						<f:facet name="header">
@@ -85,16 +76,16 @@
 						</f:facet>
 						[<s:link value="details" propagation="none" action="#{publicationManager.showDetails}"/>]
 					</h:column>
-					<f:facet name="footer">
-			   			<h:panelGroup layout="block">
-			   				<s:link value="Previous page" action="#{publicationManager.prevPage}" propagation="none" rendered="#{publicationManager.prevPageAvailable}"/>
-							<h:outputText value="Previous page" rendered="#{publicationManager.prevPageAvailable eq false}"/>
-							<h:outputText value="::" style="padding-left: 6px; padding-right: 6px;"/>
-							<s:link value="Next page" action="#{publicationManager.nextPage}" propagation="none" rendered="#{publicationManager.nextPageAvailable}"/>
-							<h:outputText value="Next page" rendered="#{publicationManager.nextPageAvailable eq false}"/>
-						</h:panelGroup>
-			 		</f:facet>
 				</h:dataTable>
+				<r:panel>
+			   		<h:panelGroup layout="block">
+			   			<s:link value="Previous page" action="#{publicationManager.prevPage}" propagation="none" rendered="#{publicationManager.prevPageAvailable}"/>
+						<h:outputText value="Previous page" rendered="#{publicationManager.prevPageAvailable eq false}"/>
+						<h:outputText value="::" style="padding-left: 6px; padding-right: 6px;"/>
+						<s:link value="Next page" action="#{publicationManager.nextPage}" propagation="none" rendered="#{publicationManager.nextPageAvailable}"/>
+						<h:outputText value="Next page" rendered="#{publicationManager.nextPageAvailable eq false}"/>
+					</h:panelGroup>
+			 	</r:panel>
 			</r:panel>
 			<r:panel rendered="#{publicationManager.details}">
 				<f:facet name="header">
@@ -104,7 +95,8 @@
 					Id: <h:outputText value="#{publication.id}"/>
 					Title: <h:outputText value="#{publication.title}"/>
 					Link: <h:outputText value="#{publication.link}"/>
-					Keywords: <h:outputText value="#{publication.keywords}"/>
+					Authors: <h:outputText value="#{publication.authors}"/>
+					Keywords: <h:outputText value="#{publication.keywordsList}"/>
 					Year: <h:outputText value="#{publication.year}"/>
 					References: <h:outputText value="#{publication.references}"/>
 					Journal: <h:outputText value="#{publication.journal}"/>
@@ -113,16 +105,10 @@
 				</h:panelGrid>
 				<r:panel>
 					<f:facet name="header">
-		    			<h:outputText value="Authors" rendered="#{publUserList.rowCount>0}" />
+		    			<h:outputText value="Users" rendered="#{publUserList.rowCount>0}" />
 		  			</f:facet>
-		  			<h:outputText value="No authors to display" rendered="#{publUserList.rowCount==0}" />
+		  			<h:outputText value="No users to display" rendered="#{publUserList.rowCount==0}" />
 					<h:dataTable border="0" cellpadding="5" cellspacing="0" var="pusr" value="#{publUserList}" rendered="#{publUserList.rowCount>0}">
-						<h:column>
-							<f:facet name="header">
-								<h:outputText value="Id"/>
-							</f:facet>
-							<h:outputText value="#{pusr.id}"/>
-						</h:column>
 						<h:column>
 							<f:facet name="header">
 								<h:outputText value="Name"/>
@@ -138,6 +124,18 @@
 							<s:link value="#{pusr.email}" view="/sendEmail.xhtml" propagation="none">
 								<f:param name="userId" value="#{pusr.id}"/>
 							</s:link>
+						</h:column>
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="Competences"/>
+							</f:facet>
+							<h:outputText value="#{pusr.competences}"/>
+						</h:column>
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="Roles"/>
+							</f:facet>
+							<h:outputText value="#{pusr.rolesList}"/>
 						</h:column>
 						<h:column>
 							<f:facet name="header">

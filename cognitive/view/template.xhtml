@@ -144,11 +144,14 @@
 			<s:link value="Oferty pracy" view="/offer.seam" action="#{offerManager.getOffer}" styleClass="active" propagation="none" rendered="#{pageid eq 'offer'}"></s:link>
 			<s:link value="Oferty pracy" view="/offer.seam" action="#{offerManager.getOffer}" propagation="none" rendered="#{pageid ne 'offer'}"></s:link>
 		</li>
-		
 		<li>
 			<s:link value="Science Domain" view="/scienceDomainList.seam" styleClass="active" propagation="none" rendered="#{pageid eq 'sd'}"></s:link>
 			<s:link value="Science Domain" view="/scienceDomainList.seam"  propagation="none" rendered="#{pageid ne 'sd'}"></s:link>
-		</li>										
+		</li>
+		<li>
+			<s:link value="Google Scholar" view="/googleScholar.seam" styleClass="active" propagation="none" rendered="#{pageid eq 'gs'}"></s:link>
+			<s:link value="Google Scholar" view="/googleScholar.seam" propagation="none" rendered="#{pageid ne 'gs'}"></s:link>
+		</li>
 		<li>
 			<s:link value="Wstaw dane testowe" view="/homepage.seam" action="#{TestData.insert}" rendered="#{pageid ne 'testdata'}" propagation="none">
 				<f:param name="token" value="6936598e6e25e96bb9694b30187b42a4"></f:param>

@@ -197,4 +197,17 @@ public class User implements Serializable
 	public List<ScienceDomain> getScienceDomains() {
 		return scienceDomains;
 	}
+	
+	public String getRolesList()
+	{
+		StringBuilder sb = new StringBuilder("");
+		for (Role r : this.roles)
+		{
+			sb.append(r.getName() + ", ");
+		}
+		String res = sb.toString();
+		if (res.length() < 1)
+			return "";
+		return res.substring(0, res.lastIndexOf(","));
+	}
 }
