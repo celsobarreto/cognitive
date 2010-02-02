@@ -23,6 +23,7 @@ import org.jboss.seam.log.Log;
 
 import edu.uj.cognitive.model.Keyword;
 import edu.uj.cognitive.model.KeywordStatistics;
+import edu.uj.cognitive.model.Publication;
 
 @Stateful
 @Scope(ScopeType.SESSION)
@@ -76,6 +77,7 @@ public class KeywordManagerBean implements KeywordManager
 	{
     	allKeywords = true;
     	this.keywordList = this.em.createQuery("SELECT kw FROM Keyword kw ORDER BY kw.name").getResultList();
+    	log.info("get List");
     	
     	
 	}
@@ -87,8 +89,17 @@ public class KeywordManagerBean implements KeywordManager
 
 	@Override
 	public void addKeyword() {
-		// TODO Auto-generated method stub
+		statisticKeywords = false;
 		
+		if(searchKeywords ==  null)
+		{
+			searchKeywords = "";
+			searchKeywords += selectedKeyword.getName(); 
+		}
+		else
+		{
+			searchKeywords +=" " + selectedKeyword.getName(); 
+		}
 	}
 
 	public void setSearchKeywords(String searchKeywords) {
@@ -101,13 +112,20 @@ public class KeywordManagerBean implements KeywordManager
 
 	@Override
 	public void search() {
+		statisticKeywords = false;
+		
+		if(keywordStatisticsList != null)
+		{
+			keywordStatisticsList.clear();
+		}
+		
 		String[] keywordsArray = searchKeywords.split(" ");
 		
 		keywordStatisticsList = new ArrayList<KeywordStatistics>();
 		
 		for (int i = 0; i < keywordsArray.length; i++) {
 			
-			List<Keyword> keywordListWithLike = this.em.createQuery("SELECT kw FROM Keyword kw WHERE kw.name LIKE :param ")
+			List<Keyword> keywordListWithLike = this.em.createQuery("SELECT DISTINCT kw  FROM Keyword kw WHERE kw.name LIKE :param ")
 			.setParameter("param", keywordsArray[i] + "%")
 			.getResultList();
 			
@@ -118,24 +136,45 @@ public class KeywordManagerBean implements KeywordManager
 				KeywordStatistics keywordStatistics = new KeywordStatistics(); 
 				keywordStatistics.setName(keyword.getName());
 				
-				long count = (Long)this.em.createQuery(" SELECT COUNT(p) FROM Publications p WHERE p.keywords.name = :param " )
+				long count = (Long)this.em.createQuery(" SELECT COUNT( kw.name ) FROM Publication p INNER JOIN  p.keywords kw WHERE kw.name = :param " )
 				.setParameter("param", keyword.getName())
 				.getSingleResult();
 				
 				keywordStatistics.setCount(count);
+				
+				List<Publication> linkedPublications = this.em.createQuery("SELECT p FROM Publication p INNER JOIN p.keywords kw WHERE kw.name = :param ")
+				.setParameter("param", keyword.getName())
+				.getResultList();
+				
+				String linkedKeywords = "";
+				
+				for ( Publication publ : linkedPublications )
+				{
+					for( Keyword publKeyword : publ.getKeywords() )
+					{
+						if(!publKeyword.equals(keyword))
+						{
+							linkedKeywords += publKeyword.getName() + " ";
+						}
+					}
+				}
+				
+				keywordStatistics.setLinkedKeywords(linkedKeywords);
 				
 				keywordStatisticsList.add(keywordStatistics);
 				
 			}	
 		}
 		
-		searchKeywords = "";
+		searchKeywords = null;
 		statisticKeywords = true;
 	}
     
 	@Remove
 	public void destroy()
 	{
+		this.keywordStatisticsList.clear();
+		this.keywordStatisticsList = null;
 		this.searchKeywords = null;
 		this.keywordList.clear();
 		this.keywordList = null;

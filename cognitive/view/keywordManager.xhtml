@@ -53,7 +53,7 @@
 	  			<h:outputText value="Statystyka slow kluczowych" />
 	  		</f:facet>
 	  		<h:outputText value="Brak slow kluczowych" rendered="#{statisticsList.rowCount==0}" />
-	  			<h:dataTable border="0" cellpadding="5" cellspacing="0" var="statistics" value="#{statisticsList}" rendered="#{statisticsList.rowCount>0}" >
+	  			<h:dataTable border="0" cellpadding="5" cellspacing="0" var="statistics" value="#{keywordStatisticsList}" rendered="#{keywordStatisticsList.rowCount>0}" >
 					<h:column  >
 						<f:facet name="header">
 							<h:outputText value="Slowo" />
@@ -70,7 +70,7 @@
 						<f:facet name="header">
 							<h:outputText value="Slowa powiazane" />
 						</f:facet>
-						<h:outputText value="#{statistics.link}" />
+						<h:outputText value="#{statistics.linkedKeywords}" />
 					</h:column>
 				</h:dataTable>
 	    </rich:panel>
