@@ -6,5 +6,6 @@ import javax.ejb.Local;
 public interface SPage
 {
 	public void toPage(String page);
+	public String getPageContent(String page);
 	public void destroy();
 }
