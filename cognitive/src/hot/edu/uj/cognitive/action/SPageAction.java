@@ -36,4 +36,11 @@ public class SPageAction implements SPage
 		if (this.pageID != null)
 			this.pageID = "";
 	}
+	
+	public String getPageContent(String page){
+		SpecialPage pageContent = this.em.find(SpecialPage.class, page);
+		System.out.println(pageContent.getContent());
+		return "jakis kontent";
+		//return pageContent.getContent();
+	}
 }

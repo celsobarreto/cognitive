@@ -66,7 +66,7 @@ public class TestDataBean implements TestData
 		if (token == null || !token.equals(EXPECTED_TOKEN)) {
 			statusMessages.add("Niepoprawny token. Nie masz możesz wykonać tej operacji.");
 		} else {
-			//this.clearTables();
+			this.clearTables();
 			this.insertRoles();
 			this.insertUsers();
 			this.insertSpecialPages();
@@ -159,7 +159,25 @@ public class TestDataBean implements TestData
 		sp.setId("links");
 		sp.setTitle("Linki");		
 		sp.setContent(dummyText);		
-		this.em.persist(sp);			
+		this.em.persist(sp);
+		
+		sp = new SpecialPage();		
+		sp.setId("sgnaukowcy");
+		sp.setTitle("NAUKOWCY");		
+		sp.setContent("krotki opis co sie zawiera w zakladce naukowcy");		
+		this.em.persist(sp);
+		
+		sp = new SpecialPage();		
+		sp.setId("sgpublikacje");
+		sp.setTitle("PUBLIKACJE");		
+		sp.setContent("krotki opis co sie zawiera w zakladce publikacje");		
+		this.em.persist(sp);		
+		
+		sp = new SpecialPage();		
+		sp.setId("sgprzedsiebiorcy");
+		sp.setTitle("PRZEDSIEBIORCY");		
+		sp.setContent("krotki opis co sie zawiera w zakladce przedsiębiorcy");		
+		this.em.persist(sp);				
 	}
 	
 	private void insertNews() {
@@ -173,7 +191,13 @@ public class TestDataBean implements TestData
 		news2.setTitle("Druga wiadomosc");
 		news2.setContent("A to dla odmiany jest zawartosc drugiej wiadomosci :)");
 		news2.setDate(new Date());
-		this.em.persist(news2);		
+		this.em.persist(news2);
+		
+		News news3 = new News();
+		news3.setTitle("Trzecia wiadomosc");
+		news3.setContent("A to dla odmiany jest zawartosc trzeciej wiadomosci :)");
+		news3.setDate(new Date());
+		this.em.persist(news3);			
 	}
 	private void insertScienceDomains(){
 		ScienceDomain domain = new ScienceDomain();
