@@ -37,10 +37,11 @@ public class SPageAction implements SPage
 			this.pageID = "";
 	}
 	
-	public String getPageContent(String page){
-		SpecialPage pageContent = this.em.find(SpecialPage.class, page);
-		System.out.println(pageContent.getContent());
-		return "jakis kontent";
-		//return pageContent.getContent();
+	public String getPageContent(String pageId){
+		SpecialPage page = (SpecialPage)this.em.createQuery("select u from SpecialPage u where id=:id").setParameter("id", pageId).getSingleResult();
+		System.out.println(page.getContent());
+		this.sPage = page;
+		this.pageID = pageId;
+		return page.getContent();
 	}
 }
