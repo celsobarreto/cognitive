@@ -52,13 +52,11 @@ public class KeywordManagerBean implements KeywordManager
 	@DataModelSelection(value = "keywordList")
 	@In(required=false)
 	@Out(required=false)
-	private Keyword selectedKeyword;
+	private KeywordStatistics selectedKeyword;
 	
 	
 	@DataModel
 	private List<KeywordStatistics> keywordStatisticsList;
-	
-	
 	
 	
 	private String searchKeywords;
@@ -80,35 +78,38 @@ public class KeywordManagerBean implements KeywordManager
     	
     	allKeywords = true;
     	List<Keyword> keywords;
+    	List<KeywordStatistics> keywordStatisticsList = new ArrayList<KeywordStatistics>();
     	
     	keywords = this.em.createQuery("SELECT kw FROM Keyword kw ORDER BY kw.name").getResultList();
+    	
+    	this.em.clear();
     
-    	for ( Keyword keyword : keywords )
+    	for (Iterator iterator = keywords.iterator(); iterator.hasNext();) 
     	{
+    		Keyword keyword = (Keyword) iterator.next();
+    		
     		KeywordStatistics keywordStatistic = new KeywordStatistics();
     		
     		keywordStatistic.setName(keyword.getName());
     		
     		long count = (Long)this.em.createQuery(" SELECT COUNT( kw.name ) FROM Publication p INNER JOIN  p.keywords kw WHERE kw.name = :param " )
-			.setParameter("param", keyword.getName())
+			.setParameter("param", keywordStatistic.getName())
 			.getSingleResult();
     		
     		keywordStatistic.setCount(count);
     		
-    		keywordList.add(keywordStatistic);
+    		keywordStatisticsList.add(keywordStatistic);
     		
     	}
     	
-    	Collections.sort(keywordList);
+    	Collections.sort(keywordStatisticsList);
     	
-    	
+    	keywordList = keywordStatisticsList;
     	
 	}
     
     
-    public boolean isAllKeywords() {
-		return allKeywords;
-	}
+   
 
 	@Override
 	public void addKeyword() {
@@ -125,13 +126,7 @@ public class KeywordManagerBean implements KeywordManager
 		}
 	}
 
-	public void setSearchKeywords(String searchKeywords) {
-		this.searchKeywords = searchKeywords;
-	}
 
-	public String getSearchKeywords() {
-		return searchKeywords;
-	}
 
 	@Override
 	public void search() {
@@ -186,6 +181,7 @@ public class KeywordManagerBean implements KeywordManager
 				
 				keywordStatisticsList.add(keywordStatistics);
 				
+				Collections.sort(keywordStatisticsList);
 			}	
 		}
 		
@@ -203,11 +199,22 @@ public class KeywordManagerBean implements KeywordManager
 		this.keywordList = null;
 	}
 
+	 public boolean isAllKeywords() {
+			return allKeywords;
+		}
+	
 	@Override
 	public boolean isStatisticKeywords() {
 		// TODO Auto-generated method stub
 		return statisticKeywords;
 	}
     
+	public void setSearchKeywords(String searchKeywords) {
+		this.searchKeywords = searchKeywords;
+	}
+
+	public String getSearchKeywords() {
+		return searchKeywords;
+	}
     
 }
