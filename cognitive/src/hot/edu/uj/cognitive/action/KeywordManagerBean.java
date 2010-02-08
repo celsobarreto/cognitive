@@ -1,6 +1,8 @@
 package edu.uj.cognitive.action;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
@@ -45,7 +47,7 @@ public class KeywordManagerBean implements KeywordManager
     
    
 	@DataModel
-	private List<Keyword> keywordList;
+	private List<KeywordStatistics> keywordList;
 	
 	@DataModelSelection(value = "keywordList")
 	@In(required=false)
@@ -75,9 +77,30 @@ public class KeywordManagerBean implements KeywordManager
 	@Factory("keywordList")
 	public void list()
 	{
+    	
     	allKeywords = true;
-    	this.keywordList = this.em.createQuery("SELECT kw FROM Keyword kw ORDER BY kw.name").getResultList();
-    	log.info("get List");
+    	List<Keyword> keywords;
+    	
+    	keywords = this.em.createQuery("SELECT kw FROM Keyword kw ORDER BY kw.name").getResultList();
+    
+    	for ( Keyword keyword : keywords )
+    	{
+    		KeywordStatistics keywordStatistic = new KeywordStatistics();
+    		
+    		keywordStatistic.setName(keyword.getName());
+    		
+    		long count = (Long)this.em.createQuery(" SELECT COUNT( kw.name ) FROM Publication p INNER JOIN  p.keywords kw WHERE kw.name = :param " )
+			.setParameter("param", keyword.getName())
+			.getSingleResult();
+    		
+    		keywordStatistic.setCount(count);
+    		
+    		keywordList.add(keywordStatistic);
+    		
+    	}
+    	
+    	Collections.sort(keywordList);
+    	
     	
     	
 	}

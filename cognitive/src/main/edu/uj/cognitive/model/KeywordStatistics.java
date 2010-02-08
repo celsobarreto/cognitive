@@ -1,6 +1,6 @@
 package edu.uj.cognitive.model;
 
-public class KeywordStatistics {
+public class KeywordStatistics implements Comparable<KeywordStatistics> {
 
 	
 	private String name;
@@ -26,6 +26,25 @@ public class KeywordStatistics {
 	}
 	public void setLinkedKeywords(String linkedKeywords) {
 		this.linkedKeywords = linkedKeywords;
+	}
+	
+	
+	@Override
+	public int compareTo(KeywordStatistics o) {
+		
+		if(this.getCount() == o.getCount())
+		{
+			return 0;
+		}
+		else if( this.getCount() > o.getCount() )
+		{
+			return 1;
+		}
+		else
+		{
+			return -1;
+		}
+		
 	}
 	
 	
