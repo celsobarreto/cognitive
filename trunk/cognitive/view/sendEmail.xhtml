@@ -8,7 +8,7 @@
 				template="template.xhtml">
 				
 	<ui:define name="navigation">
-		<ui:param name="pageid" value="news" />
+		<ui:param name="pageid" value="sendEmail" />
 	</ui:define>
 				
 	<ui:define name="content">
@@ -19,8 +19,6 @@
 
             <div class="dialog">
                 <h:panelGrid columns="2" rowClasses="prop" columnClasses="name,value">
-                    <h:outputLabel for="emailAddress">E-mail</h:outputLabel>
-                    <h:outputText id="emailAddress" value="#{emailSender.recipient}"/>
                     <h:outputLabel for="emailSubject">Subject</h:outputLabel>
                     <h:inputText id="emailSubject" value="#{emailSender.subject}"/>
                 </h:panelGrid>
