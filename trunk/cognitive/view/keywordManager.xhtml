@@ -28,7 +28,7 @@
 	    </rich:panel>
 	    <rich:panel rendered="#{keywordManager.allKeywords}">
 	    	<f:facet name="header">
-	  			<h:outputText value="Wszystkie slowa kluczowe" />
+	  			<h:outputText value="Ranking slow kluczowych" />
 	  		</f:facet>
 	  		<h:outputText value="Brak slow kluczowych" rendered="#{keywordList.rowCount==0}" />
 	  			<h:dataTable border="0" cellpadding="2" cellspacing="0" var="keyw" value="#{keywordList}" rendered="#{keywordList.rowCount>0}">
@@ -44,13 +44,19 @@
 						</f:facet>
 						[<s:link value="#{keyw.name}" propagation="none" action="#{keywordManager.addKeyword}"/>]
 					</h:column>
+					<h:column>
+						<f:facet name="header">
+							<h:outputText value="Ilosc wystapien" />
+						</f:facet>
+						<h:outputText value="#{keyw.count}"/>
+					</h:column>
 				</h:dataTable>
 	    	
 	    </rich:panel>
 	    
 	    <rich:panel rendered="#{keywordManager.statisticKeywords}" >
 	    	<f:facet name="header">
-	  			<h:outputText value="Statystyka slow kluczowych" />
+	  			<h:outputText value="Powiazanie slow" />
 	  		</f:facet>
 	  		<h:outputText value="Brak slow kluczowych" rendered="#{statisticsList.rowCount==0}" />
 	  			<h:dataTable border="0" cellpadding="5" cellspacing="0" var="statistics" value="#{keywordStatisticsList}" rendered="#{keywordStatisticsList.rowCount>0}" >
