@@ -3,6 +3,7 @@ package edu.uj.cognitive.action;
 import javax.ejb.Remove;
 import javax.ejb.Stateful;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.Name;
@@ -37,11 +38,23 @@ public class SPageAction implements SPage
 			this.pageID = "";
 	}
 	
-	public String getPageContent(String pageId){
-		SpecialPage page = (SpecialPage)this.em.createQuery("select u from SpecialPage u where id=:id").setParameter("id", pageId).getSingleResult();
-		System.out.println(page.getContent());
-		this.sPage = page;
-		this.pageID = pageId;
+	public String getPageContent(String pageId)
+	{
+		SpecialPage page = null;
+		
+		try
+		{
+			page = (SpecialPage)this.em.createQuery("select u from SpecialPage u where id=:id").setParameter("id", pageId).getSingleResult();
+			System.out.println(page.getContent());
+			this.sPage = page;
+			this.pageID = pageId;			
+		}
+		catch (NoResultException e) 
+		{
+			this.pageID = "";
+			return "";
+		}
+		
 		return page.getContent();
 	}
 }
