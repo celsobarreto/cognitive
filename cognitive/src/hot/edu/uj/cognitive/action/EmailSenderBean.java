@@ -5,8 +5,10 @@ import java.util.Properties;
 import javax.ejb.Remove;
 import javax.ejb.Stateful;
 import javax.ejb.Stateless;
+import javax.faces.context.FacesContext;
 import javax.mail.Message;
 import javax.mail.MessagingException;
+import javax.mail.NoSuchProviderException;
 import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
@@ -14,6 +16,7 @@ import javax.mail.internet.MimeMessage;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceContextType;
+import javax.servlet.http.HttpServletRequest;
 
 import org.drools.lang.DRLParser.unary_constr_return;
 import org.hibernate.validator.NotNull;
@@ -36,7 +39,8 @@ public class EmailSenderBean implements EmailSender{
 	public static String HOST = "smtp.gmail.com";
 	public static String USERNAME = "cognitiveportal";
 	public static String PASSWORD = "cognitive1234";
-
+    @In private FacesContext facesContext;  
+	
 	@PersistenceContext(type = PersistenceContextType.EXTENDED)
 	private EntityManager em;
 	
@@ -68,9 +72,7 @@ public class EmailSenderBean implements EmailSender{
 	}
 
 
-	
-	public void postMail( ) throws MessagingException
-	{
+	public static void sendMail(String recipient, String subject, String message) throws MessagingException{
 		
 		String recipients[] = {recipient}; 
 	    boolean debug = false;
@@ -116,6 +118,12 @@ public class EmailSenderBean implements EmailSender{
 	    
 	}
 	
+	public void postMail( ) throws MessagingException
+	{
+		sendMail(recipient, subject, message);
+	    
+	}
+	
 	@Remove
 	public void destroy() 
 	{
@@ -124,19 +132,10 @@ public class EmailSenderBean implements EmailSender{
 		this.message = null;
 		this.subject = null;
 	}		
-	/*
-public static void main(String[] args) throws MessagingException {
-	EmailData emailData = new EmailData();
-	emailData.from = "za3maj@gmail.com";
-	emailData.recipient = "za3maj@gmail.com";
-	emailData.subject = "za3maj@gmail.com";
-	emailData.message = "za3maj@gmail.com";
-	EmailSenderBean esb= new EmailSenderBean();
-	esb.emailData = emailData;
-	esb.postMail();
-}*/
 	@Override
 	public void updateRecipientAddress() {
 		this.recipient = this.em.find(User.class, userId).getEmail();		
 	}
+
+
 }
