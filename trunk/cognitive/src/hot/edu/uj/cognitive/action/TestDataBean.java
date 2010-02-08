@@ -30,6 +30,12 @@ import edu.uj.cognitive.model.User;
 
 @Stateless
 @Name("TestData")
+/**
+ * By wstawic dane testowe otwórz dowolną podstrone w przeglarce np.
+ * /testData.seam
+ * Nastepnie otwórz w przeglądarce
+ * /homepage.seam?token=6936598e6e25e96bb9694b30187b42a4&actionMethod=testData.xhtml%3ATestData.insert
+ */
 public class TestDataBean implements TestData
 {
     @Logger private Log log;
