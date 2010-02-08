@@ -34,12 +34,6 @@
 	  			<h:dataTable border="0" cellpadding="2" cellspacing="0" var="keyw" value="#{keywordList}" rendered="#{keywordList.rowCount>0}">
 					<h:column>
 						<f:facet name="header">
-							<h:outputText value="Id" />
-						</f:facet>
-						<h:outputText value="#{keyw.id}"/>
-					</h:column>
-					<h:column>
-						<f:facet name="header">
 							<h:outputText value="Slowo kluczowe" />
 						</f:facet>
 						[<s:link value="#{keyw.name}" propagation="none" action="#{keywordManager.addKeyword}"/>]

@@ -38,11 +38,11 @@ public class KeywordStatistics implements Comparable<KeywordStatistics> {
 		}
 		else if( this.getCount() > o.getCount() )
 		{
-			return 1;
+			return -1;
 		}
 		else
 		{
-			return -1;
+			return 1;
 		}
 		
 	}
