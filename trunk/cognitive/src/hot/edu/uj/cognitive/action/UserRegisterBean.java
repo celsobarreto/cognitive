@@ -6,9 +6,12 @@ import java.util.List;
 
 import javax.ejb.Remove;
 import javax.ejb.Stateful;
+import javax.faces.context.FacesContext;
+import javax.mail.MessagingException;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.servlet.http.HttpServletRequest;
 
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Logger;
@@ -46,10 +49,12 @@ public class UserRegisterBean implements UserRegister {
 	private Boolean isEntrepreneur;
 	private Boolean isScientist;
 	
-	private final boolean REQUIRE_EMAIL_CONFIRMATION = false;
+	private final boolean REQUIRE_EMAIL_CONFIRMATION = true;
 	private final boolean REQUIRE_ADMIN_ACCEPTATION = false;
 
 	private ArrayList<Role> roles = new ArrayList<Role>();
+	@In
+	private FacesContext facesContext;
 
 	public void userRegister() {
 		roles.clear();
@@ -87,8 +92,19 @@ public class UserRegisterBean implements UserRegister {
 				newUser.setRoles(new HashSet<Role>(roles));
 
 				em.persist(newUser);
-
-				newUser.setEmailConfirmed(!REQUIRE_EMAIL_CONFIRMATION);
+				if(REQUIRE_EMAIL_CONFIRMATION){
+					newUser.setEmailConfirmed(false);
+				    try {
+						sendActivationEmail(newUser);
+					} catch (MessagingException e) {
+						// TODO Auto-generated catch block
+						log.error(e);
+					}
+				}
+				else {
+					newUser.setEmailConfirmed(true);
+				}
+				
 				newUser.setAccepted(!REQUIRE_ADMIN_ACCEPTATION);
 				
 				log
@@ -199,4 +215,22 @@ public class UserRegisterBean implements UserRegister {
 
 	}
 
+
+	private void sendAcceptationEmail(User u) throws MessagingException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	private void sendActivationEmail(User u) throws MessagingException {
+		String token = "random";
+		u.setActivationToken("random");
+		EmailSenderBean.sendMail(u.getEmail(), "Activation Confirm link", getURL()+"/activation.seam?activationToken="+token+"&userId="+u.getId());
+		
+	}
+
+	private String getURL(){
+
+		HttpServletRequest request= (HttpServletRequest)facesContext.getExternalContext().getRequest();
+		return request.getScheme()+ "://"+request.getServerName()+":"+request.getServerPort()+request.getContextPath();
+	}
 }

@@ -118,6 +118,8 @@ public class User implements Serializable
 	@UserRoles
 	@ManyToMany(fetch=FetchType.EAGER)
 	private Set<Role> roles;
+
+	private String activationToken;
 	
 
 	public String getPasswordHash() {
@@ -197,7 +199,17 @@ public class User implements Serializable
 	public List<ScienceDomain> getScienceDomains() {
 		return scienceDomains;
 	}
+
+	public void setActivationToken(String string) {
+		activationToken = string;
+		
+	}
 	
+	
+	public String getActivationToken() {
+		return activationToken;
+	}
+
 	public String getRolesList()
 	{
 		StringBuilder sb = new StringBuilder("");
