@@ -51,6 +51,9 @@ public class Keyword implements Serializable
 		return this.id;
 	}
 
+	public String toString(){
+		return getName();
+	}
 	
 
 }
