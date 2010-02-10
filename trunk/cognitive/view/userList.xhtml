@@ -22,15 +22,12 @@
 					<h:inputText id="searchText" value="#{userManager.searchText}" style="width: 250px;"/>
 					<h:commandButton id="findUsers" value="Szukaj" action="#{userManager.list()}"/>
 				</h:panelGrid>	
-				<h:panelGrid columns="2">
+				<h:panelGrid columns="2" rendered="#{userManager.mode eq 'scientist'}">
 					<h:outputText value="Szukaj wedlug:"/>
-					<h:selectOneMenu id="criterion1" value="#{userManager.searchCriteria}" style="width: 120px;" rendered="#{userManager.mode eq 'scientist'}">
+					<h:selectOneMenu id="criterion1" value="#{userManager.searchCriteria}" style="width: 120px;">
 						<f:selectItem id="criterion11" itemLabel="imie/nazwisko" itemValue="fullName"/>
 						<f:selectItem id="criterion12" itemLabel="dziedzina naukowa" itemValue="scienceDomains"/>
 						<f:selectItem id="criterion13" itemLabel="kompetencje" itemValue="competences"/>
-					</h:selectOneMenu>
-					<h:selectOneMenu id="criterion2" value="#{userManager.searchCriteria}" style="width: 120px;" rendered="#{userManager.mode eq 'entrepreneur'}">
-						<f:selectItem id="criterion21" itemLabel="imie/nazwisko" itemValue="fullName"/>
 					</h:selectOneMenu>					
 				</h:panelGrid>
 			</r:panel>
@@ -40,12 +37,6 @@
 		  		</f:facet>
 				<h:outputText value="Nie ma żadnych użytkowników w systemie" rendered="#{userList.rowCount==0}" />
 				<h:dataTable border="0" cellpadding="5" cellspacing="0" headerClass="header_table" var="usr" value="#{userList}" rendered="#{userList.rowCount>0}">
-					<h:column>
-						<f:facet name="header">
-							<h:outputText value="Id"/>
-						</f:facet>
-						<h:outputText value="#{usr.id}"/>
-					</h:column>
 					<h:column>
 						<f:facet name="header">
 							<h:outputText value="Nazwa użytkownika"/>
@@ -62,19 +53,13 @@
 							<f:param name="userId" value="#{usr.id}"/>
 						</s:link>
 					</h:column>
-					<h:column>
+					<h:column rendered="#{userManager.mode eq 'scientist'}">
 						<f:facet name="header">
 							<h:outputText value="Liczba publikacji"/>
 						</f:facet>
 						<h:outputText value="#{usr.publications.size}"/>
 					</h:column>
-					<h:column>
-						<f:facet name="header">
-							<h:outputText value="Aktywny"/>
-						</f:facet>
-						<h:selectBooleanCheckbox value="#{usr.activated}" disabled="true"/>
-					</h:column>
-					<h:column>
+					<h:column rendered="#{userManager.mode eq 'scientist'}">
 						<f:facet name="header">
 							<h:outputText value="Kompetencje"/>
 						</f:facet>
