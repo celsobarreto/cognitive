@@ -9,7 +9,7 @@ public interface ProfileManager {
 
 	public String changeRequest();
 	public String changePerform();
-	
+	public void destroy();	
 	public void setNewAddress(String s);
 	public void setNewAddressConfirm(String s);
 	public String getNewAddressConfirm();

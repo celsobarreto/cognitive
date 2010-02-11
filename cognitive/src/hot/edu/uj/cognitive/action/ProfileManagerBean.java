@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.StringTokenizer;
 
 import javax.ejb.Remove;
+import javax.ejb.Stateful;
 import javax.ejb.Stateless;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
@@ -215,12 +216,10 @@ public class ProfileManagerBean implements ProfileManager {
 		User user = (User) Contexts.getSessionContext().get("loggedUser");
 		user = (User)this.em.createQuery("select u from User u where id=:id").setParameter("id", user.getId()).getSingleResult();
 		this.userPublications = user.getPublications();
-		boolean valid = false;
 		Publication p = null;
 		for(Publication pub: this.userPublications){
 			System.out.println("PubID: "+pub.getId());
 			if(pub.getId().equals(pId)){
-				valid = true;
 				p = pub;
 				break;
 			}
@@ -238,7 +237,7 @@ public class ProfileManagerBean implements ProfileManager {
 			StringBuilder sb = new StringBuilder();
 			for (Keyword kw : p.getKeywords()) {
 				sb.append(kw.getName());
-			    sb.append(",");
+			    sb.append(" ");
 			}
 			this.publicationKeywords = sb.toString();
 			
@@ -281,40 +280,27 @@ public class ProfileManagerBean implements ProfileManager {
 
 	@Override
 	public String savePublication() {
-		Publication p = null;
-		if(action.equals("EDIT")){
-			Publication tmp = validPubl(publication.getId());
-			if(tmp!=null){
-				//tmp to publikacja z bazy
-				//nie mozna zapisac do bazy this.publication:
-				//detached entity passed to persist
-				
-				
-				tmp.setAuthors(publication.getAuthors());
-				tmp.setTitle(publication.getTitle());
-				tmp.setJournal(publication.getJournal());
-				
-				tmp.setLink(publication.getLink());
-				tmp.setPages(publication.getPages());
-				tmp.setVolume(publication.getVolume());
-				tmp.setReferences(publication.getReferences());
-				tmp.setYear(publication.getYear());
-				p = tmp;
-				
-			}
+		//Publication p = null;
+		
+		if(action.equals("EDIT"))
+			if(validPubl(publication.getId())!=null)
+				return "/editUserProfile.xhtml";
 			System.out.println("action: EDIT");
-		} else {
-			p = this.publication;
-		}
-		if(p!=null){
+		
+		
+		if(publication!=null){
 			KeywordFactory kfact = new KeywordFactory(this.em);
-			p.setKeywords(kfact.createFromText(this.publicationKeywords));
-			em.persist(p);
-			if(action.equals("ADD")){
+			publication.setKeywords(kfact.createFromText(this.publicationKeywords));
+			if(action.equals("EDIT")){
+				em.flush();
+				em.merge(publication);
+				
+			} else {
+				em.persist(publication);
 				//dodajemy userowi te publikacje
 				User user = (User) Contexts.getSessionContext().get("loggedUser");
 				user = (User)this.em.createQuery("select u from User u where id=:id").setParameter("id", user.getId()).getSingleResult();
-				user.getPublications().add(p);
+				user.getPublications().add(publication);
 			}
 			facesContext.addMessage(null, new FacesMessage("zapisano"));
 			
@@ -346,6 +332,5 @@ public class ProfileManagerBean implements ProfileManager {
 	public void setPublicationKeywords(String k) {
 		this.publicationKeywords = k;
 	}
-
 
 }

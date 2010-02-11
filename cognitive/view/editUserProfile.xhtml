@@ -20,11 +20,11 @@
 	  		<h:form>
 				<h:panelGrid columns="2">
 					<h:outputLabel for="fullName" value="Nazwa uzytkownika: "/>
-					<h:inputText id="fullName" value="#{user.fullName}"/>
+					<h:inputText id="fullName" value="#{loggedUser.fullName}"/>
 					<h:outputLabel for="competences" value="Kompetencje: "/>
-					<h:inputTextarea id="competences" value="#{user.competences}" style=" width : 400px;"/>
+					<h:inputTextarea id="competences" value="#{loggedUser.competences}" style=" width : 400px;"/>
 					<h:outputLabel for="allowedIPs" value="Dozwolone adresy IP: "/>
-					<h:inputText id="allowedIPs" value="#{user.allowedIPs}"/>
+					<h:inputText id="allowedIPs" value="#{loggedUser.allowedIPs}"/>
 				</h:panelGrid>
 				<r:panel>
 					<f:facet name="header">
