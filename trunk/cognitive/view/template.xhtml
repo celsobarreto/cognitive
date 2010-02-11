@@ -71,13 +71,15 @@
 						<li>
 							<s:link value="Profil " view="/userProfile.xhtml" action="#{userManager.show}" propagation="none">
 					  			<f:param name="userId" value="#{loggedUser.id}"/>
-					  		</s:link><s:link value="(edytuj)" view="/editUserProfile.seam" />
-						</li>
-				  								
+					  		</s:link>
+					  		<s:link value="(edytuj)" view="/editUserProfile.seam" action="#{userManager.show}" propagation="none">
+					  			<f:param name="userId" value="#{loggedUser.id}"/>
+					  		</s:link>
+						</li>				
 				  		<li>
-				  			<s:link value="Wyloguj" view="/homepage.seam" action="#{identity.logout}" propagation="none"/>
+				  			<s:link value="Wyloguj" action="#{authenticator.logout}" propagation="none"/>
 						</li>
-					</c:if>					
+					</c:if>						
 				</ul>					
 			</div>
 		</div>

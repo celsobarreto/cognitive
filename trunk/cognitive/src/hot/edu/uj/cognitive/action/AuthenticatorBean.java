@@ -100,4 +100,9 @@ public class AuthenticatorBean implements Authenticator
     	return ((HttpServletRequest) facesContext.getExternalContext().getRequest()).getRemoteAddr();    	
     }
 
+    public String logout()
+    {
+    	this.identity.logout();
+    	return "/homepage.seam";
+    }
 }

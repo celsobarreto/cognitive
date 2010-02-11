@@ -65,11 +65,17 @@ public class PublicationManagerAction implements PublicationManager
 		}
 		else if (this.criterion != null && this.criterion.equalsIgnoreCase("keywords"))
 		{
-			query = this.em.createQuery("select distinct p from Publication p join p.keywords k where lower(k.name) like #{pattern}");
+			query = this.em.createQuery("select distinct p " +
+										"from Publication p " +
+										"join p.keywords k " +
+										"where lower(k.name) like #{pattern}");
 		}
 		else if (this.criterion != null && this.criterion.equalsIgnoreCase("users"))
 		{
-			query = this.em.createQuery("select distinct p from Publication p join p.users u where lower(u.fullName) like #{pattern}");
+			query = this.em.createQuery("select distinct p " +
+										"from Publication p " +
+										"join p.users u " +
+										"where lower(u.fullName) like #{pattern}");
 		}
 		else if (this.criterion != null && this.criterion.length() > 0)
 		{
@@ -86,7 +92,19 @@ public class PublicationManagerAction implements PublicationManager
 			{
 				value = 0;
 			}
-			query = this.em.createQuery("from Publication where lower(title) like #{pattern} or lower(link) like #{pattern} or lower(references) like #{pattern} or lower(journal) like #{pattern} or year = :value or volume = :value or pages = :value").setParameter("value", value);
+			query = this.em.createQuery("select distinct p " +
+										"from Publication p " +
+										"join p.users u join p.keywords k " +
+										"where lower(u.fullName) like #{pattern} " +
+										"or lower(k.name) like #{pattern} " +
+										"or lower(title) like #{pattern} " +
+										"or lower(link) like #{pattern} " +
+										"or lower(authors) like #{pattern} " +
+										"or lower(references) like #{pattern} " +
+										"or lower(journal) like #{pattern} " +
+										"or year = :value " +
+										"or volume = :value " +
+										"or pages = :value").setParameter("value", value);
 		}
 		List<Publication> results = query.setMaxResults(this.pageSize + 1).setFirstResult(this.page * this.pageSize).getResultList();
 		this.nextPageAvailable = results.size() > this.pageSize;
