@@ -6,5 +6,5 @@ import javax.ejb.Local;
 public interface Authenticator {
 
     boolean authenticate();
-
+    public String logout();
 }
