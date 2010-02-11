@@ -6,13 +6,17 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 
+import javax.ejb.Remove;
+import javax.ejb.Stateful;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Logger;
 import org.jboss.seam.annotations.Name;
+import org.jboss.seam.annotations.Scope;
 import org.jboss.seam.annotations.web.RequestParameter;
 import org.jboss.seam.international.StatusMessages;
 import org.jboss.seam.log.Log;
@@ -28,13 +32,14 @@ import edu.uj.cognitive.model.ScienceDomain;
 import edu.uj.cognitive.model.SpecialPage;
 import edu.uj.cognitive.model.User;
 
-@Stateless
+@Stateful
 @Name("TestData")
+@Scope(ScopeType.SESSION)
 /**
  * By wstawic dane testowe otwórz dowolną podstrone w przeglarce np.
  * /testData.seam
  * Nastepnie otwórz w przeglądarce
- * /homepage.seam?token=6936598e6e25e96bb9694b30187b42a4&actionMethod=testData.xhtml%3ATestData.insert
+ * /testData.seam?token=6936598e6e25e96bb9694b30187b42a4&actionMethod=testData.xhtml%3ATestData.insert
  */
 public class TestDataBean implements TestData
 {
@@ -43,7 +48,7 @@ public class TestDataBean implements TestData
     @In StatusMessages statusMessages;
 
     @RequestParameter
-    private String token;
+    public String token;
     
     // top secret
     private final String EXPECTED_TOKEN = "6936598e6e25e96bb9694b30187b42a4";
@@ -67,10 +72,12 @@ public class TestDataBean implements TestData
 			"<p>Proin sit amet semper nunc. Nullam urna dolor, placerat at accumsan blandit, dictum in magna. Vivamus semper ornare purus a rhoncus. Sed pretium volutpat gravida. Nunc et mi non nisl accumsan blandit. Sed scelerisque orci et libero vestibulum quis tincidunt nisi sollicitudin. Vivamus ut consequat sem. Pellentesque eu leo ipsum. Fusce leo urna, molestie sed aliquam sed, pharetra eu tellus. Phasellus sed lobortis tortor. Duis convallis sapien quis est suscipit in vestibulum arcu convallis. Sed ac purus diam. Praesent pulvinar rutrum sem, a sodales felis dignissim quis. Suspendisse non risus ipsum. Sed dictum viverra ornare. In hac habitasse platea dictumst." +
 			"</p>";
 	
-	public String insert()
+	public void insert()
 	{
-		if (token == null || !token.equals(EXPECTED_TOKEN)) {
-			statusMessages.add("Niepoprawny token. Nie masz możesz wykonać tej operacji.");
+		if (token == null) {
+			statusMessages.add("Musisz podać token aby wykonać tę operację.");
+		} else if (!token.equals(EXPECTED_TOKEN)) {
+			statusMessages.add("Niepoprawny token. Nie możesz wykonać tej operacji.");	
 		} else {
 			this.clearTables();
 			this.insertRoles();
@@ -82,8 +89,6 @@ public class TestDataBean implements TestData
 			this.insertScienceDomains();
 	        statusMessages.add("Test data loaded successfully.");
 		}
-		
-        return "/homepage.xhtml";
     }
 	
 	private void clearTables() {
@@ -256,4 +261,9 @@ public class TestDataBean implements TestData
 		offer2.setOfferType(OfferTypeEnum.SERVICE.getOfferType());
 		this.em.persist(offer2);
 	}
+	
+	@Remove
+	public void destroy() {
+		this.token = null;
+	}	
 }

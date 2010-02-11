@@ -1,14 +1,29 @@
-<html>
-<head>
-</head>
-<body>
-<div>
-	<p>Administratorze, aby wstawić dane testowe otwórz w przeglądarce link, który otrzymałeś.</p>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	    		xmlns:ui="http://java.sun.com/jsf/facelets"
+	  			xmlns:h="http://java.sun.com/jsf/html"
+	  			xmlns:f="http://java.sun.com/jsf/core"
+	  			xmlns:s="http://jboss.com/products/seam/taglib"
+                xmlns:a="http://richfaces.org/a4j"
+                xmlns:r="http://richfaces.org/rich"
+				xmlns:c="http://java.sun.com/jstl/core"                
+				template="template.xhtml">
+	<ui:define name="navigation">
+		<ui:param name="pageid" value="activation" />
+	</ui:define>
 	
-	<p>Jest on w postaci:</p>
-	<pre>/homepage.seam?token={TOKEN AUTORYZUJĄCY}&amp;actionMethod=testData.xhtml%3ATestData.insert</pre>
+	<ui:define name="content">
+		
+			<p>Administratorze, aby wstawić dane testowe otwórz w przeglądarce link, który otrzymałeś.</p>
+			
+			<p>Link jest w postaci:</p>
+			<pre>/testData.seam?token={TOKEN AUTORYZUJĄCY}&amp;actionMethod=testData.xhtml%3ATestData.insert</pre>
+			
+			<p>W razie jego zgubienia zajrzyj do pliku TestDataBean.java.</p>
+
 	
-	<p>W razie jego zgubienia zajrzyj do pliku TestDataBean.java.</p>
-</div>
-</body>
-</html>
+
+	</ui:define>
+</ui:composition>
+
