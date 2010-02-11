@@ -2,11 +2,14 @@ package edu.uj.cognitive.action;
 
 import javax.ejb.Remove;
 import javax.ejb.Stateful;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import org.jboss.seam.ScopeType;
+import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Logger;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Scope;
@@ -21,7 +24,7 @@ import edu.uj.cognitive.model.SpecialPage;
 public class PageFormBean implements PageForm {
 	@Logger private Log log;
 	
-		
+	@In private FacesContext facesContext;  
 	@PersistenceContext
 	private EntityManager em;
 	
@@ -56,6 +59,7 @@ public class PageFormBean implements PageForm {
 		sPage.setContent(this.text);
 		sPage.setTitle(this.title);
 		em.persist(sPage);
+		facesContext.addMessage(null, new FacesMessage("Strona została zapisana"));		
 	}
 
 	@Override

@@ -4,6 +4,8 @@ import java.util.List;
 
 import javax.ejb.Remove;
 import javax.ejb.Stateful;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
@@ -26,7 +28,7 @@ public class PageEditAction implements PageEdit
 {
 	@Logger private Log log;
 	
-	
+	@In private FacesContext facesContext;  
 	@Out(required = false)
 	private SpecialPage sPage;
 	
@@ -83,7 +85,7 @@ public class PageEditAction implements PageEdit
 		this.sPage.setContent(this.text);
 		this.em.persist(this.sPage);
 		this.pageID = (this.sPage == null ? "error": this.sPage.getId());
-		
+		facesContext.addMessage(null, new FacesMessage("Strona została zapisana"));
 	}
 	public void setText(String text){
 		this.text = text;
