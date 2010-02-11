@@ -104,11 +104,12 @@ public class UserManagerBean implements UserManager
 	@Factory("sdList")
 	public void scienceDomainList()
 	{
+		User loggedUser = (User) Contexts.getSessionContext().get("loggedUser");
 		sdList = em.createQuery("select sc from ScienceDomain sc").getResultList();
 		for (ScienceDomain sd : sdList)
 		{
 			boolean sel = false;
-			for (ScienceDomain userSd : user.getScienceDomains())
+			for (ScienceDomain userSd : loggedUser.getScienceDomains())
 			{
 				if (userSd.getName().equals(sd.getName()))
 				{
