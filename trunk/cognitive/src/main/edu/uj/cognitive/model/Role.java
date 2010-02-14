@@ -13,6 +13,10 @@ import org.jboss.seam.annotations.security.management.RoleName;
 @Table(name = "roles")
 public class Role implements Serializable
 {
+	public final static String ADMIN_ROLE = "admin";
+	public final static String SCIENTIST_ROLE = "scientist";
+	public final static String ENTREPRENEUR_ROLE = "entrepreneur";
+	
     private Integer id;
 
     private String name;
