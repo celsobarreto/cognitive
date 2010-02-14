@@ -1,35 +1,24 @@
 package edu.uj.cognitive.action;
 
-import java.util.Properties;
-
+import java.util.List;
 import javax.ejb.Remove;
 import javax.ejb.Stateful;
-import javax.ejb.Stateless;
 import javax.faces.context.FacesContext;
-import javax.mail.Message;
 import javax.mail.MessagingException;
-import javax.mail.NoSuchProviderException;
-import javax.mail.Session;
-import javax.mail.Transport;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceContextType;
 import javax.servlet.http.HttpServletRequest;
-
-import org.drools.lang.DRLParser.unary_constr_return;
-import org.hibernate.validator.NotNull;
 import org.jboss.seam.ScopeType;
-import org.jboss.seam.annotations.Factory;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Logger;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Scope;
-import org.jboss.seam.annotations.security.Restrict;
 import org.jboss.seam.annotations.web.RequestParameter;
+import org.jboss.seam.contexts.Contexts;
 import org.jboss.seam.log.Log;
 
+import edu.uj.cognitive.model.Role;
 import edu.uj.cognitive.model.User;
 
 @Stateful
@@ -39,26 +28,36 @@ public class ActivationBean implements Activation{
 	@RequestParameter 
 	private Integer userId;
 	@RequestParameter 
-	private String userToken;
+	private String activationToken;
 	@PersistenceContext(type = PersistenceContextType.EXTENDED)
 	private EntityManager em;
 	
 	@Override
 	public void accept() {
-		this.em.find(User.class, userId).setAccepted(true);		
+		User user = (User) Contexts.getSessionContext().get("loggedUser");
+			for(Role role : user.getRoles())//sprawdzamy, czy jest adminem
+				if(Role.ADMIN_ROLE.equals(role.getName())){
+					this.em.find(User.class, userId).setAccepted(true);		
+					return;
+				}
 	}
 
 	@Override
 	public void activate() {
-		User u =this.em.find(User.class, userId);
-		if(u.getActivationToken().equalsIgnoreCase(userToken))
+		User u =em.find(User.class, userId);
+		if(u.getActivationToken().equals(activationToken))
 		{	
 			u.setEmailConfirmed(true);
 			em.persist(u);
 			try {
-				sendAcceptationEmail(u);
+				javax.persistence.Query c = em.createQuery("select u " +
+						"from User u, IN(u.roles) r " +
+						"where r.name = :ruleName");
+				c.setParameter("ruleName", Role.ADMIN_ROLE);
+				for(User admin : (List<User>)c.getResultList())
+					sendAcceptationEmail(admin);
 			} catch (MessagingException e) {
-				// TODO Auto-generated catch block
+				log.error(e);
 				
 			}
 		}	
@@ -67,7 +66,7 @@ public class ActivationBean implements Activation{
 
 
 	private void sendAcceptationEmail(User u) throws MessagingException {
-		EmailSenderBean.sendMail("za3maj@gmail.com", "Activation Confirm link", getURL()+"/activation.seam&userId="+u.getId());
+		EmailSenderBean.sendMail(u.getEmail(), "Acceptation Confirm link", getURL()+"/activation.seam?userId="+u.getId()+"&actionMethod=activation.xhtml:activation.accept()");
 		
 	}
 	@Logger
