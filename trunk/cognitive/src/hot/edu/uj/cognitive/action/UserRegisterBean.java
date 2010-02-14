@@ -50,7 +50,7 @@ public class UserRegisterBean implements UserRegister {
 	private Boolean isScientist;
 	
 	private final boolean REQUIRE_EMAIL_CONFIRMATION = true;
-	private final boolean REQUIRE_ADMIN_ACCEPTATION = false;
+	private final boolean REQUIRE_ADMIN_ACCEPTATION = true;
 
 	private ArrayList<Role> roles = new ArrayList<Role>();
 	@In
@@ -60,11 +60,11 @@ public class UserRegisterBean implements UserRegister {
 		roles.clear();
 
 		if (isScientist) {
-			roles.add(getRole("scientist"));
+			roles.add(getRole(Role.SCIENTIST_ROLE));
 		} 
 		
 		if (isEntrepreneur) {
-			roles.add(getRole("entrepreneur"));
+			roles.add(getRole(Role.ENTREPRENEUR_ROLE));
 		} 
 		
 		if (roles.isEmpty()) {
@@ -215,19 +215,36 @@ public class UserRegisterBean implements UserRegister {
 
 	}
 
-
-	private void sendAcceptationEmail(User u) throws MessagingException {
-		// TODO Auto-generated method stub
-		
-	}
-
 	private void sendActivationEmail(User u) throws MessagingException {
-		String token = "random";
-		u.setActivationToken("random");
-		EmailSenderBean.sendMail(u.getEmail(), "Activation Confirm link", getURL()+"/activation.seam?activationToken="+token+"&userId="+u.getId());
+		String token = getRanomToken(20);
+		u.setActivationToken(token);
+		EmailSenderBean.sendMail(u.getEmail(), "Activation Confirm link", getURL()+"/activation.seam?activationToken="+token+"&userId="+u.getId()+"&actionMethod=activation.xhtml:activation.activate()");
 		
 	}
+	
+	/**
+	 * @return Case sensitive alphanumeric (a-z, A-Z, 0-9) random char
+	 */
+	private static char getRandom() {
+		int random =  (int) (Math.random()*62);
+		if(random<10){
+			return (char)(random+48);
+		}else if(random<36){
+			return (char)(random+55);
+		}else{
+			return (char)(random+61);
+		}
+		}
 
+	public static String getRanomToken(int lenght){
+		StringBuilder sb = new StringBuilder();
+		for(int i= 0; i<lenght; i++ ){
+			sb.append(getRandom());
+		}
+		return sb.toString();
+		
+	}
+	
 	private String getURL(){
 
 		HttpServletRequest request= (HttpServletRequest)facesContext.getExternalContext().getRequest();
