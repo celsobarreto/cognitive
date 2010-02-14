@@ -114,15 +114,15 @@ public class TestDataBean implements TestData
 	
 	private void insertRoles() {
 		adminRole = new Role();
-		adminRole.setName("admin");
+		adminRole.setName(Role.ADMIN_ROLE);
 		this.em.persist(adminRole);
 		
 		scientistRole = new Role();
-		scientistRole.setName("scientist");
+		scientistRole.setName(Role.SCIENTIST_ROLE);
 		this.em.persist(scientistRole);
 		
 		entrepreneurRole = new Role();
-		entrepreneurRole.setName("entrepreneur");
+		entrepreneurRole.setName(Role.ENTREPRENEUR_ROLE);
 		this.em.persist(entrepreneurRole);
 		
 		this.em.flush();
@@ -141,7 +141,7 @@ public class TestDataBean implements TestData
 		milioner.setRoles(new HashSet<Role>(Arrays.asList(new Role[] {entrepreneurRole})));
 		this.em.persist(milioner);		
 
-		admin = new User("Administrator", "admin@uj.pl", "admin", true, true);
+		admin = new User("za3maj", "za3maj@gmail.com", "za3maj", true, true);
 		admin.setRoles(new HashSet<Role>(Arrays.asList(new Role[] {adminRole})));
 		admin.setAllowedIPs("127.0.0.1"); // oddzielone przecinkiem
 		this.em.persist(admin);
