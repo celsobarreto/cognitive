@@ -13,11 +13,12 @@
 	</ui:define>
 	
 	<ui:define name="content">
-	<h:form>	
-	    <div class="actionButtons">
-            <h:commandButton id="submit" value="send" action="#{activation.activate()}"/>
-        </div>
-
-    </h:form>
+						<s:link value="aktywuj" view="/activation.xhtml"  action="#{activation.activate()}" propagation="none">
+							<f:param name="userId" value="12"/>
+						</s:link>
+						<s:link value="akceptuj" view="/activation.xhtml"  action="#{activation.accept()}" propagation="none">
+							<f:param name="userId" value="12"/>
+						</s:link>
+						
 	</ui:define>
 </ui:composition>
