@@ -2,6 +2,8 @@ package edu.uj.cognitive.action;
 
 import javax.ejb.Local;
 
+import edu.uj.cognitive.model.SearchParameters;
+
 @Local
 public interface PublicationManager 
 {
@@ -11,15 +13,7 @@ public interface PublicationManager
 	public void newSearch();
 	public void nextPage();
 	public void prevPage();
-	public boolean isNextPageAvailable();
-	public boolean isPrevPageAvailable();
 	public boolean isDetails();
-	public int getRowIndex();
-	public String getSearchString();
-	public void setSearchString(String searchString);
-	public String getSearchPattern();
-	public int getPageSize();
-	public void setPageSize(int pageSize);
-	public String getCriterion();
-	public void setCriterion(String criterion);
+	public void setSearchParam(SearchParameters searchParam);
+	public SearchParameters getSearchParam();
 }

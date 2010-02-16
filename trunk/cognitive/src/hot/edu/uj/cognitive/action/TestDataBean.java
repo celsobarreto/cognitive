@@ -101,7 +101,7 @@ public class TestDataBean implements TestData
 		em.createQuery("DELETE Publication p").executeUpdate();
 		
 		em.createNativeQuery("DELETE FROM users_sciencedomain").executeUpdate();
-		//em.createQuery("DELETE ScienceDomain sc").executeUpdate();
+		em.createQuery("DELETE ScienceDomain sc").executeUpdate();
 		
 		em.createNativeQuery("DELETE FROM users_roles").executeUpdate();
 		em.createQuery("DELETE User u").executeUpdate();

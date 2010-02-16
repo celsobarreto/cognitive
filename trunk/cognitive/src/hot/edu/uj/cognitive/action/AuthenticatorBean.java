@@ -80,7 +80,7 @@ public class AuthenticatorBean implements Authenticator
     
     private boolean hasAllowedIP(User user, String ip) {
     	String allowedIPs = user.getAllowedIPs();
-    	if (allowedIPs == null) {
+    	if (allowedIPs == null || allowedIPs.length() == 0) {
     		log.info("Uzytkownik nie ma ustalonych dopuszczalnych IP logowania. Nie sprawdzam IP.");
     		return true;
     	}
