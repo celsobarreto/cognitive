@@ -15,6 +15,7 @@ import org.jboss.seam.annotations.Scope;
 import org.jboss.seam.annotations.datamodel.DataModel;
 import org.jboss.seam.annotations.datamodel.DataModelSelection;
 import edu.uj.cognitive.model.Publication;
+import edu.uj.cognitive.model.SearchParameters;
 import edu.uj.cognitive.model.User;
 
 @Stateful
@@ -22,16 +23,8 @@ import edu.uj.cognitive.model.User;
 @Name("publicationManager")
 public class PublicationManagerAction implements PublicationManager
 {
-	private int pageSize = 5;
-	private String criterion = "";
-	private int page;
-	private boolean nextPageAvailable;
-	private boolean prevPageAvailable;
-	private String searchString;
-	private int rowIndex = 0;
-
-	@Out(required = false, scope = ScopeType.EVENT)
-	private boolean details;
+	private SearchParameters searchParam = new SearchParameters();
+	private boolean details = false;
 
 	@PersistenceContext(type = PersistenceContextType.EXTENDED)
 	private EntityManager em;
@@ -40,6 +33,8 @@ public class PublicationManagerAction implements PublicationManager
 	private List<Publication> publicationList;
 
 	@DataModelSelection(value = "publicationList")
+	private Publication publicationSelect;
+	
 	@Out(required = false)
 	private Publication publication;
 
@@ -50,43 +45,41 @@ public class PublicationManagerAction implements PublicationManager
 	public void findPublication() 
 	{
 		Query query;
-		if (this.criterion != null && (this.criterion.equalsIgnoreCase("year") || this.criterion.equalsIgnoreCase("volume") || this.criterion.equalsIgnoreCase("pages")))
+		if (this.searchParam.getCriterion() != null && (this.searchParam.getCriterion().equalsIgnoreCase("year") || this.searchParam.getCriterion().equalsIgnoreCase("volume") || this.searchParam.getCriterion().equalsIgnoreCase("pages")))
 		{
 			int value;
 			try
 			{
-				value = ((this.searchString != null && this.searchString.length() > 0) ? Integer.parseInt(this.searchString) : 0);
+				value = ((this.searchParam.getSearchString() != null && this.searchParam.getSearchString().length() > 0) ? Integer.parseInt(this.searchParam.getSearchString()) : 0);
 			}
 			catch (NumberFormatException e)	
 			{
 				value = 0;
 			}
-			query = this.em.createQuery("from Publication where " + this.criterion + " = :value").setParameter("value", value);
+			query = this.em.createQuery("from Publication where " + this.searchParam.getCriterion() + " = :value").setParameter("value", value);
 		}
-		else if (this.criterion != null && this.criterion.equalsIgnoreCase("keywords"))
+		else if (this.searchParam.getCriterion() != null && this.searchParam.getCriterion().equalsIgnoreCase("keywords"))
 		{
 			query = this.em.createQuery("select distinct p " +
-										"from Publication p " +
-										"join p.keywords k " +
+										"from Publication p, IN(p.keywords) k " +
 										"where lower(k.name) like #{pattern}");
 		}
-		else if (this.criterion != null && this.criterion.equalsIgnoreCase("users"))
+		else if (this.searchParam.getCriterion() != null && this.searchParam.getCriterion().equalsIgnoreCase("users"))
 		{
 			query = this.em.createQuery("select distinct p " +
-										"from Publication p " +
-										"join p.users u " +
+										"from Publication p, IN(p.users) u " +
 										"where lower(u.fullName) like #{pattern}");
 		}
-		else if (this.criterion != null && this.criterion.length() > 0)
+		else if (this.searchParam.getCriterion() != null && this.searchParam.getCriterion().length() > 0)
 		{
-			query = this.em.createQuery("from Publication where lower(" + this.criterion + ") like #{pattern}");
+			query = this.em.createQuery("from Publication where lower(" + this.searchParam.getCriterion() + ") like #{pattern}");
 		}
 		else
 		{
 			int value;
 			try
 			{
-				value = ((this.searchString != null && this.searchString.length() > 0) ? Integer.parseInt(this.searchString) : 0);
+				value = ((this.searchParam.getSearchString() != null && this.searchParam.getSearchString().length() > 0) ? Integer.parseInt(this.searchParam.getSearchString()) : 0);
 			}
 			catch (NumberFormatException e)	
 			{
@@ -94,7 +87,7 @@ public class PublicationManagerAction implements PublicationManager
 			}
 			query = this.em.createQuery("select distinct p " +
 										"from Publication p " +
-										"join p.users u join p.keywords k " +
+										"left join p.users u left join p.keywords k " +
 										"where lower(u.fullName) like #{pattern} " +
 										"or lower(k.name) like #{pattern} " +
 										"or lower(title) like #{pattern} " +
@@ -106,30 +99,30 @@ public class PublicationManagerAction implements PublicationManager
 										"or volume = :value " +
 										"or pages = :value").setParameter("value", value);
 		}
-		List<Publication> results = query.setMaxResults(this.pageSize + 1).setFirstResult(this.page * this.pageSize).getResultList();
-		this.nextPageAvailable = results.size() > this.pageSize;
-		if (this.nextPageAvailable) 
+		List<Publication> results = query.setMaxResults(this.searchParam.getPageSize() + 1).setFirstResult(this.searchParam.getPage() * this.searchParam.getPageSize()).getResultList();
+		this.searchParam.setNextPageAvailable(results.size() > this.searchParam.getPageSize());
+		if (this.searchParam.isNextPageAvailable()) 
 		{
-			this.publicationList = results.subList(0, this.pageSize);
+			this.publicationList = results.subList(0, this.searchParam.getPageSize());
 		} 
 		else 
 		{
 			this.publicationList = results;
 		}
-		this.prevPageAvailable = (this.page > 0);
+		this.searchParam.setPrevPageAvailable(this.searchParam.getPage() > 0);
 		this.details = false;
-		this.rowIndex = 0;
+		this.searchParam.setRowIndex(0);
 	}
 
 	@Factory(value="pattern", scope=ScopeType.EVENT)
 	public String getSearchPattern()
 	{
-		return (this.searchString == null ? "%" : '%' + this.searchString.toLowerCase().replace('*', '%') + '%');
+		return (this.searchParam.getSearchString() == null ? "%" : '%' + this.searchParam.getSearchString().toLowerCase().replace('*', '%') + '%');
 	}
 
 	public void search() 
 	{
-		this.page = 0;
+		this.searchParam.setPage(0);
 		this.findPublication();
 	}
 
@@ -138,29 +131,20 @@ public class PublicationManagerAction implements PublicationManager
 	{
 		this.publicationList = null;
 		this.publUserList = null;
-	}
-
-	public boolean isNextPageAvailable() 
-	{
-		return this.nextPageAvailable;
-	}
-
-	public boolean isPrevPageAvailable()
-	{
-		return this.prevPageAvailable;
+		this.publication = null;
 	}
 
 	public void nextPage() 
 	{
-		this.page++;
+		this.searchParam.setPage(this.searchParam.getPage() + 1);
 		this.findPublication();
 	}
 
 	public void prevPage() 
 	{
-		if (this.page > 0)
+		if (this.searchParam.getPage() > 0)
 		{
-			this.page--;
+			this.searchParam.setPage(this.searchParam.getPage() - 1);
 			this.findPublication();
 		}
 	}
@@ -172,8 +156,10 @@ public class PublicationManagerAction implements PublicationManager
 
 	public void showDetails()
 	{
+		this.publication = this.publicationSelect;
 		this.publUserList = this.publication.getUsers();
 		this.details = true;
+		this.searchParam.setRowIndex(0);
 	}
 
 	public List<User> getPublUserList()
@@ -181,48 +167,18 @@ public class PublicationManagerAction implements PublicationManager
 		return this.publUserList;
 	}
 
-	public void setSearchString(String searchString)
-	{
-		this.searchString = searchString;
-	}
-
-	public String getSearchString()
-	{
-		return this.searchString;
-	}
-
-	public int getPageSize()
-	{
-		return this.pageSize;
-	}
-
-	public void setPageSize(int pageSize)
-	{
-		this.pageSize = pageSize;
-	}
-
-	public String getCriterion()
-	{
-		return this.criterion;
-	}
-
-	public void setCriterion(String criterion)
-	{
-		this.criterion = criterion;
-	}
-
-	public void setPublicationList(List<Publication> publicationList)
-	{
-		this.publicationList = publicationList;
-	}
-
 	public List<Publication> getPublicationList()
 	{
 		return this.publicationList;
 	}
 
-	public int getRowIndex()
+	public void setSearchParam(SearchParameters searchParam) 
 	{
-		return ++this.rowIndex + this.page * this.pageSize;
+		this.searchParam = searchParam;
+	}
+
+	public SearchParameters getSearchParam() 
+	{
+		return this.searchParam;
 	}
 }

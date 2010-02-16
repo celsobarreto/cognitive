@@ -4,18 +4,14 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
 import javax.ejb.Remove;
 import javax.ejb.Stateful;
 import javax.faces.context.FacesContext;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceContextType;
-
 import javax.servlet.http.HttpServletRequest;
-
 import org.jboss.seam.ScopeType;
-
 import org.jboss.seam.annotations.Factory;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
@@ -24,14 +20,8 @@ import org.jboss.seam.annotations.Scope;
 import org.jboss.seam.annotations.datamodel.DataModel;
 import org.jboss.seam.annotations.web.RequestParameter;
 import org.jboss.seam.contexts.Contexts;
-
-
-import edu.uj.cognitive.model.Publication;
-import edu.uj.cognitive.model.ScienceDomain;
-import edu.uj.cognitive.model.SpecialPage;
-
 import edu.uj.cognitive.model.Role;
-
+import edu.uj.cognitive.model.ScienceDomain;
 import edu.uj.cognitive.model.User;
 
 @Stateful
@@ -51,17 +41,11 @@ public class UserManagerBean implements UserManager
 	@RequestParameter 
 	private Integer userId;
 	
-
 	private Integer editUserId;
-	
-
 	private String mode;
-	
 	private String searchText;
-	
 	private String searchCriteria;
 	
-
 	public Integer getUserId() {
 		return userId;
 	}
@@ -104,12 +88,12 @@ public class UserManagerBean implements UserManager
 	@Factory("sdList")
 	public void scienceDomainList()
 	{
-		User loggedUser = (User) Contexts.getSessionContext().get("loggedUser");
+		//User loggedUser = (User) Contexts.getSessionContext().get("loggedUser");
 		sdList = em.createQuery("select sc from ScienceDomain sc").getResultList();
 		for (ScienceDomain sd : sdList)
 		{
 			boolean sel = false;
-			for (ScienceDomain userSd : loggedUser.getScienceDomains())
+			for (ScienceDomain userSd : this.userProfile.getScienceDomains())
 			{
 				if (userSd.getName().equals(sd.getName()))
 				{
@@ -219,7 +203,7 @@ public class UserManagerBean implements UserManager
 		
 		User logUsr = (User) Contexts.getSessionContext().get("loggedUser");
 		boolean changeAllowedIp = false;
-		if (logUsr != null && logUsr.getId().equals(editUserId)) 
+		if (logUsr != null && logUsr.getId().equals(editUserId) && logUsr.getRolesList().contains(Role.ADMIN_ROLE)) 
 		{
 			String IP = ((HttpServletRequest) facesContext.getExternalContext().getRequest()).getRemoteAddr();
 			for (String userIp : user.getAllowedIPs().split(","))
@@ -240,6 +224,7 @@ public class UserManagerBean implements UserManager
 		em.merge(userProfile);
 		em.flush();
 		sdList = null;
-		System.out.println(userProfile.getAllowedIPs());
+		if (logUsr != null && logUsr.getId().equals(editUserId))
+			Contexts.getSessionContext().set("loggedUser", userProfile);
 	}
 }
