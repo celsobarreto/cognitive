@@ -281,18 +281,19 @@ public class ProfileManagerBean implements ProfileManager {
 	@Override
 	public String savePublication() {
 		//Publication p = null;
-		
+		System.out.println("ACTION: "+action);
 		if(action.equals("EDIT"))
-			if(validPubl(publication.getId())!=null)
+			if(validPubl(publication.getId())==null)
 				return "/editUserProfile.xhtml";
-			System.out.println("action: EDIT");
-		
+			
+	
 		
 		if(publication!=null){
 			KeywordFactory kfact = new KeywordFactory(this.em);
 			publication.setKeywords(kfact.createFromText(this.publicationKeywords));
 			if(action.equals("EDIT")){
 				em.flush();
+				System.out.println("EDIT: "+this.publicationKeywords);
 				em.merge(publication);
 				
 			} else {
