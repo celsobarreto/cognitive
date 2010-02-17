@@ -16,11 +16,11 @@
 <ui:define name="content">
 
     <rich:panel>
-        <f:facet name="header">scienceDomainList</f:facet>
+        <f:facet name="header">Lista Kompetencji</f:facet>
 
         <div class="results">
 
-            <h:outputText value="No scienceDomain exists"
+            <h:outputText value="Brak kompetencji"
                        rendered="#{empty scienceDomainList.resultList}"/>
 
             <h:dataTable id="scienceDomainList" var="scienceDomain"
@@ -31,7 +31,7 @@
                     #{scienceDomain.id}
                 </h:column>
                 <h:column>
-                    <f:facet name="header">Name</f:facet>
+                    <f:facet name="header">Nazwa</f:facet>
                     <s:link id="scienceDomain"
                          value="#{scienceDomain.name}"
                    propagation="none"
@@ -48,7 +48,7 @@
 
     <div class="actionButtons">
         <s:button id="done"
-               value="Create scienceDomain"
+               value="Dodaj Kompetencje"
                 view="/scienceDomain.xhtml"/>
     </div>
 
