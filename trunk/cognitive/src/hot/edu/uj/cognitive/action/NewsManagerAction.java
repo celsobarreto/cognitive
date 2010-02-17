@@ -1,5 +1,7 @@
 package edu.uj.cognitive.action;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -19,6 +21,7 @@ import org.jboss.seam.annotations.Scope;
 import org.jboss.seam.annotations.datamodel.DataModel;
 import org.jboss.seam.annotations.datamodel.DataModelSelection;
 import org.jboss.seam.contexts.Contexts;
+import org.jboss.seam.international.StatusMessages;
 
 import edu.uj.cognitive.model.News;
 import edu.uj.cognitive.model.Role;
@@ -32,6 +35,9 @@ public class NewsManagerAction implements NewsManager
 	@PersistenceContext(type = PersistenceContextType.EXTENDED)
 	private EntityManager em;
 	
+	@In
+	StatusMessages statusMessages;
+	
 	@DataModel
 	private List<News> newsList;
 	
@@ -42,6 +48,7 @@ public class NewsManagerAction implements NewsManager
 
 	private String searchString;
 	private String criterion;
+	private String date;
 	
 	private actionType action;
 	private int homePageMessageLength = 300;
@@ -58,6 +65,7 @@ public class NewsManagerAction implements NewsManager
 	{
 		action = actionType.ADD;
 		this.news = new News();
+		this.date = (new SimpleDateFormat("dd-MM-yyyy")).format(new Date());
 		
 		return "/addNewsForm.xhtml";
 	}	
@@ -66,6 +74,7 @@ public class NewsManagerAction implements NewsManager
 	public String editNewsAction() 
 	{
 		action = actionType.EDIT;
+		this.date = (new SimpleDateFormat("dd-MM-yyyy")).format(news.getDate());
 		
 		return "/editNewsForm.xhtml";
 	}
@@ -84,12 +93,17 @@ public class NewsManagerAction implements NewsManager
 		switch(action)
 		{
 			case ADD:
-				System.out.println("ADD NEWS ACTION:");
-				System.out.println(news);
-				news.setDate(new Date());
-				em.persist(news);
-				
 			case EDIT:
+				try 
+				{
+					news.setDate( (new SimpleDateFormat("dd-MM-yyyy")).parse(date)) ;
+					em.persist(news);
+				} 
+				catch (ParseException e) 
+				{
+					statusMessages.add("Błędna data");
+					return null;
+				}
 				break;
 				
 			case DELETE:
@@ -200,5 +214,15 @@ public class NewsManagerAction implements NewsManager
 			
 			newsList.add(n);
 		}
+	}
+
+	public String getDate() 
+	{
+		return date;
+	}
+
+	public void setDate(String date) 
+	{
+		this.date = date;
 	}
 }

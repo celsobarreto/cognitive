@@ -17,23 +17,21 @@
 				<f:facet name="header">
 	    			<h:outputText value="Wyszukiwanie aktualności"/>
 	  			</f:facet>
-				<h:panelGrid columns="2">
-					<h:inputText id="searchString" value="#{newsManager.searchString}" style="width: 250px;"/>
-					<h:commandButton id="findNews" value="Szukaj" action="#{newsManager.searchNews()}"/>
-				</h:panelGrid>	
-				<h:panelGrid columns="2">
+				<h:panelGrid columns="4">
 					<h:outputText value="Szukaj w:"/>
 					<h:selectOneMenu id="criterion" value="#{newsManager.criterion}" style="width: 120px;">
 						<f:selectItem id="criterion1" itemLabel="tytule" itemValue="title"/>
 						<f:selectItem id="criterion2" itemLabel="treści" itemValue="content"/>
 					</h:selectOneMenu>					
-				</h:panelGrid>
+					<h:inputText id="searchString" value="#{newsManager.searchString}" style="width: 400px;"/>
+					<h:commandButton id="findNews" value="Szukaj" action="#{newsManager.searchNews()}"/>
+				</h:panelGrid>	
 			</a:panel>
 		
-			<h:outputText value="Brak wiadomości" rendered="#{newsList.rowCount == 0}"/>
+			<h:outputText value="Brak aktualności" rendered="#{newsList.rowCount == 0}"/>
             <h:dataTable border="0" cellpadding="3" cellspacing="0" headerClass="header_table" var="n" value="#{newsList}" rendered="#{newsList.rowCount>0}" width="100%">
             	<f:facet name="header">
-    				<h:outputText value="News:"/>
+    				<h:outputText value="Aktualności:"/>
   				</f:facet>            	
   				<h:column>
             		<a:panel>

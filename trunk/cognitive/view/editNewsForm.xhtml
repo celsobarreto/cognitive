@@ -13,9 +13,9 @@
 				
 	<ui:define name="content">
 		<h:form>
-        	<h:outputText value="Edycja wiadomości"/><br/>
-			Tytuł: <h:inputText value="#{newsManager.getNews().title}"/><br/>
-			Treść: <h:inputTextarea value="#{newsManager.getNews().content}"/><br/>
+			Tytuł: <h:inputText value="#{newsManager.getNews().title}"/><br/><br/>
+			Data: <h:inputText value="#{newsManager.date}"/><br/><br/>
+			Treść: <h:inputTextarea value="#{newsManager.getNews().content}"/><br/><br/>
 			<h:commandButton  id="submit" value="Zapisz" action="#{newsManager.performNewsAction()}"/>
 		</h:form>
 	</ui:define>
