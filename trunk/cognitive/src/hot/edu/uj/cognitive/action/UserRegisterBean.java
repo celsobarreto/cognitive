@@ -53,12 +53,16 @@ public class UserRegisterBean implements UserRegister {
 	private final boolean REQUIRE_ADMIN_ACCEPTATION = true;
 
 	private ArrayList<Role> roles = new ArrayList<Role>();
+	
 	@In
 	private FacesContext facesContext;
 
 	public void userRegister() {
 		roles.clear();
 
+		
+		System.out.println(" userRegister ");
+		
 		if (isScientist) {
 			roles.add(getRole(Role.SCIENTIST_ROLE));
 		} 
@@ -69,6 +73,7 @@ public class UserRegisterBean implements UserRegister {
 		
 		if (roles.isEmpty()) {
 			statusMessages.add("Wybierz grupe do ktorej chcesz nalezec");
+			
 		}
 		else {
 
@@ -128,6 +133,8 @@ public class UserRegisterBean implements UserRegister {
 
 	private Role getRole(String roleName) {
 
+		System.out.println("[UserRegisterBean] getRole() - roleName " + roleName  );
+		
 		Role role = (Role) em.createQuery("from Role where name = :name")
 				.setParameter("name", roleName).getSingleResult();
 
