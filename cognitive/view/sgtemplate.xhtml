@@ -11,7 +11,7 @@
 <html>
 <head>
 	<title>Cognitive Project</title>
-	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-2" />
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<meta http-equiv="Expires" content="0" />
 	<meta http-equiv="Pragma" content="no-cache" />
 	<meta http-equiv="Cache-Control" content="no-cache" />
@@ -38,7 +38,7 @@
 						<s:link value="Start" view="/homepage.seam" styleClass="" propagation="none"></s:link>
 					</li>
 					<li>
-						<s:link value="Aktualności" view="/News.seam" action="#{newsManager.getListOfNews()}" styleClass="active" propagation="none" ></s:link>
+						<s:link value="Aktualnosci" view="/News.seam" action="#{newsManager.getListOfNews()}" styleClass="active" propagation="none" ></s:link>
 					</li>					
 					<li>
 						<s:link value="O projekcie" view="/spage.seam" action="#{specialPages.toPage('info')}" styleClass="active" propagation="none" ></s:link>
@@ -47,10 +47,13 @@
 						<s:link value="Naukowcy" view="/userList.seam" action="#{userManager.setMode('scientist')}" styleClass="active" propagation="none" ></s:link>
 					</li>
 					<li>
-						<s:link value="Przedsiębiorcy" view="/userList.seam" action="#{userManager.setMode('entrepreneur')}" styleClass="active" propagation="none" ></s:link>
+						<s:link value="Przedsiebiorcy" view="/userList.seam" action="#{userManager.setMode('entrepreneur')}" styleClass="active" propagation="none" ></s:link>
 					</li>
 					<li>
-						<s:link value="Publikacje" view="/offer.seam" action="#{offerManager.getOffer}" styleClass="active" propagation="none" ></s:link>
+						<s:link value="Publikacje" view="/publication.seam" action="#{publicationManager.newSearch}" styleClass="active" propagation="none"></s:link>
+					</li>
+					<li>
+						<s:link value="Oferty pracy" view="/offer.seam" action="#{offerManager.getOffer}" styleClass="active" propagation="none" ></s:link>
 					</li>
 					<li>
 						<s:link value="Forum" view="/frameset.seam" styleClass="active" propagation="none" ></s:link>
@@ -119,7 +122,7 @@
 						<h:outputText value="#{specialPages.getPageContent('sgnaukowcy')}"/> 
 					</div>
 					<div class="more">
-						<s:link value="WIĘCEJ" view="/userList.seam" action="#{userManager.setMode('scientist')}" propagation="none" ></s:link>
+						<s:link value="WIÄCEJ" view="/userList.seam" action="#{userManager.setMode('scientist')}" propagation="none" ></s:link>
 					</div>
 				</div>
 				
@@ -134,13 +137,13 @@
 						Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
 					</div>
 					<div class="more">
-						<s:link value="WIĘCEJ" view="/offer.seam" action="#{offerManager.getOffer}" styleClass="active" propagation="none" ></s:link>
+						<s:link value="WIÄCEJ" view="/offer.seam" action="#{offerManager.getOffer}" styleClass="active" propagation="none" ></s:link>
 					</div>
 				</div>
 				
 				<div class="zajawka">
 					<div class="headline">
-						<h2>PRZEDSĘBIORCY</h2>
+						<h2>PRZEDSÄBIORCY</h2>
 					</div>
 					<div class="foto">
 						<img src="images/foto3.jpg" />
@@ -149,7 +152,7 @@
 						Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
 					</div>
 					<div class="more">
-						<s:link value="WIĘCEJ" view="/userList.seam" action="#{userManager.setMode('entrepreneur')}" styleClass="active" propagation="none" ></s:link>
+						<s:link value="WIÄCEJ" view="/userList.seam" action="#{userManager.setMode('entrepreneur')}" styleClass="active" propagation="none" ></s:link>
 					</div>
 				</div>
 			</div>

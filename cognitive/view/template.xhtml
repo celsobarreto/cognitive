@@ -51,8 +51,11 @@
 						<s:link value="Przedsiębiorcy" view="/userList.seam" action="#{userManager.setMode('entrepreneur')}" styleClass="active" propagation="none" ></s:link>
 					</li>
 					<li>
-						<s:link value="Publikacje" view="/offer.seam" action="#{offerManager.getOffer}" styleClass="active" propagation="none" ></s:link>
+						<s:link value="Publikacje" view="/publication.seam" action="#{publicationManager.newSearch}" styleClass="active" propagation="none"></s:link>
 					</li>
+					<li>
+						<s:link value="Oferty pracy" view="/offer.seam" action="#{offerManager.getOffer}" styleClass="active" propagation="none" ></s:link>
+					</li>					
 					<li>
 						<s:link value="Forum" view="/frameset.seam" styleClass="active" propagation="none" ></s:link>
 					</li>
@@ -96,7 +99,7 @@
 					    <h:outputLabel for="password" value="Password: "/>
 					    <h:inputSecret id="password" value="#{credentials.password}" redisplay="false"/>
 					    <f:facet name="footer">
-					    	<h:commandButton value="Zaloguj" action="#{identity.login}" view="/homepage.seam" propagation="none" />
+					    	<h:commandButton value="Zaloguj" action="#{identity.login}" view="/login.xhtml" propagation="none" />
 				   		</f:facet>
 					</h:panelGrid>
 				</h:form>		
@@ -148,8 +151,8 @@
 			<s:link value="Oferty pracy" view="/offer.seam" action="#{offerManager.getOffer}" propagation="none" rendered="#{pageid ne 'offer'}"></s:link>
 		</li>
 		<li>
-			<s:link value="Kompetencje" view="/scienceDomainList.seam" styleClass="active" propagation="none" rendered="#{pageid eq 'sd'}"></s:link>
-			<s:link value="Kompetencje" view="/scienceDomainList.seam"  propagation="none" rendered="#{pageid ne 'sd'}"></s:link>
+			<s:link value="Dziedziny naukowe" view="/scienceDomainList.seam" styleClass="active" propagation="none" rendered="#{pageid eq 'sd'}"></s:link>
+			<s:link value="Dziedziny naukowe" view="/scienceDomainList.seam"  propagation="none" rendered="#{pageid ne 'sd'}"></s:link>
 		</li>
 		<li>
 			<s:link value="Słowa kluczowe" view="/keywordManager.seam"  action="#{keywordManager.list}" styleClass="active" propagation="none" rendered="#{pageid eq 'sd'}"></s:link>

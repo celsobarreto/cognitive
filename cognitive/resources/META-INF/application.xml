@@ -5,7 +5,7 @@
              version="5">
     
    <display-name>cognitive</display-name>
-   
+    
    <module> 
       <web>
          <web-uri>cognitive.war</web-uri>
