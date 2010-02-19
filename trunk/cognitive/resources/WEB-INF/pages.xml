@@ -3,7 +3,7 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://jboss.com/products/seam/pages http://jboss.com/products/seam/pages-2.2.xsd"
 
-       no-conversation-view-id="/home.xhtml"
+       no-conversation-view-id="/homepage.xhtml"
        login-view-id="/login.xhtml">
 
     <page view-id="*">
@@ -13,6 +13,18 @@
             </rule>
         </navigation>
     </page>
+    
+ 	<page view-id="*">
+        <navigation from-action="#{identity.logout}">
+            <redirect view-id="/homepage.xhtml"/>
+        </navigation>
+    </page>    
+    
+    <page view-id="*">
+   <navigation from-action="#{identity.login}">
+         <redirect view-id="/homepage.xhtml"/>
+   </navigation>    
+   </page>
 
     <exception class="org.jboss.seam.framework.EntityNotFoundException">
         <redirect view-id="/error.xhtml">
