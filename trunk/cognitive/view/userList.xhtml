@@ -45,14 +45,6 @@
 						     <f:param name="userId" value="#{usr.id}"/>
 						</s:link>
 					</h:column>
-					<h:column>
-						<f:facet name="header">
-							<h:outputText value="E-mail"/>
-						</f:facet>
-						<s:link value="#{usr.email}" view="/sendEmail.xhtml"  action="#{emailSender.updateRecipientAddress()}" propagation="none">
-							<f:param name="userId" value="#{usr.id}"/>
-						</s:link>
-					</h:column>
 					<h:column rendered="#{userManager.mode eq 'scientist'}">
 						<f:facet name="header">
 							<h:outputText value="Liczba publikacji"/>
