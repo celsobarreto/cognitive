@@ -168,33 +168,39 @@ public class TestDataBean implements TestData
 		
 		sp = new SpecialPage();		
 		sp.setId("links");
-		sp.setTitle("Linki");		
-		sp.setContent(dummyText);		
+		sp.setTitle("LINKI");		
+		sp.setContent("<ul class='linkList'><li> <a href='onet.pl'>onet.pl</a><p class='description'>najwiekszy polski portal</p></li><li> <a href='onet.pl'>onet.pl</a><p class='description'>najwiekszy polski portal</p></li><li> <a href='onet.pl'>onet.pl</a><p class='description'>najwiekszy polski portal</p></li><li> <a href='onet.pl'>onet.pl</a><p class='description'>najwiekszy polski portal</p></li><li> <a href='onet.pl'>onet.pl</a><p class='description'>najwiekszy polski portal</p></li><li> <a href='onet.pl'>onet.pl</a><p class='description'>najwiekszy polski portal</p></li></ul>");		
 		this.em.persist(sp);
 		
 		sp = new SpecialPage();		
-		sp.setId("sgnaukowcy");
+		sp.setId("sgkat1");
 		sp.setTitle("NAUKOWCY");		
 		sp.setContent("krotki opis co sie zawiera w zakladce naukowcy");		
 		this.em.persist(sp);
 		
 		sp = new SpecialPage();		
-		sp.setId("sgpublikacje");
+		sp.setId("sgkat2");
 		sp.setTitle("PUBLIKACJE");		
 		sp.setContent("krotki opis co sie zawiera w zakladce publikacje");		
 		this.em.persist(sp);		
 		
 		sp = new SpecialPage();		
-		sp.setId("sgprzedsiebiorcy");
+		sp.setId("sgkat3");
 		sp.setTitle("PRZEDSIEBIORCY");		
 		sp.setContent("krotki opis co sie zawiera w zakladce przedsiębiorcy");		
-		this.em.persist(sp);				
+		this.em.persist(sp);		
+		
+		sp = new SpecialPage();		
+		sp.setId("blockextra");
+		sp.setTitle("PRAWA BELKA");		
+		sp.setContent("prawa belka content");		
+		this.em.persist(sp);	
 	}
 	
 	private void insertNews() {
 		News news1 = new News();
 		news1.setTitle("Pierwsza wiadomosc");
-		news1.setContent("<b>To jest zawartosc pierwszej wiadomosci :)</b>");
+		news1.setContent("To jest zawartosc pierwszej wiadomosci :)");
 		news1.setDate(new Date());
 		this.em.persist(news1);
 		

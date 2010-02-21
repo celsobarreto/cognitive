@@ -57,4 +57,11 @@ public class SPageAction implements SPage
 		
 		return page.getContent();
 	}
+	
+	public String getPageTitle(String pageId){
+		SpecialPage page = (SpecialPage)this.em.createQuery("select u from SpecialPage u where id=:id").setParameter("id", pageId).getSingleResult();
+		this.sPage = page;
+		this.pageID = pageId;
+		return page.getTitle();
+	}	
 }

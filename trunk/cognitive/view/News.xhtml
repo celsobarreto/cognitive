@@ -23,32 +23,33 @@
 						<f:selectItem id="criterion1" itemLabel="tytule" itemValue="title"/>
 						<f:selectItem id="criterion2" itemLabel="treści" itemValue="content"/>
 					</h:selectOneMenu>					
-					<h:inputText id="searchString" value="#{newsManager.searchString}" style="width: 400px;"/>
+					<h:inputText id="searchString" value="#{newsManager.searchString}" style="width: 350px;"/>
 					<h:commandButton id="findNews" value="Szukaj" action="#{newsManager.searchNews()}"/>
 				</h:panelGrid>	
 			</a:panel>
 		
-			<h:outputText value="Brak aktualności" rendered="#{newsList.rowCount == 0}"/>
-            <h:dataTable border="0" cellpadding="3" cellspacing="0" headerClass="header_table" var="n" value="#{newsList}" rendered="#{newsList.rowCount>0}" width="100%">
-            	<f:facet name="header">
-    				<h:outputText value="Aktualności:"/>
-  				</f:facet>            	
-  				<h:column>
-            		<a:panel>
-            			<f:facet name="header">
-            					<h:outputFormat value="{0}	{1, date, yyyy-MM-dd HH:mm:ss}">
-            						<f:param value="#{n.title}"/>
-            						<f:param value="#{n.date}"/>
-            					</h:outputFormat>
-            			</f:facet>
-            			<h:outputText value="#{n.content}" escape="false"/>
-            		</a:panel>
-            	</h:column>
-            </h:dataTable>
-            
-            <a:panel rendered="#{newsManager.manageEnabled()}">
-            	<s:link value="Zarządzaj wiadomościami" view="/manageNews.seam" action="#{newsManager.getListOfNews()}"/>
-            </a:panel>
+			<h:outputText value="Brak wiadomości" rendered="#{newsList.rowCount == 0}"/>
+
+		<h2>AKTUALNOŚCI</h2>
+		
+		<ui:repeat value="#{newsList}" var="news">
+      		<div class="news">
+      			<div class="header">
+      				<h3>
+      					<h:outputText value="#{news.title}" escape="false"/>
+      				</h3>
+      				<h:outputText value="#{news.date}" class="date" />
+      			</div>
+      			<div class="content">
+      				<h:outputText value="#{news.content}" escape="false"/>
+      			</div>
+      		</div>
+		</ui:repeat>
+		<h:outputText value="Brak aktualności" rendered="#{newsList.rowCount == 0}"/>
+
+        <a:panel rendered="#{newsManager.manageEnabled()}">
+        	<s:link value="Zarządzaj wiadomościami" view="/manageNews.seam" action="#{newsManager.getListOfNews()}"/>
+        </a:panel>
             
 		</h:form>
 	</ui:define>
