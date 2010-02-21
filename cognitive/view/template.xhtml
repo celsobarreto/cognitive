@@ -115,7 +115,7 @@
 				<ui:insert name="content"/>
 			</div>
 			<div id="extra">
-			
+<c:if test="${s:hasRole('admin')}">			
 <div id="temporaryNavigation navigation">
 	<ul>
 		<li class="begin">
@@ -169,7 +169,11 @@
 		</li>
 	</ul>
 </div>
-			
+</c:if>
+			<h:outputText value="#{specialPages.getPageContent('blockextra')}"/>
+			<s:link value="Edytuj ten blok" view="/pageform.seam" action="#{pageForm.showForm()}" rendered="#{s:hasRole('admin')}">
+				<f:param name="pageId" value="blockextra"/>
+			</s:link>
 			</div>
 		</div>
 	</div>

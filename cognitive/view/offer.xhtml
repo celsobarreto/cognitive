@@ -18,12 +18,11 @@
 				<s:link id="addOffer" view="/addOffer.xhtml" value="Dodaj Oferte"/>
 			</rich:toolBarGroup>
 		</rich:toolBar>
+		<h2>Oferty pracy/uslug:</h2>
 		<h:form>
             <h:outputText value="Brak danych do wyswietlania" rendered="#{offerList.rowCount==0}" />
             <h:dataTable border="0" cellpadding="3" cellspacing="0" headerClass="header_table" var="offer" value="#{offerList}" rendered="#{offerList.rowCount>0}" width="100%">
-            	<f:facet name="header">
-    				<h:outputText value="Oferty pracy/uslug:"/>
-  				</f:facet>
+            	
   				<h:column>
   					<rich:toolBar rendered="#{loggedUser.id == offer.entrepreneur_id}">
 						<rich:toolBarGroup>
@@ -31,12 +30,23 @@
             				<s:link id="removeOffer" action="#{offerManager.removeOffer}" value="Usun oferte"/>
 						</rich:toolBarGroup>
 					</rich:toolBar>
-            		<a:panel>
-            			<f:facet name="header">
-            				<h:outputText value="Tytul: #{offer.title}|Data dodania: #{offer.dateAdded}|Typ oferty: #{offer.offerType}|Dodal:  #{offerManager.getEntrepreneurName(offer)}"/> 
-            			</f:facet>
-            			<h:outputText value="#{offer.content}"/>	
-            		</a:panel>
+            		<table class="offer">
+            			<tr>
+            				<td class="type">#{offer.offerType}</td>
+            				<td class="owner">#{offerManager.getEntrepreneurName(offer)}</td>
+            				<td class="date">
+            					<h:outputText value="#{offer.dateAdded}">
+        							<s:convertDateTime type="both" pattern="dd/MM/yyyy" />
+   								</h:outputText>
+            				</td>
+            			</tr>
+            			<tr>
+            				<td colspan="3" class="title">#{offer.title}</td>
+            			</tr>
+            			<tr>
+            				<td class="content" colspan="3">#{offer.content}</td>
+            			</tr>
+            		</table>
             	</h:column>
             </h:dataTable>
 		</h:form>

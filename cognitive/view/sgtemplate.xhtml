@@ -113,46 +113,55 @@
 			<div class="contentHead">
 				<div class="zajawka">
 					<div class="headline">
-						<h2>NAUKOWCY</h2>
+						<h2><h:outputText value="#{specialPages.getPageTitle('sgkat1')}"/></h2>
 					</div>
 					<div class="foto">
 						<img src="images/foto1.jpg" />
 					</div>
 					<div class="description">
-						<h:outputText value="#{specialPages.getPageContent('sgnaukowcy')}"/> 
+						<h:outputText value="#{specialPages.getPageContent('sgkat1')}"/> 
+						<s:link value="Edytuj ten blok" view="/pageform.seam" action="#{pageForm.showForm()}" rendered="#{s:hasRole('admin')}">
+							<f:param name="pageId" value="sgkat1"/>
+						</s:link>
 					</div>
 					<div class="more">
-						<s:link value="WIÄCEJ" view="/userList.seam" action="#{userManager.setMode('scientist')}" propagation="none" ></s:link>
+						<s:link value="WIĘCEJ" view="/userList.seam" action="#{userManager.setMode('scientist')}" propagation="none" ></s:link>
 					</div>
 				</div>
 				
 				<div class="zajawka">
 					<div class="headline">
-						<h2>PUBLIKACJE</h2>
+						<h2><h:outputText value="#{specialPages.getPageTitle('sgkat2')}"/></h2>
 					</div>
 					<div class="foto">
 						<img src="images/foto2.jpg" />
 					</div>
 					<div class="description">
-						Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+						<h:outputText value="#{specialPages.getPageContent('sgkat2')}"/>
+						<s:link value="Edytuj ten blok" view="/pageform.seam" action="#{pageForm.showForm()}" rendered="#{s:hasRole('admin')}">
+							<f:param name="pageId" value="sgkat2"/>
+						</s:link>
 					</div>
 					<div class="more">
-						<s:link value="WIÄCEJ" view="/offer.seam" action="#{offerManager.getOffer}" styleClass="active" propagation="none" ></s:link>
+						<s:link value="WIĘCEJ" view="/offer.seam" action="#{offerManager.getOffer}" styleClass="active" propagation="none" ></s:link>
 					</div>
 				</div>
 				
 				<div class="zajawka">
 					<div class="headline">
-						<h2>PRZEDSÄBIORCY</h2>
+						<h2><h:outputText value="#{specialPages.getPageTitle('sgkat3')}"/></h2>
 					</div>
 					<div class="foto">
 						<img src="images/foto3.jpg" />
 					</div>
 					<div class="description">
-						Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+						<h:outputText value="#{specialPages.getPageContent('sgkat3')}"/>
+						<s:link value="Edytuj ten blok" view="/pageform.seam" action="#{pageForm.showForm()}" rendered="#{s:hasRole('admin')}">
+							<f:param name="pageId" value="sgkat3"/>
+						</s:link>
 					</div>
 					<div class="more">
-						<s:link value="WIÄCEJ" view="/userList.seam" action="#{userManager.setMode('entrepreneur')}" styleClass="active" propagation="none" ></s:link>
+						<s:link value="WIĘCEJ" view="/userList.seam" action="#{userManager.setMode('entrepreneur')}" styleClass="active" propagation="none" ></s:link>
 					</div>
 				</div>
 			</div>
@@ -163,13 +172,14 @@
 				<div class="con2"></div>
 			</div>
 			<div class="contentFoot">
-				
+				<h2><h:outputText value="#{specialPages.getPageTitle('links')}"/></h2>
+				<h:outputText value="#{specialPages.getPageContent('links')}" escape="false"/>
 			</div>
 		</div>
 	</div>
 	<div class="footContainer">
 		<div id="foot">
-		
+
 		</div>
 		
 	</div>

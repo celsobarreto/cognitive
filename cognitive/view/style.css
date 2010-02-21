@@ -127,8 +127,9 @@ overflow: hidden;
 
 #content{
 	float: left;
-	width: 670px;
+	width: 630px;
 	height: 100%;
+	padding: 20px;
 }
 
 #extra{
@@ -208,7 +209,7 @@ text-decoration:none;
 	background-color: #a39c96;
 	width: 960px;
 	padding: 10px 5px;
-	height: 400px;
+	height: 300px;
 }
 
 .contentHead .zajawka{
@@ -232,7 +233,7 @@ font-family:verdana;
 font-size:12px;
 font-weight:normal;
 padding:10px 0;
-height: 100px;
+height: 50px;
 }
 
 .contentHead .more{
@@ -248,8 +249,8 @@ text-decoration:underline;
 .sg .contentBox{
 	background-color: #d1cdca;
 	width: 100%;
-	height: 400px;
-	color: #2a2927;	
+	color: #2a2927;
+  overflow: hidden;	
 }
 
 .sg .contentBox .con1{
@@ -293,15 +294,20 @@ text-decoration:underline;
 
 
 .sg .contentBox .con2{
-	width: 300px;
+	width: 260px;
 	padding: 20px 25px 20px 20px;
 	float: left;	
 }	
 
 .sg .contentFoot{
-	background-color: #a39c96;
-	width: 100%;
-	height: 400px;
+  background-color:#A39C96;
+  overflow:hidden;
+  padding:20px 20px 30px;
+  width:930px;
+}
+
+.sg .contentFoot h2{
+padding-bottom: 20px
 }
 
 h2{
@@ -309,7 +315,7 @@ h2{
 	font-size: 18px;
 	font-weight: bold;
 	margin: 0;
-	padding: 0;
+	padding: 0 0 20px;;
 }
 
 h3{
@@ -318,4 +324,163 @@ h3{
 	font-weight: bold;
 	margin: 0;
 	padding; 0;
+}
+
+/* logowanie */
+.loginForm tr{
+	height: 30px;
+}	
+.loginForm tfoot td{
+	text-align: right;
+}
+.loginForm tfoot input{
+	width: 60px;
+}
+.loginForm tbody td.right{
+	width:80px;
+	color: #fff;
+}
+.loginForm tbody td input{
+	width:180px;
+}
+
+/* link list */
+.linkList{
+  clear:both;
+  list-style-image:none;
+  list-style-position:outside;
+  list-style-type:none;
+  margin:0;
+  overflow:visible;
+  padding:0;
+}
+
+.linkList li{
+  border-bottom:1px dashed #352929;
+  display:block;
+  float:left;
+  margin:10px;
+  width:290px;
+}
+
+.linkList a{
+  color:#2A2927;
+  font-weight:bold;
+  text-decoration:underline;
+}
+
+.linkList a:hover{
+  color:#fff;
+}
+
+.linkList .description{
+  color:#FFFFFF;
+  font-family:verdana;
+  font-size:11px;
+  height:32px;
+  line-height:16px;
+  margin:10px;
+  overflow:hidden;
+}
+
+
+
+.rich-panel {
+border-bottom:1px dashed black;
+border-color:none;
+margin-bottom:20px;
+padding:0 0 10px;
+}
+
+.dr-pnl {
+background-color:transparent;
+border-color:none;
+border-style: none;
+}
+eAGTcz...2IDhA__ (wiersz 1)
+.dr-pnl {
+background-color: transparent;
+border-color:none;
+border-style:none;
+border-width:0;
+padding:0;
+}
+
+element.style {
+
+}
+.rich-panel-header {
+border-bottom-width:20px;
+margin-bottom:20px;
+
+background-image: none;
+border: none;
+color:#000000;
+font-family:arial;
+font-size:18px;
+font-weight:bold;
+margin: 0;
+padding:0;
+}
+
+.dr-pnl-h {
+background: none;
+border: none;
+padding:0;
+}
+.dr-pnl-h {
+background: none;
+border: none;
+padding:0;
+}
+
+.header_table{
+	text-align: left;
+}
+
+table tr td{
+	font-size: 12px;
+	font-weight: normal;
+	color: #000;
+}
+
+table.offer{
+border:1px solid #B3AEAA;
+margin:20px 0;
+width:620px;
+}
+.offer td{
+	
+}
+.offer tr{
+	
+}
+.offer td.type{
+color:red;
+font-weight:bold;
+width:100px;	
+}
+
+.offer td.owner{
+font-style:italic;
+width:300px;	
+}
+
+.offer td.date{
+font-family:verdana;
+font-size:11px;
+text-align:right;	
+}
+
+.offer td.title{
+background-color:#22211D;
+color:white;
+font-family:arial;
+font-size:14px;
+font-weight:bold;
+line-height:20px;	
+}
+
+.offer td.content{
+padding:10px;	
 }
