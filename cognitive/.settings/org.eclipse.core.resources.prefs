@@ -1,8 +1,9 @@
-#Fri Feb 19 17:13:49 CET 2010
+#Sun Feb 21 22:26:08 CET 2010
 eclipse.preferences.version=1
 encoding//resources/messages_pl.properties=UTF-8
 encoding//view/addNewsForm.xhtml=UTF-8
 encoding//view/changePassword.xhtml=UTF-8
+encoding//view/editUserProfile.xhtml=UTF-8
 encoding//view/login.xhtml=UTF-8
 encoding//view/sgtemplate.xhtml=UTF-8
 encoding//view/template.xhtml=UTF-8

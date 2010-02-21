@@ -26,7 +26,7 @@
 					<h:outputLabel for="allowedIPs" value="Dozwolone adresy IP: "/>
 					<h:inputText id="allowedIPs" value="#{user.allowedIPs}"/>
 				</h:panelGrid>
-				<r:panel>
+				<r:panel rendered="#{identity.hasRole('scientist')}">
 					<f:facet name="header">
 			    		<h:outputText value="Dziedziny naukowe"/>
 			  		</f:facet>
@@ -72,7 +72,8 @@
 	  		</f:facet>	
 	  		Jeśli chcesz zmienić hasło skorzystaj z <s:link value="formularza" view="/changePassword.seam" propagation="none"/>
 		</r:panel>
-		<r:panel>
+		
+		<r:panel rendered="#{identity.hasRole('scientist')}">
 			<f:facet name="header">
 	    		<h:outputText value="Twoje publikacje" rendered="#{profileManager.publications.size>0}"/>
 	  		</f:facet>

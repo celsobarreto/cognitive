@@ -26,7 +26,7 @@
 
 			</ul>
 		</r:panel>
-		<r:panel>
+		<r:panel rendered="#{identity.hasRole('scientist')}">
 			<f:facet name="header">
 	    		<h:outputText value="Publikacje użytkownika" rendered="#{userProfile.publications.size>0}"/>
 	  		</f:facet>
@@ -88,7 +88,7 @@
 				</h:column>
 			</h:dataTable>
 		</r:panel>
-		<r:panel>
+		<r:panel rendered="#{identity.hasRole('scientist')}">
 			<f:facet name="header">
 	    		<h:outputText value="Dziedziny naukowe" rendered="#{userProfile.scienceDomains.size>0}"/>
 	  		</f:facet>

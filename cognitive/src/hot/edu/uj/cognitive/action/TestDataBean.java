@@ -216,7 +216,7 @@ public class TestDataBean implements TestData
 		domain.setDescription("bardzo skomplikowana dziedzina");
 		this.em.persist(domain);
 		ScienceDomain domain2 = new ScienceDomain();
-		domain2.setName("Teoria mnogości");
+		domain2.setName("Teoria mnogosci");
 		domain2.setDescription("jeszcze bardziej skomplikowana dziedzina");
 		this.em.persist(domain2);
 	}
