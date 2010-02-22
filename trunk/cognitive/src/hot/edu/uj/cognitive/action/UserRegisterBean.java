@@ -102,7 +102,7 @@ public class UserRegisterBean implements UserRegister {
 				    try {
 						sendActivationEmail(newUser);
 					} catch (MessagingException e) {
-						// TODO Auto-generated catch block
+						statusMessages.add("Nie wyslano e-maila z potwierdzeniem skontaktuj sie z administratorem.");
 						log.error(e);
 					}
 				}
@@ -227,9 +227,8 @@ public class UserRegisterBean implements UserRegister {
 		u.setActivationToken(token);
 		
 		String message = 
-			"W celu potwierdzenia adresu e-mail otwórz kolejno następujące strony:\n"+
-			getURL()+"/activation.seam\n"+
-			getURL()+"/activation.seam?activationToken="+token+"&userId="+u.getId()+"&actionMethod=activation.xhtml:activation.activate()";
+			"W celu potwierdzenia adresu e-mail otworz nastepujaca strone:\n"+
+			getURL()+"/activation.seam?activationToken="+token+"&userId="+u.getId();
 		
 		EmailSenderBean.sendMail(u.getEmail(), "Aktywacja konta w serwisie Cognitive", message);
 		
