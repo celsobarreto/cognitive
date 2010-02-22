@@ -36,10 +36,8 @@ import edu.uj.cognitive.model.User;
 @Name("TestData")
 @Scope(ScopeType.SESSION)
 /**
- * By wstawic dane testowe otwórz dowolną podstrone w przeglarce np.
- * /testData.seam
- * Nastepnie otwórz w przeglądarce
- * /testData.seam?token=6936598e6e25e96bb9694b30187b42a4&actionMethod=testData.xhtml%3ATestData.insert
+ * By wstawic dane testowe otwórz w przeglądarce:
+ * /testData.seam?token=6936598e6e25e96bb9694b30187b42a4
  */
 public class TestDataBean implements TestData
 {
