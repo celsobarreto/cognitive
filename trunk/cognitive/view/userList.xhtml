@@ -22,7 +22,7 @@
 					<h:inputText id="searchText" value="#{userManager.searchText}" style=" width : 400px;"/>
 					<h:selectOneMenu id="criterion1" value="#{userManager.searchCriteria}" style="width: 120px;" rendered="#{userManager.mode eq 'scientist'}">
 						<f:selectItem id="criterion11" itemLabel="imie/nazwisko" itemValue="fullName"/>
-						<f:selectItem id="criterion12" itemLabel="dziedzina naukowa" itemValue="scienceDomains"/>
+						<f:selectItem id="criterion12" itemLabel="liczba publikacji" itemValue="publicationsSize"/>
 						<f:selectItem id="criterion13" itemLabel="kompetencje" itemValue="competences"/>
 					</h:selectOneMenu>	
 					<h:commandButton id="findUsers" value="Szukaj" action="#{userManager.list()}"/>
