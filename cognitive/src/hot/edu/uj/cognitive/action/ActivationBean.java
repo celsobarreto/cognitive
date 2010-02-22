@@ -66,7 +66,12 @@ public class ActivationBean implements Activation{
 
 
 	private void sendAcceptationEmail(User u) throws MessagingException {
-		EmailSenderBean.sendMail(u.getEmail(), "Acceptation Confirm link", getURL()+"/activation.seam?userId="+u.getId()+"&actionMethod=activation.xhtml:activation.accept()");
+		String message = 
+			"W celu potwierdzenia aktywacji konta użytkownika "+u.getFullName()+" otwórz kolejno następujące strony:\n"+
+			getURL()+"/activation.seam\n"+
+			getURL()+"/activation.seam?userId="+u.getId()+"&actionMethod=activation.xhtml:activation.accept()";
+		
+		EmailSenderBean.sendMail(u.getEmail(), "Akceptacja konta użytkownika", message);
 		
 	}
 	@Logger

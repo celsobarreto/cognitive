@@ -14,6 +14,10 @@
         </navigation>
     </page>
 
+    <page view-id="/testData.xhtml" action="#{TestData.insert}">
+
+    </page>
+
     <exception class="org.jboss.seam.framework.EntityNotFoundException">
         <redirect view-id="/error.xhtml">
             <message severity="warn">Record not found</message>

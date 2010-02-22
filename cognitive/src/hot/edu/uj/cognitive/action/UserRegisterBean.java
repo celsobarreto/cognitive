@@ -225,7 +225,13 @@ public class UserRegisterBean implements UserRegister {
 	private void sendActivationEmail(User u) throws MessagingException {
 		String token = getRanomToken(20);
 		u.setActivationToken(token);
-		EmailSenderBean.sendMail(u.getEmail(), "Activation Confirm link", getURL()+"/activation.seam?activationToken="+token+"&userId="+u.getId()+"&actionMethod=activation.xhtml:activation.activate()");
+		
+		String message = 
+			"W celu potwierdzenia adresu e-mail otwórz kolejno następujące strony:\n"+
+			getURL()+"/activation.seam\n"+
+			getURL()+"/activation.seam?activationToken="+token+"&userId="+u.getId()+"&actionMethod=activation.xhtml:activation.activate()";
+		
+		EmailSenderBean.sendMail(u.getEmail(), "Aktywacja konta w serwisie Cognitive", message);
 		
 	}
 	

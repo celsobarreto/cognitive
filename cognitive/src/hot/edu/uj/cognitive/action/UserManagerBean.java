@@ -70,8 +70,8 @@ public class UserManagerBean implements UserManager
 	{
 		if(searchCriteria != null && !searchCriteria.equals("scienceDomains")){
 			String search = "%"+searchText.replace("*", "%")+"%";
-			this.userList = this.em.createQuery("select u from User u where u."+searchCriteria+
-					" like '"+search+"' order by u.fullName").getResultList();
+			this.userList = this.em.createQuery("select u from User u where UPPER(u."+searchCriteria+
+					") like :param order by u.fullName").setParameter("param", search.toUpperCase()).getResultList();
 		}else{
 			this.userList = this.em.createQuery("select u from User u").getResultList();
 		}
