@@ -17,7 +17,11 @@
     <page view-id="/testData.xhtml" action="#{TestData.insert}">
 
     </page>
+    <page view-id="/activation.xhtml" action="#{activation.activate}">
+    </page>
+    <page view-id="/acceptation.xhtml" action="#{activation.accept}">
 
+    </page>
     <exception class="org.jboss.seam.framework.EntityNotFoundException">
         <redirect view-id="/error.xhtml">
             <message severity="warn">Record not found</message>
