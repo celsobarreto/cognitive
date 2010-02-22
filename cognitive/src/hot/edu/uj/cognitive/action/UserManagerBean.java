@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
 import javax.ejb.Remove;
 import javax.ejb.Stateful;
 import javax.faces.context.FacesContext;
@@ -11,6 +12,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceContextType;
 import javax.servlet.http.HttpServletRequest;
+
 import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.Factory;
 import org.jboss.seam.annotations.In;
@@ -20,6 +22,8 @@ import org.jboss.seam.annotations.Scope;
 import org.jboss.seam.annotations.datamodel.DataModel;
 import org.jboss.seam.annotations.web.RequestParameter;
 import org.jboss.seam.contexts.Contexts;
+import org.jboss.seam.faces.FacesMessages;
+
 import edu.uj.cognitive.model.Role;
 import edu.uj.cognitive.model.ScienceDomain;
 import edu.uj.cognitive.model.User;
@@ -41,11 +45,20 @@ public class UserManagerBean implements UserManager
 	@RequestParameter 
 	private Integer userId;
 	
+	@In
+	private FacesMessages facesMessages;
+	
+
 	private Integer editUserId;
+	
+
 	private String mode;
+	
 	private String searchText;
+	
 	private String searchCriteria;
 	
+
 	public Integer getUserId() {
 		return userId;
 	}
@@ -68,7 +81,13 @@ public class UserManagerBean implements UserManager
 	@Factory("userList")
 	public void list()
 	{
-		if(searchCriteria != null && !searchCriteria.equals("scienceDomains")){
+		if(mode!=null && mode.equals("entrepreneur")){
+			searchCriteria = "fullName";
+			if(searchText == null){
+				searchText = "%";
+			}
+		}
+		if(searchCriteria != null && !searchCriteria.equals("scienceDomains") && !searchCriteria.equals("publicationsSize")){
 			String search = "%"+searchText.replace("*", "%")+"%";
 			this.userList = this.em.createQuery("select u from User u where UPPER(u."+searchCriteria+
 					") like :param order by u.fullName").setParameter("param", search.toUpperCase()).getResultList();
@@ -78,6 +97,8 @@ public class UserManagerBean implements UserManager
 		selectUsers();
 		if(searchCriteria != null && searchCriteria.equals("scienceDomains")){
 			searchUserScienceDomains();
+		}else if(searchCriteria != null && searchCriteria.equals("publicationsSize")){
+			searchUserPublicationsSize();
 		}
 		searchText = null;
 		searchCriteria = null;
@@ -105,6 +126,29 @@ public class UserManagerBean implements UserManager
 		}
 	}
 
+	private void searchUserPublicationsSize(){
+		
+		int publSize = 0;
+		try{
+			publSize = Integer.valueOf(searchText.trim());
+		}catch(NumberFormatException exception){
+			facesMessages.add("Nie podano liczby");
+			userList.removeAll(userList);
+		}
+		if(publSize < 0){
+			facesMessages.add("Podano ujemna liczbe");
+			userList.removeAll(userList);
+		}
+		else{
+			Set<User> tmpList = new HashSet<User>();
+			for(User u : userList){
+				if(u.getPublications().size() != publSize){
+					tmpList.add(u);
+				}
+			}
+			userList.removeAll(tmpList);
+		}
+	}
 	
 	private void searchUserScienceDomains(){
 		Set<User> tmpList = new HashSet<User>();
@@ -127,7 +171,6 @@ public class UserManagerBean implements UserManager
 		for(User u : userList){
 			if(u.getRoles() != null && u.getRoles().size()>0){
 				for(Role r : u.getRoles()){
-					System.out.println(mode);
 					if(!r.getName().equals(mode)){
 						tmpList.add(u);
 					}
