@@ -114,7 +114,7 @@ public class UserRegisterBean implements UserRegister {
 				
 				log
 				.info("UserRegister.userRegister() action called with: #{UserRegister.fullName}");
-				statusMessages.add("Zarejestrowano uzytkownika #{UserRegister.fullName}");
+				statusMessages.add("Zarejestrowano uzytkownika #{UserRegister.fullName}. Sprawdz poczte w celu aktywacji konta.");
 			
 			//	return "/profileManager.xhtml";
 				

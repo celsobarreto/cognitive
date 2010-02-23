@@ -85,7 +85,7 @@ public class TestDataBean implements TestData
 			this.insertPropositions();
 			this.insertNews();
 			this.insertScienceDomains();
-	        statusMessages.add("Test data loaded successfully.");
+	        statusMessages.add("Dane testowe zostały wstawione do bazy.");
 		}
     }
 	
@@ -131,7 +131,7 @@ public class TestDataBean implements TestData
 		doktor.setRoles(new HashSet<Role>(Arrays.asList(new Role[] {scientistRole})));
 		this.em.persist(doktor);
 
-		profesor = new User("prof. Wit A�a", "profesor@uj.pl", "profesor", true, true);
+		profesor = new User("prof. Wit Ała", "profesor@uj.pl", "profesor", true, true);
 		doktor.setRoles(new HashSet<Role>(Arrays.asList(new Role[] {scientistRole})));
 		this.em.persist(profesor);		
 		
@@ -139,7 +139,7 @@ public class TestDataBean implements TestData
 		milioner.setRoles(new HashSet<Role>(Arrays.asList(new Role[] {entrepreneurRole})));
 		this.em.persist(milioner);		
 
-		admin = new User("za3maj", "za3maj@gmail.com", "za3maj", true, true);
+		admin = new User("Admin", "admin@uj.pl", "admin", true, true);
 		admin.setRoles(new HashSet<Role>(Arrays.asList(new Role[] {adminRole})));
 		admin.setAllowedIPs("127.0.0.1"); // oddzielone przecinkiem
 		this.em.persist(admin);

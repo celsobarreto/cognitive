@@ -9,4 +9,5 @@ import edu.uj.cognitive.model.User;
 public interface Activation {
 	public void activate();
 	public void accept();
+	public void destroy();
 }
