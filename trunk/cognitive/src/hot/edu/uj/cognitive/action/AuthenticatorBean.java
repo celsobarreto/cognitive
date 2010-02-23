@@ -38,10 +38,12 @@ public class AuthenticatorBean implements Authenticator
     {
     	 try {
              User user = (User) entityManager.createQuery(
-                "from User where email = :username and passwordHash = :password")
-                .setParameter("username", credentials.getUsername())
+                "from User where email = :email and passwordHash = :password")
+                .setParameter("email", credentials.getUsername())
                 .setParameter("password", DigestUtils.md5Hex(credentials.getPassword()))
                 .getSingleResult();
+             
+             log.info("Podane dane naleza do uzytkownika o ID = "+user.getId().toString());
              
              if (user.getRoles() != null) {
                 for (Role mr : user.getRoles())

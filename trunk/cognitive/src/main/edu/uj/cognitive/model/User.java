@@ -12,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 import org.hibernate.validator.Email;
 import org.hibernate.validator.Length;
@@ -31,7 +32,7 @@ import org.jboss.seam.security.digest.DigestUtils;
 @Entity
 @Name("user")
 @Scope(ScopeType.SESSION)
-@Table(name = "users")
+@Table(name = "users", uniqueConstraints={@UniqueConstraint(columnNames={"email"})})
 @SequenceGenerator(name = "user_seq", sequenceName = "users_seq", allocationSize = 1, initialValue = 10)
 public class User implements Serializable
 {
